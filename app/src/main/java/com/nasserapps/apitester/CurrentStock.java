@@ -1,0 +1,99 @@
+package com.nasserapps.apitester;
+
+/**
+ * Created by Nasser on 10/1/15.
+ * CurrentStock Object
+ * Has the following attributes: Price, volume, symbol, name, supply(ask), demand(bid), PE Ratio, Price-to-Book Value.
+ */
+public class CurrentStock {
+    String mSymbol;
+    String mName;
+    double mPrice;
+    double mPERatio;
+    long mVolume;
+    double mDemand;
+    double mSupply;
+    double mPBV;
+    String percentage;
+    double change;
+
+    public double getChange() {
+        return change;
+    }
+
+    public void setChange(double change) {
+        this.change = change;
+    }
+
+    public double getPBV() {
+        return mPBV;
+    }
+
+    public void setPBV(double PBV) {
+        mPBV = PBV;
+    }
+
+    public double getPERatio() {
+        return mPERatio;
+    }
+
+    public void setPERatio(double PERatio) {
+        mPERatio = PERatio;
+    }
+
+    public String getSymbol() {
+        return mSymbol;
+    }
+
+    public void setSymbol(String symbol) {
+        mSymbol = symbol;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public void setName(String name) {
+        mName = name;
+    }
+
+    public double getPrice() {
+        return mPrice;
+    }
+
+    public void setPrice(double price) {
+        mPrice = price;
+    }
+
+    public long getVolume() {
+        return mVolume;
+    }
+
+    public void setVolume(long volume) {
+        mVolume = volume;
+    }
+
+    public double getDemand() {
+        return mDemand;
+    }
+
+    public void setDemand(double demand) {
+        mDemand = demand;
+    }
+
+    public double getSupply() {
+        return mSupply;
+    }
+
+    public void setSupply(double supply) {
+        mSupply = supply;
+    }
+
+    public String getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(String percentage) {
+        this.percentage = percentage;
+    }
+}

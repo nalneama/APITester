@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/table"
+    android:stretchColumns="*"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+    <TableRow>
+
+            <TextView
+                android:text="Year"
+                android:textSize="14dp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="12dp"
+                android:paddingBottom="12dp"
+                />
+
+            <TextView
+                android:text="EPS"
+                android:textSize="14dp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="12dp"
+                android:paddingLeft="12dp"
+                />
+
+            <TextView
+                android:text="BEST PE"
+                android:textSize="14dp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="12dp"
+                android:paddingLeft="12dp"/>
+
+            <TextView
+                android:text="BEST PBV"
+                android:textSize="14dp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:paddingRight="12dp"
+                android:paddingLeft="12dp"
+                />
+
+            <TextView
+                android:text="DIVIDEND"
+                android:textSize="14dp"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="12dp"
+                android:paddingLeft="12dp"
+                />
+
+            <TextView
+                android:text="VOLUME"
+                android:textSize="14dp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_width="0dp"
+                android:layout_height="500dp"
+                android:layout_weight="1"
+                android:textAlignment="textEnd"/>
+
+    </TableRow>-->
+
+</TableLayout>
