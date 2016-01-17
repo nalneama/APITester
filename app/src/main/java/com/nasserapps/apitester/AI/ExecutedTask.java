@@ -10,7 +10,7 @@ import android.net.NetworkInfo;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.nasserapps.apitester.CurrentStock;
+import com.nasserapps.apitester.Stock;
 import com.nasserapps.apitester.JSONParser;
 import com.nasserapps.apitester.MainActivity;
 import com.squareup.okhttp.Call;
@@ -33,7 +33,7 @@ import java.io.IOException;
  */
 public class ExecutedTask extends IntentService {
 
-    private CurrentStock mStock;
+    private Stock mStock;
     public SharedPreferences memory;
     SharedPreferences.Editor memoryWriter;
 
@@ -77,7 +77,7 @@ public class ExecutedTask extends IntentService {
                         String jsonData = response.body().string();
                         if (response.isSuccessful()) {
                             JSONParser jsonParser = new JSONParser(jsonData);
-                            mStock = jsonParser.tieData();
+                            //mStock = jsonParser.tieData();
                             createNotification(1, android.support.design.R.drawable.abc_ic_ab_back_mtrl_am_alpha,mStock.getSymbol() + " price is "+ mStock.getPrice() + "", "Great Opportunity for investing PE is " + mStock.getPERatio());
                             memoryWriter.putString("mStockData", jsonData).commit();
                         } else {

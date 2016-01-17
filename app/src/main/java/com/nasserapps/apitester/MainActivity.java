@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -50,10 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private CurrentStock mStock;
-    private boolean isAIActivated;
-    public SharedPreferences memory;
-    SharedPreferences.Editor memoryWriter;
+    private Stock mStock;
+    StocksDataSource mStocksDataSource;
 
     @Bind(R.id.nameView) TextView nameView;
     @Bind(R.id.PercentageView) TextView percentageView;
@@ -75,19 +72,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        //Initiate SharedPreferences
-        memory = getApplicationContext().getSharedPreferences("appMemory", MODE_PRIVATE);
-        memoryWriter = memory.edit();
-
         setSupportActionBar(toolbar);
         mProgressBar.setVisibility(View.INVISIBLE);
 
+        mStocksDataSource = new StocksDataSource(getApplicationContext());
+
         //update Display with data from memory
-        JSONParser jsonParser = null;
+        JSONParser jsonParser;
 
         try {
-            jsonParser = new JSONParser(memory.getString("mStockData","no"));
-            mStock = jsonParser.tieData();
+            jsonParser = new JSONParser(mStocksDataSource.getStoredStockData());
+            //mStock = jsonParser.tieData();
             updateDisplay();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -177,14 +172,13 @@ public class MainActivity extends AppCompatActivity {
 
     //Get Stock data from Yahoo API TODO save data to SharedPreferences
     private void getStock() {
-        String stockURL ="https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%3D%22QIGD.QA%22&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
 
         if(isNetworkAvailable()) {
             toggleRefresh();
 
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(stockURL)
+                    .url(mStocksDataSource.getAPIURL())
                     .build();
 
             Call call = client.newCall(request);
@@ -211,14 +205,14 @@ public class MainActivity extends AppCompatActivity {
                         String jsonData = response.body().string();
                         if (response.isSuccessful()) {
                             JSONParser jsonParser = new JSONParser(jsonData);
-                            mStock = jsonParser.tieData();
+                            //mStock = jsonParser.tieData();
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     updateDisplay();
                                 }
                             });
-                            memoryWriter.putString("mStockData", jsonData).commit();
+                            mStocksDataSource.saveStockDataInMemory(jsonData);
                         } else {
                             alertUserAboutError();
                         }
@@ -250,8 +244,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return isAvailable;
     }
-
-
 
     //Change the UI of the ProgressBar (Not Working) TODO Fix ProgressBar which require some type of window access
     private void toggleRefresh() {
@@ -309,13 +301,13 @@ public class MainActivity extends AppCompatActivity {
     //Start AI Assistant if it is not activated (Only allow AI Assistant activation if SharedPreferences indicates that the AI is off).
     public void startAI() {
 
-        isAIActivated = memory.getBoolean("isAIActivated", false);
+        boolean isAIActivated = mStocksDataSource.getIsActivated();
 
         if(isAIActivated){
             Snackbar.make(fab, "AI Assistance already working", Snackbar.LENGTH_LONG).show();
         }
         else {
-            memoryWriter.putBoolean("isAIActivated",true).commit();
+            mStocksDataSource.saveIsActivated(true);
             // Construct an intent that will execute the AlarmReceiver
             Intent intent = new Intent(getApplicationContext(), InformAI.class);
             // Create a PendingIntent to be triggered when the alarm goes off
@@ -336,14 +328,14 @@ public class MainActivity extends AppCompatActivity {
     //Stop AI Assistant if it is activated (Only allow AI Assistant de-activation if SharedPreferences indicates that the AI is on).
     public void stopAI() {
 
-        isAIActivated = memory.getBoolean("isAIActivated", false);
+        boolean isAIActivated = mStocksDataSource.getIsActivated();
 
         if(!isAIActivated){
             Snackbar.make(fab, "AI Assistance already not working", Snackbar.LENGTH_LONG).show();
         }
 
         else{
-            memoryWriter.putBoolean("isAIActivated",false).commit();
+            mStocksDataSource.saveIsActivated(false);
             Intent intent = new Intent(getApplicationContext(), InformAI.class);
             final PendingIntent pIntent = PendingIntent.getBroadcast(this, InformAI.REQUEST_CODE,
                     intent, PendingIntent.FLAG_UPDATE_CURRENT);

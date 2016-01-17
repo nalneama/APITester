@@ -5,7 +5,7 @@ package com.nasserapps.apitester;
  * CurrentStock Object
  * Has the following attributes: Price, volume, symbol, name, supply(ask), demand(bid), PE Ratio, Price-to-Book Value.
  */
-public class CurrentStock {
+public class Stock {
     String mSymbol;
     String mName;
     double mPrice;

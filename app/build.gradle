@@ -25,10 +25,12 @@ repositories {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    provided 'junit:junit:4.12'
+    testCompile 'junit:junit:4.12' // For JUnit Test
+    testCompile 'org.json:json:20140107' // For JSON Test
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:design:23.0.1'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.5'
+    compile 'junit:junit:4.12'
 }

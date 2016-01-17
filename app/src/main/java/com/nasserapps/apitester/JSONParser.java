@@ -1,7 +1,10 @@
 package com.nasserapps.apitester;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by Nasser on 10/1/15.
@@ -10,22 +13,35 @@ import org.json.JSONObject;
  */
 public class JSONParser {
 
-    public JSONObject getQuote() {
-        return mQuote;
-    }
+    private JSONArray mQuotes;
+    private int mCount;
 
-    private JSONObject mQuote;
-
-    public JSONParser(String jsonData) throws JSONException{
+    public JSONParser(String jsonData) throws JSONException {
         JSONObject APIResults = new JSONObject(jsonData);
-
         JSONObject query = APIResults.getJSONObject("query");
-        JSONObject results = query.getJSONObject("results");
-        mQuote = results.getJSONObject("quote");
+        JSONObject results;
+
+        //TODO if count =0, 1 or more;
+        mCount = query.getInt("count");
+        switch (mCount) {
+            case 0:
+                mQuotes = new JSONArray();
+                break;
+            case 1:
+                results = query.getJSONObject("results");
+                JSONObject mJSONObject = results.getJSONObject("quote");
+                mQuotes = new JSONArray("["+mJSONObject+"]");
+                break;
+            default:
+                results = query.getJSONObject("results");
+                Object mObject = results.get("quote");
+                mQuotes = new JSONArray(mObject.toString().trim());
+                break;
+        }
     }
 
-    public CurrentStock tieData() throws JSONException{
-        CurrentStock stock = new CurrentStock();
+    private Stock tieData(JSONObject mQuote) throws JSONException{
+        Stock stock = new Stock();
 
         stock.setSymbol(mQuote.getString("Symbol"));
         stock.setPERatio(mQuote.getDouble("PERatio"));
@@ -39,5 +55,16 @@ public class JSONParser {
         stock.setChange(mQuote.getDouble("Change"));
 
         return stock;
+    }
+
+    public ArrayList<Stock> getStocks() throws JSONException{
+        JSONObject stock;
+        ArrayList<Stock> stocks = new ArrayList<>(1);
+        for (int i=0;i < mQuotes.length(); i++){
+            stock = mQuotes.getJSONObject(i);
+            stocks.add(tieData(stock));
+
+        }
+        return  stocks;
     }
 }
