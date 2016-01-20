@@ -1,6 +1,6 @@
 package tests;
 
-import com.nasserapps.apitester.JSONParser;
+import com.nasserapps.apitester.Model.JSONParser;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -297,6 +297,100 @@ public class JSONParserTest {
         "}\n" +
         "}\n";
 
+    private final String JSONIndexExampleData = "{\n" +
+            "\"query\": {\n" +
+            "\"count\": 1,\n" +
+            "\"created\": \"2016-01-19T11:52:50Z\",\n" +
+            "\"lang\": \"en-us\",\n" +
+            "\"results\": {\n" +
+            "\"quote\": {\n" +
+            "\"symbol\": \"BZH16.NYM\",\n" +
+            "\"Ask\": \"29.96\",\n" +
+            "\"AverageDailyVolume\": null,\n" +
+            "\"Bid\": \"29.93\",\n" +
+            "\"AskRealtime\": null,\n" +
+            "\"BidRealtime\": null,\n" +
+            "\"BookValue\": \"0.00\",\n" +
+            "\"Change_PercentChange\": \"+1.01 - +3.49%\",\n" +
+            "\"Change\": \"+1.01\",\n" +
+            "\"Commission\": null,\n" +
+            "\"Currency\": \"USD\",\n" +
+            "\"ChangeRealtime\": null,\n" +
+            "\"AfterHoursChangeRealtime\": null,\n" +
+            "\"DividendShare\": null,\n" +
+            "\"LastTradeDate\": \"1/19/2016\",\n" +
+            "\"TradeDate\": null,\n" +
+            "\"EarningsShare\": null,\n" +
+            "\"ErrorIndicationreturnedforsymbolchangedinvalid\": null,\n" +
+            "\"EPSEstimateCurrentYear\": null,\n" +
+            "\"EPSEstimateNextYear\": null,\n" +
+            "\"EPSEstimateNextQuarter\": \"0.00\",\n" +
+            "\"DaysLow\": \"27.67\",\n" +
+            "\"DaysHigh\": \"29.97\",\n" +
+            "\"YearLow\": \"27.67\",\n" +
+            "\"YearHigh\": \"29.97\",\n" +
+            "\"HoldingsGainPercent\": null,\n" +
+            "\"AnnualizedGain\": null,\n" +
+            "\"HoldingsGain\": null,\n" +
+            "\"HoldingsGainPercentRealtime\": null,\n" +
+            "\"HoldingsGainRealtime\": null,\n" +
+            "\"MoreInfo\": null,\n" +
+            "\"OrderBookRealtime\": null,\n" +
+            "\"MarketCapitalization\": null,\n" +
+            "\"MarketCapRealtime\": null,\n" +
+            "\"EBITDA\": null,\n" +
+            "\"ChangeFromYearLow\": \"2.28\",\n" +
+            "\"PercentChangeFromYearLow\": \"+8.24%\",\n" +
+            "\"LastTradeRealtimeWithTime\": null,\n" +
+            "\"ChangePercentRealtime\": null,\n" +
+            "\"ChangeFromYearHigh\": \"-0.02\",\n" +
+            "\"PercebtChangeFromYearHigh\": \"-0.07%\",\n" +
+            "\"LastTradeWithTime\": \"6:22am - <b>29.95</b>\",\n" +
+            "\"LastTradePriceOnly\": \"29.95\",\n" +
+            "\"HighLimit\": null,\n" +
+            "\"LowLimit\": null,\n" +
+            "\"DaysRange\": \"27.67 - 29.97\",\n" +
+            "\"DaysRangeRealtime\": null,\n" +
+            "\"FiftydayMovingAverage\": null,\n" +
+            "\"TwoHundreddayMovingAverage\": null,\n" +
+            "\"ChangeFromTwoHundreddayMovingAverage\": null,\n" +
+            "\"PercentChangeFromTwoHundreddayMovingAverage\": null,\n" +
+            "\"ChangeFromFiftydayMovingAverage\": null,\n" +
+            "\"PercentChangeFromFiftydayMovingAverage\": null,\n" +
+            "\"Name\": \"Brent Crude Oil Last Day Financ\",\n" +
+            "\"Notes\": null,\n" +
+            "\"Open\": \"28.80\",\n" +
+            "\"PreviousClose\": \"28.94\",\n" +
+            "\"PricePaid\": null,\n" +
+            "\"ChangeinPercent\": \"+3.49%\",\n" +
+            "\"PriceSales\": null,\n" +
+            "\"PriceBook\": null,\n" +
+            "\"ExDividendDate\": null,\n" +
+            "\"PERatio\": null,\n" +
+            "\"DividendPayDate\": null,\n" +
+            "\"PERatioRealtime\": null,\n" +
+            "\"PEGRatio\": \"0.00\",\n" +
+            "\"PriceEPSEstimateCurrentYear\": null,\n" +
+            "\"PriceEPSEstimateNextYear\": null,\n" +
+            "\"Symbol\": \"BZH16.NYM\",\n" +
+            "\"SharesOwned\": null,\n" +
+            "\"ShortRatio\": null,\n" +
+            "\"LastTradeTime\": \"6:22am\",\n" +
+            "\"TickerTrend\": null,\n" +
+            "\"OneyrTargetPrice\": null,\n" +
+            "\"Volume\": \"20266\",\n" +
+            "\"HoldingsValue\": null,\n" +
+            "\"HoldingsValueRealtime\": null,\n" +
+            "\"YearRange\": \"27.67 - 29.97\",\n" +
+            "\"DaysValueChange\": null,\n" +
+            "\"DaysValueChangeRealtime\": null,\n" +
+            "\"StockExchange\": \"NYM\",\n" +
+            "\"DividendYield\": null,\n" +
+            "\"PercentChange\": \"+3.49%\"\n" +
+            "}\n" +
+            "}\n" +
+            "}\n" +
+            "}\n";
 
     @Test
     public void testTieDataForZeroStock() throws Exception {
@@ -314,5 +408,12 @@ public class JSONParserTest {
         mJSONParser = new JSONParser(JSONTwoStocksExampleData);
         Assert.assertEquals("MRDS.QA", mJSONParser.getStocks().get(1).getSymbol());
         }
+
+    @Test
+    public void testTieDataForIndex() throws Exception {
+        mJSONParser = new JSONParser(JSONIndexExampleData);
+        mJSONParser.getStocks();
+        Assert.assertEquals("BZH16.NYM", mJSONParser.getIndeces().get(0).getSymbol());
+    }
 
 }

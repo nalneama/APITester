@@ -10,9 +10,9 @@ import android.net.NetworkInfo;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.nasserapps.apitester.Stock;
-import com.nasserapps.apitester.JSONParser;
-import com.nasserapps.apitester.MainActivity;
+import com.nasserapps.apitester.Model.Stock;
+import com.nasserapps.apitester.Model.JSONParser;
+import com.nasserapps.apitester.Controllers.MainActivity;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;

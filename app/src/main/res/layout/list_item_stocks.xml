@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:tool="http://schemas.android.com/tools"
+                android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/stockSymbol"
+        android:paddingBottom="6dp"
+        android:textStyle="bold"
+        android:textColor="#424242"
+        android:textSize="18sp"
+        tool:text="QIBK"/>
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:id="@+id/stockName"
+        tool:text="Qatar Islamic Bank"
+        android:paddingBottom="12dp"
+        android:layout_below="@id/stockSymbol"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/stockPrice"
+        android:layout_below="@id/stockName"
+        android:textStyle="bold"
+        android:textColor="#9E9E9E"
+        android:textSize="22sp"
+        tool:text="79.11"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:layout_marginStart="67dp"
+        android:id="@+id/textView2"
+        android:layout_alignBottom="@+id/stockPrice"
+        android:layout_toEndOf="@+id/stockName"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:id="@+id/textView"
+        android:layout_marginLeft="45dp"
+        android:layout_alignTop="@+id/stockName"
+        android:layout_alignEnd="@+id/textView2"/>
+
+    <TextView
+        tool:text="1.56"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:text="BP:"
+        android:id="@+id/bpvalue"
+        android:layout_marginLeft="2dp"
+        android:layout_above="@+id/stockPrice"
+        android:layout_toEndOf="@+id/textView"/>
+
+    <TextView
+        tool:text="10.56"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:id="@+id/peratio"
+        android:text="PE:"
+        android:layout_marginLeft="2dp"
+        android:layout_below="@+id/stockName"
+        android:layout_toEndOf="@+id/textView2"/>
+
+</RelativeLayout>

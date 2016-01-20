@@ -1,4 +1,4 @@
-package com.nasserapps.apitester;
+package com.nasserapps.apitester.Model;
 
 /**
  * Created by Nasser on 10/1/15.

@@ -1,4 +1,4 @@
-package com.nasserapps.apitester;
+package com.nasserapps.apitester.Controllers;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -26,6 +26,12 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.nasserapps.apitester.AI.InformAI;
+import com.nasserapps.apitester.Model.JSONParser;
+import com.nasserapps.apitester.Model.Stock;
+import com.nasserapps.apitester.Model.StocksDataSource;
+import com.nasserapps.apitester.R;
+import com.nasserapps.apitester.exchangeTime;
+import com.nasserapps.apitester.stockHistoricalData;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -81,8 +87,9 @@ public class MainActivity extends AppCompatActivity {
         JSONParser jsonParser;
 
         try {
-            jsonParser = new JSONParser(mStocksDataSource.getStoredStockData());
-            //mStock = jsonParser.tieData();
+            //jsonParser = new JSONParser(mStocksDataSource.getStoredStockData());
+            //mStock = jsonParser.getStocks().get(0);
+            mStock = mStocksDataSource.loadStockDataFromMemory().get(0);
             updateDisplay();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -205,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
                         String jsonData = response.body().string();
                         if (response.isSuccessful()) {
                             JSONParser jsonParser = new JSONParser(jsonData);
-                            //mStock = jsonParser.tieData();
+                            mStock = jsonParser.getStocks().get(0);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -301,13 +308,13 @@ public class MainActivity extends AppCompatActivity {
     //Start AI Assistant if it is not activated (Only allow AI Assistant activation if SharedPreferences indicates that the AI is off).
     public void startAI() {
 
-        boolean isAIActivated = mStocksDataSource.getIsActivated();
+        boolean isAIActivated = mStocksDataSource.isAIActivated();
 
         if(isAIActivated){
             Snackbar.make(fab, "AI Assistance already working", Snackbar.LENGTH_LONG).show();
         }
         else {
-            mStocksDataSource.saveIsActivated(true);
+            mStocksDataSource.setIsAIActivated(true);
             // Construct an intent that will execute the AlarmReceiver
             Intent intent = new Intent(getApplicationContext(), InformAI.class);
             // Create a PendingIntent to be triggered when the alarm goes off
@@ -328,14 +335,14 @@ public class MainActivity extends AppCompatActivity {
     //Stop AI Assistant if it is activated (Only allow AI Assistant de-activation if SharedPreferences indicates that the AI is on).
     public void stopAI() {
 
-        boolean isAIActivated = mStocksDataSource.getIsActivated();
+        boolean isAIActivated = mStocksDataSource.isAIActivated();
 
         if(!isAIActivated){
             Snackbar.make(fab, "AI Assistance already not working", Snackbar.LENGTH_LONG).show();
         }
 
         else{
-            mStocksDataSource.saveIsActivated(false);
+            mStocksDataSource.setIsAIActivated(false);
             Intent intent = new Intent(getApplicationContext(), InformAI.class);
             final PendingIntent pIntent = PendingIntent.getBroadcast(this, InformAI.REQUEST_CODE,
                     intent, PendingIntent.FLAG_UPDATE_CURRENT);
