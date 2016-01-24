@@ -413,7 +413,7 @@ public class JSONParserTest {
     public void testTieDataForIndex() throws Exception {
         mJSONParser = new JSONParser(JSONIndexExampleData);
         mJSONParser.getStocks();
-        Assert.assertEquals("BZH16.NYM", mJSONParser.getIndeces().get(0).getSymbol());
+        Assert.assertEquals("BZH16.NYM", mJSONParser.getIndexes().get(0).getSymbol());
     }
 
 }

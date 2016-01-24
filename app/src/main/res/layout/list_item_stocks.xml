@@ -16,7 +16,7 @@
         tool:text="QIBK"/>
 
     <TextView
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:id="@+id/stockName"
@@ -28,11 +28,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/stockPrice"
-        android:layout_below="@id/stockName"
         android:textStyle="bold"
         android:textColor="#9E9E9E"
         android:textSize="22sp"
-        tool:text="79.11"/>
+        tool:text="79.11"
+        android:layout_above="@+id/textView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,25 +55,49 @@
         android:layout_alignEnd="@+id/textView2"/>
 
     <TextView
-        tool:text="1.56"
+        tool:text="BP: 1.56"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
         android:text="BP:"
+        android:textSize="12sp"
         android:id="@+id/bpvalue"
-        android:layout_marginLeft="2dp"
-        android:layout_above="@+id/stockPrice"
-        android:layout_toEndOf="@+id/textView"/>
+        android:layout_below="@+id/textView2"
+        android:layout_alignStart="@+id/peratio"/>
 
     <TextView
-        tool:text="10.56"
+        tool:text="PE: 10.56"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
         android:id="@+id/peratio"
         android:text="PE:"
+        android:textSize="12sp"
+        android:layout_alignTop="@+id/stockPrice"
+        android:layout_toStartOf="@+id/stockPrice"
+        android:layout_marginEnd="46dp"/>
+
+    <TextView
+        tool:text="-1.7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:text="BP:"
+        android:textSize="12sp"
+        android:id="@+id/change"
+        android:layout_alignTop="@+id/bpvalue"
+        android:layout_toStartOf="@+id/percentage"/>
+
+    <TextView
+        tool:text="(-5.34%)"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp"
+        android:textSize="12sp"
         android:layout_marginLeft="2dp"
-        android:layout_below="@+id/stockName"
-        android:layout_toEndOf="@+id/textView2"/>
+        android:id="@+id/percentage"
+        android:layout_alignTop="@+id/change"
+        android:layout_alignEnd="@+id/stockPrice"/>
+
 
 </RelativeLayout>

@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             //jsonParser = new JSONParser(mStocksDataSource.getStoredStockData());
             //mStock = jsonParser.getStocks().get(0);
-            mStock = mStocksDataSource.loadStockDataFromMemory().get(0);
+            mStock = mStocksDataSource.loadStocksDataFromMemory().get(0);
             updateDisplay();
         } catch (JSONException e) {
             e.printStackTrace();

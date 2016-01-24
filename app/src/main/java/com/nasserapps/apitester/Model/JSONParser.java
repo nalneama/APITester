@@ -15,18 +15,18 @@ public class JSONParser {
 
     private JSONArray mQuotes;
     private int mCount;
-    private ArrayList<Stock> mIndeces;
+    private ArrayList<Stock> mIndexes;
+    private ArrayList<Stock> mStocks;
 
     public JSONParser(String jsonData) throws JSONException {
 
-        mIndeces = new ArrayList<>();
+        mIndexes = new ArrayList<>();
+        mStocks = new ArrayList<>();
 
         JSONObject APIResults = new JSONObject(jsonData);
         JSONObject query = APIResults.getJSONObject("query");
         JSONObject results;
 
-
-        //TODO if count =0, 1 or more;
         mCount = query.getInt("count");
         switch (mCount) {
             case 0:
@@ -43,12 +43,26 @@ public class JSONParser {
                 mQuotes = new JSONArray(mObject.toString().trim());
                 break;
         }
+
+        JSONObject stock;
+        for (int i=0;i < mQuotes.length(); i++){
+            stock = mQuotes.getJSONObject(i);
+            if(!stock.isNull("PERatio")) {
+                mStocks.add(extractStock(stock));
+            }
+            else{
+                mIndexes.add(extractIndex(stock));
+            }
+
+        }
+
+
     }
 
     private Stock extractStock(JSONObject mQuote) throws JSONException{
         Stock stock = new Stock();
         //Todo uncomment the two parameters
-        stock.setSymbol(mQuote.getString("Symbol"));
+        stock.setSymbol(mQuote.getString("Symbol").substring(0,4));
         stock.setPERatio(mQuote.getDouble("PERatio"));
         stock.setVolume(mQuote.getLong("Volume"));
         stock.setPBV(mQuote.getDouble("PriceBook"));
@@ -64,7 +78,7 @@ public class JSONParser {
     private Stock extractIndex(JSONObject mQuote) throws JSONException{
         Stock stock = new Stock();
         //Todo uncomment the two parameters
-        stock.setSymbol(mQuote.getString("Symbol"));
+        stock.setSymbol(mQuote.getString("Symbol").substring(0,3));
         //stock.setPERatio(mQuote.getDouble("PERatio"));
         stock.setVolume(mQuote.getLong("Volume"));
         //stock.setPBV(mQuote.getDouble("PriceBook"));
@@ -79,23 +93,10 @@ public class JSONParser {
     }
 
     public ArrayList<Stock> getStocks() throws JSONException{
-        JSONObject stock;
-        ArrayList<Stock> stocks = new ArrayList<>();
-        for (int i=0;i < mQuotes.length(); i++){
-            stock = mQuotes.getJSONObject(i);
-            if(!stock.isNull("PERatio")) {
-                stocks.add(extractStock(stock));
-            }
-            else{
-                mIndeces.add(extractIndex(stock));
-            }
-            //TODO else add to index
-
-        }
-        return  stocks;
+        return mStocks;
     }
 
-    public ArrayList<Stock> getIndeces() {
-        return mIndeces;
+    public ArrayList<Stock> getIndexes() {
+        return mIndexes;
     }
 }

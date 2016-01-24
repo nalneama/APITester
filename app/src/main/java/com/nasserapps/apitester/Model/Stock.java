@@ -1,8 +1,10 @@
 package com.nasserapps.apitester.Model;
 
+import com.nasserapps.apitester.R;
+
 /**
  * Created by Nasser on 10/1/15.
- * CurrentStock Object
+ * Stock Object
  * Has the following attributes: Price, volume, symbol, name, supply(ask), demand(bid), PE Ratio, Price-to-Book Value.
  */
 public class Stock {
@@ -95,5 +97,17 @@ public class Stock {
 
     public void setPercentage(String percentage) {
         this.percentage = percentage;
+    }
+
+    public int getPriceColor(){
+        if(change < 0){
+            return R.color.red;
+        }
+        else if(change>0){
+            return R.color.green;
+        }
+        else{
+            return R.color.yellow;
+        }
     }
 }

@@ -9,8 +9,14 @@
         app:showAsAction="never"/>
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/detailed_view"
         android:orderInCategory="200"
         android:title="Detailed view"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/refresh_data"
+        android:orderInCategory="300"
+        android:title="Refresh Data"
         app:showAsAction="never"/>
 </menu>

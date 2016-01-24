@@ -6,14 +6,14 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -46,18 +46,21 @@ public class HomePage extends AppCompatActivity
 
     StocksDataSource mStocksDataSource;
     List<Stock> mStocks;
+    List<Stock> mIndexes;
 
     private RecyclerView recyclerView;
-    TextView indexPrice;
+    private RecyclerView indexView;
+    //TextView indexPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
 
         //Setting the View
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -66,37 +69,30 @@ public class HomePage extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        indexPrice = (TextView)findViewById(R.id.indexPrice);
-        //If first time, show no data is selected,
-        //Else, show recycleview with data stored in the memory
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Evaluate based on your purchased price", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                getStock();
-            }
-        });
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        indexView = (RecyclerView) findViewById(R.id.my_index_view);
+        indexView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
+        //indexPrice = (TextView)findViewById(R.id.indexPrice);
+
+
+        //Initiating DataSource Object
         mStocksDataSource = new StocksDataSource(getApplicationContext());
-        //update Display with data from memory
-        //JSONParser jsonParser;
-        //String g = mStocksDataSource.getStoredStockData();
-        //boolean isStoredDataAvailable=!g.contains("No Data");
-        //Log.d("varz",isStoredDataAvailable+" or "+mStocksDataSource.isStoredDataAvailable());
+
+        //Checking if data is available in memory: if yes, then setup the display
         if(mStocksDataSource.isStoredDataAvailable()) {
             try {
-                //jsonParser = new JSONParser(g);
-                //mStocks = jsonParser.getStocks();
-                mStocks = mStocksDataSource.loadStockDataFromMemory();
+
+                mStocks = mStocksDataSource.loadStocksDataFromMemory();
+                mIndexes = mStocksDataSource.loadIndexesDataFromMemory();
                 setDisplay();
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            //TODO remove the comments below.
+            //TODO remove the comments below to have live data (it should be in on resume.
             //getStock();
         }
 
@@ -127,14 +123,21 @@ public class HomePage extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+
+        if (id == R.id.detailed_view) {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
             return true;
         }
+        if (id == R.id.refresh_data) {
+            //Snackbar.make(, "Refreshing Data", Snackbar.LENGTH_LONG)
+                    //.setAction("Action", null).show();
+            getStock();
+            return true;
+        }
         if (id == R.id.sorting_options) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(HomePage.this);
-            dialog.setSingleChoiceItems(new String[]{"A-Z","Book Value", "PE Ratio","Price" }, -1, new DialogInterface.OnClickListener() {
+            dialog.setSingleChoiceItems(new String[]{"A-Z","Book Value", "Gain","PE Ratio","Price" }, -1, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
@@ -152,27 +155,39 @@ public class HomePage extends AppCompatActivity
                             Collections.sort(mStocks, new Comparator<Stock>() {
                                 @Override
                                 public int compare(Stock stock1, Stock stock2) {
-                                    return Double.compare(stock1.getPBV(),stock2.getPBV());
+                                    return Double.compare(stock1.getPBV(), stock2.getPBV());
                                 }
                             });
                             dialog.dismiss();
                             updateDisplay();
                             break;
+
                         case 2:
                             Collections.sort(mStocks, new Comparator<Stock>() {
                                 @Override
                                 public int compare(Stock stock1, Stock stock2) {
-                                    return (int) (stock1.getPERatio() - stock2.getPERatio());
+                                    return Double.compare(Double.parseDouble(stock2.getPercentage().substring(0,stock2.getPercentage().length()-1)), Double.parseDouble(stock1.getPercentage().substring(0,stock1.getPercentage().length()-1)));
                                 }
                             });
                             dialog.dismiss();
                             updateDisplay();
                             break;
+
                         case 3:
                             Collections.sort(mStocks, new Comparator<Stock>() {
                                 @Override
                                 public int compare(Stock stock1, Stock stock2) {
-                                    return (int) (stock2.getPrice() - stock1.getPrice());
+                                    return Double.compare(stock1.getPERatio(), stock2.getPERatio());
+                                }
+                            });
+                            dialog.dismiss();
+                            updateDisplay();
+                            break;
+                        case 4:
+                            Collections.sort(mStocks, new Comparator<Stock>() {
+                                @Override
+                                public int compare(Stock stock1, Stock stock2) {
+                                    return Double.compare(stock2.getPrice(), stock1.getPrice());
                                 }
                             });
                             dialog.dismiss();
@@ -244,6 +259,7 @@ public class HomePage extends AppCompatActivity
                         if (response.isSuccessful()) {
                             //JSONParser jsonParser = new JSONParser(jsonData);
                             mStocks = mStocksDataSource.loadStockDataFromResponse(jsonData);
+                            mIndexes = mStocksDataSource.loadIndexDataFromResponse(jsonData);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -271,10 +287,11 @@ public class HomePage extends AppCompatActivity
     public void updateDisplay() {
         if(mStocksDataSource.isStoredDataAvailable()) {
             recyclerView.setAdapter(new StockAdapter(mStocks));
+            indexView.setAdapter(new IndexAdapter(mIndexes));
         }
         else {
             recyclerView.swapAdapter(new StockAdapter(mStocks), false);
-            //indexPrice.setText(mStocks.get(mStocks.size() - 1).getPrice() + "");
+            indexView.swapAdapter(new IndexAdapter(mStocks), false);
         }
     }
 
@@ -291,7 +308,10 @@ public class HomePage extends AppCompatActivity
 
     public void setDisplay(){
         recyclerView.setAdapter(new StockAdapter(mStocks));
-        //indexPrice.setText(mStocks.get(mStocks.size() - 1).getPrice() + "");
+        indexView.setAdapter(new IndexAdapter(mIndexes));
+
+
+
     }
 
 
@@ -305,6 +325,9 @@ public class HomePage extends AppCompatActivity
         private TextView mStockPrice;
         private TextView mStockPBValue;
         private TextView mStockPERatio;
+        private TextView mStockChange;
+        private TextView mStockPercentage;
+
         private Stock mStock;
 
         public StockHolder(View itemView) {
@@ -315,6 +338,8 @@ public class HomePage extends AppCompatActivity
             mStockPrice = (TextView) itemView.findViewById(R.id.stockPrice);
             mStockPBValue = (TextView) itemView.findViewById(R.id.bpvalue);
             mStockPERatio = (TextView) itemView.findViewById(R.id.peratio);
+            mStockChange = (TextView) itemView.findViewById(R.id.change);
+            mStockPercentage = (TextView) itemView.findViewById(R.id.percentage);
         }
 
         public void bindStock(Stock stock){
@@ -322,8 +347,18 @@ public class HomePage extends AppCompatActivity
             mStockNameView.setText(mStock.getName());
             mStockSymbol.setText(mStock.getSymbol());
             mStockPrice.setText(mStock.getPrice()+"");
-            mStockPBValue.setText("BP: "+mStock.getPBV());
-            mStockPERatio.setText("PE: "+mStock.getPERatio());
+            mStockPBValue.setText("BP: " + mStock.getPBV());
+            mStockPERatio.setText("PE: " + mStock.getPERatio());
+
+            mStockPrice.setTextColor(getResources().getColor(mStock.getPriceColor()));
+
+
+
+            mStockChange.setText("" + mStock.getChange());
+            mStockPercentage.setText("(" + mStock.getPercentage() + ")");
+
+            mStockChange.setTextColor(getResources().getColor(mStock.getPriceColor()));
+            mStockPercentage.setTextColor(getResources().getColor(mStock.getPriceColor()));
         }
     }
 
@@ -355,4 +390,53 @@ public class HomePage extends AppCompatActivity
     }
 
 
+    private class IndexAdapter extends RecyclerView.Adapter<IndexHolder> {
+
+        private List<Stock> mIndexList;
+
+        public IndexAdapter(List<Stock> indexes) {
+            mIndexList=indexes;
+        }
+
+        @Override
+        public IndexHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+            View view = layoutInflater.inflate(R.layout.list_item_indexs,parent,false);
+            return new IndexHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(IndexHolder holder, int position) {
+            Stock index= mIndexList.get(position);
+            holder.bindIndex(index);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mIndexList.size();
+        }
+    }
+
+    private class IndexHolder extends RecyclerView.ViewHolder{
+        //View Declaration
+        private TextView mIndexSymbol;
+        private TextView mIndexPrice;
+        private Stock mIndex;
+
+        public IndexHolder(View itemView) {
+            super(itemView);
+            //Find view by ID
+
+            mIndexSymbol = (TextView) itemView.findViewById(R.id.indexSymbol);
+            mIndexPrice = (TextView) itemView.findViewById(R.id.indexPrice);
+        }
+
+        public void bindIndex(Stock index){
+            mIndex=index;
+            mIndexSymbol.setText(mIndex.getSymbol());
+            mIndexPrice.setText(mIndex.getPrice()+"");
+
+            mIndexPrice.setTextColor(getResources().getColor(mIndex.getPriceColor()));
+        }
+    }
 }
