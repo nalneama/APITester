@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,8 +26,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.nasserapps.apitester.Model.Investment;
 import com.nasserapps.apitester.Model.Stock;
 import com.nasserapps.apitester.Model.StocksDataSource;
+import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -37,6 +40,7 @@ import com.squareup.okhttp.Response;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -47,9 +51,11 @@ public class HomePage extends AppCompatActivity
     StocksDataSource mStocksDataSource;
     List<Stock> mStocks;
     List<Stock> mIndexes;
+    Wallet mWallet;
 
     private RecyclerView recyclerView;
     private RecyclerView indexView;
+    TextView capital;
     //TextView indexPrice;
 
     @Override
@@ -75,7 +81,8 @@ public class HomePage extends AppCompatActivity
 
         indexView = (RecyclerView) findViewById(R.id.my_index_view);
         indexView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
-        //indexPrice = (TextView)findViewById(R.id.indexPrice);
+
+
 
 
         //Initiating DataSource Object
@@ -89,6 +96,9 @@ public class HomePage extends AppCompatActivity
                 mIndexes = mStocksDataSource.loadIndexesDataFromMemory();
                 setDisplay();
 
+                setWallet();
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -96,6 +106,17 @@ public class HomePage extends AppCompatActivity
             //getStock();
         }
 
+    }
+
+    private void setWallet() {
+        ArrayList<Investment> investmentList = new ArrayList<Investment>();
+        investmentList.add(new Investment(mStocks.get(0),20,300));
+        investmentList.add(new Investment(mStocks.get(1),60,1000));
+        mWallet = new Wallet(investmentList);
+
+        capital = (TextView)findViewById(R.id.capitalInvested);
+        capital.setText(mWallet.getCapital()+"");
+        //Link views to items;
     }
 
     @Override
@@ -130,11 +151,18 @@ public class HomePage extends AppCompatActivity
             return true;
         }
         if (id == R.id.refresh_data) {
-            //Snackbar.make(, "Refreshing Data", Snackbar.LENGTH_LONG)
-                    //.setAction("Action", null).show();
+            Snackbar.make(this.recyclerView, "Refreshing Data", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
             getStock();
             return true;
         }
+
+        if (id == R.id.add_stocks) {
+            Intent i = new Intent(this, EditStockListActivity.class);
+            startActivity(i);
+            return true;
+        }
+
         if (id == R.id.sorting_options) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(HomePage.this);
             dialog.setSingleChoiceItems(new String[]{"A-Z","Book Value", "Gain","PE Ratio","Price" }, -1, new DialogInterface.OnClickListener() {
@@ -293,6 +321,7 @@ public class HomePage extends AppCompatActivity
             recyclerView.swapAdapter(new StockAdapter(mStocks), false);
             indexView.swapAdapter(new IndexAdapter(mStocks), false);
         }
+        capital.setText(mWallet.getCapital()+"");
     }
 
     private boolean isNetworkAvailable() {

@@ -7,16 +7,21 @@
         android:orderInCategory="100"
         android:title="Sort by"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/add_stocks"
+        android:orderInCategory="200"
+        android:title="Add Stocks"
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/detailed_view"
-        android:orderInCategory="200"
+        android:orderInCategory="300"
         android:title="Detailed view"
         app:showAsAction="never"/>
 
     <item
         android:id="@+id/refresh_data"
-        android:orderInCategory="300"
+        android:orderInCategory="400"
         android:title="Refresh Data"
         app:showAsAction="never"/>
 </menu>
