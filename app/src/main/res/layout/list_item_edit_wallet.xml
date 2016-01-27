@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingRight="16dp"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="18sp"
+        android:padding="16dp"
+        tools:text="MERS - Al-Meera"
+        android:id="@+id/edit_stock_name"/>
+    <EditText
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:paddingRight="4dp"
+        android:textAlignment="textEnd"
+        android:id="@+id/investmentPrice"
+        android:text="149.11"/>
+    <EditText
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="textEnd"
+        android:text="10000"
+        android:paddingRight="4dp"
+        android:id="@+id/investmentQuantity"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/edit_stock_checkbox"
+        />
+</LinearLayout>

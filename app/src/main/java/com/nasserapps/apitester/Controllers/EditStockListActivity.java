@@ -37,25 +37,13 @@ public class EditStockListActivity extends AppCompatActivity {
         mStocksViewList.add("BRES - Barwa");
         mStocksViewList.add("QIB - Qatar Islamic Bank");
 
-        // Find the ListView resource.
         mEditStocksRecyclerView = (RecyclerView) findViewById(R.id.edit_stock_list_recyclerview);
         mEditStocksRecyclerView.setHasFixedSize(true);
         mEditStocksRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mEditStocksRecyclerView.setAdapter(new StockListAdapter(mStocksViewList));
 
-        // When item is tapped, toggle checked properties of CheckBox and Planet.
-        /*mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View item,
-                                    int position, long id) {
 
-                /*Planet planet = listAdapter.getItem(position);
-                planet.toggleChecked();
-                PlanetViewHolder viewHolder = (PlanetViewHolder) item.getTag();
-                viewHolder.getCheckBox().setChecked(planet.isChecked());
-            }
-        });*/
-
+        //Filter items by three parameters: Islamic, Mixed, Non-Islamic
 
     }
 

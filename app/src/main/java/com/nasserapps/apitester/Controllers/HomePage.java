@@ -27,7 +27,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.nasserapps.apitester.Model.Investment;
-import com.nasserapps.apitester.Model.Stock;
+import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.StocksDataSource;
 import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
@@ -49,8 +49,8 @@ public class HomePage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     StocksDataSource mStocksDataSource;
-    List<Stock> mStocks;
-    List<Stock> mIndexes;
+    List<Ticker> mWatchList;
+    List<Ticker> mIndexes;
     Wallet mWallet;
 
     private RecyclerView recyclerView;
@@ -64,9 +64,11 @@ public class HomePage extends AppCompatActivity
         setContentView(R.layout.activity_home_page);
 
 
-        //Setting the View
+        //1.0 Linking the views to variables in code
+        //1.1 The ToolBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //1.2 The Navigation Drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -74,44 +76,57 @@ public class HomePage extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        //1.3 The Watch Card list
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
+        //1.4 The Followed Indexes List
         indexView = (RecyclerView) findViewById(R.id.my_index_view);
         indexView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
 
-
-
-
+        //TODO Wallet Object initialization
+        mWallet = new Wallet();
         //Initiating DataSource Object
         mStocksDataSource = new StocksDataSource(getApplicationContext());
 
-        //Checking if data is available in memory: if yes, then setup the display
-        if(mStocksDataSource.isStoredDataAvailable()) {
-            try {
-
-                mStocks = mStocksDataSource.loadStocksDataFromMemory();
-                mIndexes = mStocksDataSource.loadIndexesDataFromMemory();
-                setDisplay();
-
-                setWallet();
+        Log.e("zxc","mStocksDataSource.isStoredDataAvailable(): "+mStocksDataSource.isStoredDataAvailable()+"");
+        Log.e("zxc","mWallet.getInvestmentList().isEmpty() "+mWallet.getInvestmentList().isEmpty()+"");
 
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            //TODO remove the comments below to have live data (it should be in on resume.
-            //getStock();
+        //Checking if data is available in memory: if yes, then get data from memory
+        if(mStocksDataSource.isStoredDataAvailable()) {//TODO if not the first time get watchlist from memory
+                //mWatchList = mStocksDataSource.loadStocksDataFromMemory();
+                //mIndexes = mStocksDataSource.loadIndexesDataFromMemory();
+                mWallet = mStocksDataSource.getWallet();
+                //mWallet.setWatchList(mStocksDataSource.loadStocksDataFromMemory());
+                // same to this mIndexes = mStocksDataSource.loadIndexesDataFromMemory();
+
+                Log.e("zxc", "mWalet is :  " + mWallet.getAPIKey() + "");
+
         }
+        else{//Else,this is first time opening of app, get the initial watchlist
+            mWallet.setInitialWatchList();
+            Log.e("zxc", "mWallet.setInitialWatchList()" + mWallet.getAPIKey() + "");
+        }
+
+        //mWallet.setInitialWatchList();
+            mWatchList=mWallet.getWatchList();
+        Log.e("zxc", "mWatchList=mWallet.getWatchList():"+ mWallet.getWatchList().get(0).getAPICode());
+            //TODO set the Wallet Card and Watchlist
+            setDisplay();
+
+            //setWallet();
+            // TODO update the Wallet Card with new Data;
+            getStock();
+
 
     }
 
     private void setWallet() {
         ArrayList<Investment> investmentList = new ArrayList<Investment>();
-        investmentList.add(new Investment(mStocks.get(0),20,300));
-        investmentList.add(new Investment(mStocks.get(1),60,1000));
+        investmentList.add(new Investment(mWatchList.get(0),20,300));
+        investmentList.add(new Investment(mWatchList.get(1),60,1000));
         mWallet = new Wallet(investmentList);
 
         capital = (TextView)findViewById(R.id.capitalInvested);
@@ -170,9 +185,9 @@ public class HomePage extends AppCompatActivity
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
                         case 0:
-                            Collections.sort(mStocks, new Comparator<Stock>() {
+                            Collections.sort(mWatchList, new Comparator<Ticker>() {
                                 @Override
-                                public int compare(Stock stock1, Stock stock2) {
+                                public int compare(Ticker stock1, Ticker stock2) {
                                     return stock1.getSymbol().compareTo(stock2.getName());
                                 }
                             });
@@ -180,9 +195,9 @@ public class HomePage extends AppCompatActivity
                             updateDisplay();
                             break;
                         case 1:
-                            Collections.sort(mStocks, new Comparator<Stock>() {
+                            Collections.sort(mWatchList, new Comparator<Ticker>() {
                                 @Override
-                                public int compare(Stock stock1, Stock stock2) {
+                                public int compare(Ticker stock1, Ticker stock2) {
                                     return Double.compare(stock1.getPBV(), stock2.getPBV());
                                 }
                             });
@@ -191,9 +206,9 @@ public class HomePage extends AppCompatActivity
                             break;
 
                         case 2:
-                            Collections.sort(mStocks, new Comparator<Stock>() {
+                            Collections.sort(mWatchList, new Comparator<Ticker>() {
                                 @Override
-                                public int compare(Stock stock1, Stock stock2) {
+                                public int compare(Ticker stock1, Ticker stock2) {
                                     return Double.compare(Double.parseDouble(stock2.getPercentage().substring(0,stock2.getPercentage().length()-1)), Double.parseDouble(stock1.getPercentage().substring(0,stock1.getPercentage().length()-1)));
                                 }
                             });
@@ -202,9 +217,9 @@ public class HomePage extends AppCompatActivity
                             break;
 
                         case 3:
-                            Collections.sort(mStocks, new Comparator<Stock>() {
+                            Collections.sort(mWatchList, new Comparator<Ticker>() {
                                 @Override
-                                public int compare(Stock stock1, Stock stock2) {
+                                public int compare(Ticker stock1, Ticker stock2) {
                                     return Double.compare(stock1.getPERatio(), stock2.getPERatio());
                                 }
                             });
@@ -212,9 +227,9 @@ public class HomePage extends AppCompatActivity
                             updateDisplay();
                             break;
                         case 4:
-                            Collections.sort(mStocks, new Comparator<Stock>() {
+                            Collections.sort(mWatchList, new Comparator<Ticker>() {
                                 @Override
-                                public int compare(Stock stock1, Stock stock2) {
+                                public int compare(Ticker stock1, Ticker stock2) {
                                     return Double.compare(stock2.getPrice(), stock1.getPrice());
                                 }
                             });
@@ -261,7 +276,7 @@ public class HomePage extends AppCompatActivity
 
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(mStocksDataSource.getAPIURL())
+                    .url(mStocksDataSource.getAPIURL(mWallet.getAPIKey()))
                     .build();
 
             Call call = client.newCall(request);
@@ -285,14 +300,19 @@ public class HomePage extends AppCompatActivity
                     try {
                         final String jsonData = response.body().string();
                         if (response.isSuccessful()) {
-                            //JSONParser jsonParser = new JSONParser(jsonData);
-                            mStocks = mStocksDataSource.loadStockDataFromResponse(jsonData);
+                            //TODO get the Data from internet based on the current API of the mWatchlist followed by the index list;based on received JSON Object, convert string to list of Stocks
+                            //TODO update the display
+                            mWallet.updateWatchList(jsonData);
+                            mWatchList = mWallet.getWatchList();
+                            //mWatchList = mStocksDataSource.loadStockDataFromResponse(jsonData);
                             mIndexes = mStocksDataSource.loadIndexDataFromResponse(jsonData);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     updateDisplay();
-                                    mStocksDataSource.saveStockDataInMemory(jsonData);
+                                    //mStocksDataSource.saveStockDataInMemory(jsonData);
+                                    mStocksDataSource.saveWallet(mWallet);
+                                    //Log.e("zxc", "mWallet. String is: " + mStocksDataSource.getWallet().getAPIKey() + "");
                                 }
                             });
                         } else {
@@ -314,14 +334,14 @@ public class HomePage extends AppCompatActivity
 
     public void updateDisplay() {
         if(mStocksDataSource.isStoredDataAvailable()) {
-            recyclerView.setAdapter(new StockAdapter(mStocks));
-            indexView.setAdapter(new IndexAdapter(mIndexes));
+            recyclerView.setAdapter(new StockAdapter(mWatchList));
+            //indexView.setAdapter(new IndexAdapter(mIndexes));
+            //capital.setText(mWallet.getCapital() + "");
         }
         else {
-            recyclerView.swapAdapter(new StockAdapter(mStocks), false);
-            indexView.swapAdapter(new IndexAdapter(mStocks), false);
+            recyclerView.swapAdapter(new StockAdapter(mWatchList), false);
+            //indexView.swapAdapter(new IndexAdapter(mIndexes), false);
         }
-        capital.setText(mWallet.getCapital()+"");
     }
 
     private boolean isNetworkAvailable() {
@@ -336,8 +356,8 @@ public class HomePage extends AppCompatActivity
     }
 
     public void setDisplay(){
-        recyclerView.setAdapter(new StockAdapter(mStocks));
-        indexView.setAdapter(new IndexAdapter(mIndexes));
+        recyclerView.setAdapter(new StockAdapter(mWatchList));
+        //indexView.setAdapter(new IndexAdapter(mIndexes));
 
 
 
@@ -357,7 +377,7 @@ public class HomePage extends AppCompatActivity
         private TextView mStockChange;
         private TextView mStockPercentage;
 
-        private Stock mStock;
+        private Ticker mStock;
 
         public StockHolder(View itemView) {
             super(itemView);
@@ -371,7 +391,7 @@ public class HomePage extends AppCompatActivity
             mStockPercentage = (TextView) itemView.findViewById(R.id.percentage);
         }
 
-        public void bindStock(Stock stock){
+        public void bindStock(Ticker stock){
             mStock=stock;
             mStockNameView.setText(mStock.getName());
             mStockSymbol.setText(mStock.getSymbol());
@@ -393,9 +413,9 @@ public class HomePage extends AppCompatActivity
 
     private class StockAdapter extends RecyclerView.Adapter<StockHolder>{
 
-        private List<Stock> mStockList;
+        private List<Ticker> mStockList;
 
-        public StockAdapter(List<Stock> stockList) {
+        public StockAdapter(List<Ticker> stockList) {
             mStockList = stockList;
         }
 
@@ -408,7 +428,7 @@ public class HomePage extends AppCompatActivity
 
         @Override
         public void onBindViewHolder(StockHolder holder, int position) {
-            Stock stock = mStockList.get(position);
+            Ticker stock = mStockList.get(position);
             holder.bindStock(stock);
         }
 
@@ -421,9 +441,9 @@ public class HomePage extends AppCompatActivity
 
     private class IndexAdapter extends RecyclerView.Adapter<IndexHolder> {
 
-        private List<Stock> mIndexList;
+        private List<Ticker> mIndexList;
 
-        public IndexAdapter(List<Stock> indexes) {
+        public IndexAdapter(List<Ticker> indexes) {
             mIndexList=indexes;
         }
 
@@ -436,7 +456,7 @@ public class HomePage extends AppCompatActivity
 
         @Override
         public void onBindViewHolder(IndexHolder holder, int position) {
-            Stock index= mIndexList.get(position);
+            Ticker index= mIndexList.get(position);
             holder.bindIndex(index);
         }
 
@@ -450,7 +470,10 @@ public class HomePage extends AppCompatActivity
         //View Declaration
         private TextView mIndexSymbol;
         private TextView mIndexPrice;
-        private Stock mIndex;
+        private TextView mIndexPercentage;
+        private TextView mIndexChange;
+
+        private Ticker mIndex;
 
         public IndexHolder(View itemView) {
             super(itemView);
@@ -458,14 +481,23 @@ public class HomePage extends AppCompatActivity
 
             mIndexSymbol = (TextView) itemView.findViewById(R.id.indexSymbol);
             mIndexPrice = (TextView) itemView.findViewById(R.id.indexPrice);
+            mIndexPercentage = (TextView) itemView.findViewById(R.id.indexPercentage);
+            mIndexChange = (TextView) itemView.findViewById(R.id.indexChange);
         }
 
-        public void bindIndex(Stock index){
+        public void bindIndex(Ticker index){
             mIndex=index;
             mIndexSymbol.setText(mIndex.getSymbol());
             mIndexPrice.setText(mIndex.getPrice()+"");
 
             mIndexPrice.setTextColor(getResources().getColor(mIndex.getPriceColor()));
+
+
+            mIndexChange.setText("" + mIndex.getChange());
+            mIndexPercentage.setText("(" + mIndex.getPercentage() + ")");
+
+            mIndexChange.setTextColor(getResources().getColor(mIndex.getPriceColor()));
+            mIndexPercentage.setTextColor(getResources().getColor(mIndex.getPriceColor()));
         }
     }
 }

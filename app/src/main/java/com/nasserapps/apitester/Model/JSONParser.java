@@ -15,8 +15,8 @@ public class JSONParser {
 
     private JSONArray mQuotes;
     private int mCount;
-    private ArrayList<Stock> mIndexes;
-    private ArrayList<Stock> mStocks;
+    private ArrayList<Ticker> mIndexes;
+    private ArrayList<Ticker> mStocks;
 
     public JSONParser(String jsonData) throws JSONException {
 
@@ -59,8 +59,8 @@ public class JSONParser {
 
     }
 
-    private Stock extractStock(JSONObject mQuote) throws JSONException{
-        Stock stock = new Stock();
+    private Ticker extractStock(JSONObject mQuote) throws JSONException{
+        Ticker stock = new Ticker();
         //Todo uncomment the two parameters
         stock.setSymbol(mQuote.getString("Symbol").substring(0,4));
         stock.setPERatio(mQuote.getDouble("PERatio"));
@@ -75,10 +75,10 @@ public class JSONParser {
 
         return stock;
     }
-    private Stock extractIndex(JSONObject mQuote) throws JSONException{
-        Stock stock = new Stock();
+    private Ticker extractIndex(JSONObject mQuote) throws JSONException{
+        Ticker stock = new Ticker();
         //Todo uncomment the two parameters
-        stock.setSymbol(mQuote.getString("Symbol").substring(0,3));
+        stock.setSymbol(mQuote.getString("Symbol").substring(0, 3));
         //stock.setPERatio(mQuote.getDouble("PERatio"));
         stock.setVolume(mQuote.getLong("Volume"));
         //stock.setPBV(mQuote.getDouble("PriceBook"));
@@ -92,11 +92,38 @@ public class JSONParser {
         return stock;
     }
 
-    public ArrayList<Stock> getStocks() throws JSONException{
+    public ArrayList<Ticker> getStocks() throws JSONException{
         return mStocks;
     }
 
-    public ArrayList<Stock> getIndexes() {
+    public ArrayList<Ticker> getIndexes() {
         return mIndexes;
+    }
+
+    private Ticker updateStock(Ticker stock,JSONObject mQuote) throws JSONException{
+        //Todo uncomment the two parameters
+        if (stock.getAPICode().equals(mQuote.get("Symbol"))){
+            stock.setSymbol(mQuote.getString("Symbol").substring(0, 4));
+            stock.setPERatio(mQuote.getDouble("PERatio"));
+            stock.setVolume(mQuote.getLong("Volume"));
+            stock.setPBV(mQuote.getDouble("PriceBook"));
+            stock.setPrice(mQuote.getDouble("LastTradePriceOnly"));
+            stock.setDemand(mQuote.getDouble("Bid"));
+            stock.setSupply(mQuote.getDouble("Ask"));
+            stock.setName(mQuote.getString("Name"));
+            stock.setPercentage(mQuote.getString("PercentChange"));
+            stock.setChange(mQuote.getDouble("Change"));
+        }
+        return stock;
+    }
+
+    public ArrayList<Ticker> updateStocks(ArrayList<Ticker> stockArrayList) throws JSONException{
+
+        for(int i=0;i<stockArrayList.size();i++){
+            for(int j=0;j<stockArrayList.size();j++){
+                updateStock(stockArrayList.get(i),mQuotes.getJSONObject(j));
+            }
+        }
+        return stockArrayList;
     }
 }

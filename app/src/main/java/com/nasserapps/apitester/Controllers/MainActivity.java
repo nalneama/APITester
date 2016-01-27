@@ -27,8 +27,9 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.nasserapps.apitester.AI.InformAI;
 import com.nasserapps.apitester.Model.JSONParser;
-import com.nasserapps.apitester.Model.Stock;
+import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.StocksDataSource;
+import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
 import com.nasserapps.apitester.exchangeTime;
 import com.nasserapps.apitester.stockHistoricalData;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private Stock mStock;
+    private Ticker mStock;
     StocksDataSource mStocksDataSource;
 
     @Bind(R.id.nameView) TextView nameView;
@@ -185,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
 
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(mStocksDataSource.getAPIURL())
+                    .url(mStocksDataSource.getAPIURL((new Wallet()).getAPIKey()))
                     .build();
 
             Call call = client.newCall(request);

@@ -392,7 +392,7 @@ public class JSONParserTest {
             "}\n" +
             "}\n";
 
-    @Test
+    @Test( expected = IndexOutOfBoundsException.class)
     public void testTieDataForZeroStock() throws Exception {
         mJSONParser = new JSONParser(JSONZeroStockExampleData);
         Assert.assertEquals("QIGD.QA", mJSONParser.getStocks().get(0).getSymbol());
@@ -400,20 +400,20 @@ public class JSONParserTest {
     @Test
         public void testTieDataForOneStock() throws Exception {
         mJSONParser = new JSONParser(JSONOneStockExampleData);
-        Assert.assertEquals("QIGD.QA", mJSONParser.getStocks().get(0).getSymbol());
+        Assert.assertEquals("QIGD", mJSONParser.getStocks().get(0).getSymbol());
     }
 
     @Test
     public void testTieDataForTwoStocks() throws Exception {
         mJSONParser = new JSONParser(JSONTwoStocksExampleData);
-        Assert.assertEquals("MRDS.QA", mJSONParser.getStocks().get(1).getSymbol());
+        Assert.assertEquals("MRDS", mJSONParser.getStocks().get(1).getSymbol());
         }
 
     @Test
     public void testTieDataForIndex() throws Exception {
         mJSONParser = new JSONParser(JSONIndexExampleData);
         mJSONParser.getStocks();
-        Assert.assertEquals("BZH16.NYM", mJSONParser.getIndexes().get(0).getSymbol());
+        Assert.assertEquals("BZH", mJSONParser.getIndexes().get(0).getSymbol());
     }
 
 }

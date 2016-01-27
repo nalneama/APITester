@@ -2,7 +2,7 @@ package com.nasserapps.apitester.Model;
 
 public class Investment {
 
-    private Stock mStock;
+    private Ticker mStock;
     private double mPurchasedPrice;
     private int mQuantity;
     private double mProfit;
@@ -10,7 +10,7 @@ public class Investment {
     private double mCapitalInvested;
     private double mCurrentWorth;
 
-    public Investment(Stock stock, double purchasedPrice, int quantity) {
+    public Investment(Ticker stock, double purchasedPrice, int quantity) {
         mStock = stock;
         mPurchasedPrice = purchasedPrice;
         mQuantity = quantity;
@@ -20,11 +20,11 @@ public class Investment {
         mReturn = mProfit/mCapitalInvested;
     }
 
-    public Stock getStock() {
+    public Ticker getStock() {
         return mStock;
     }
 
-    public void setStock(Stock stock) {
+    public void setStock(Ticker stock) {
         mStock = stock;
     }
 

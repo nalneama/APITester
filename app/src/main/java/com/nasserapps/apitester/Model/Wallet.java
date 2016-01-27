@@ -1,11 +1,14 @@
 package com.nasserapps.apitester.Model;
 
+import org.json.JSONException;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Wallet {
 
     List<Investment> mInvestmentList;
-    List<Stock> mStockList;
+    ArrayList<Ticker> mWatchList;
 
     public Wallet(List<Investment> investmentList) {
         mInvestmentList = investmentList;
@@ -47,7 +50,7 @@ public class Wallet {
         mInvestmentList = investmentList;
     }
 
-    public void updateInvestments(List<Stock> stockList){
+    public void updateInvestments(List<Ticker> stockList){
         for (int i=0; i<stockList.size();i++){
             for (int j=0;j<mInvestmentList.size();j++){
                 if(stockList.get(i).getSymbol().equals(mInvestmentList.get(j).getStock().getSymbol())){
@@ -57,7 +60,38 @@ public class Wallet {
         }
     }
 
-    public List<Stock> getStockList() {
-        return mStockList;
+    public ArrayList<Ticker> getWatchList() {
+        return mWatchList;
     }
+
+    public Wallet(){
+        mInvestmentList= new ArrayList<>();
+    }
+
+    public void setWatchList(ArrayList<Ticker> watchList) {
+        mWatchList = watchList;
+    }
+
+    public void setInitialWatchList(){
+        mWatchList = new ArrayList<>();
+        mWatchList.add(new Ticker("MERS.QA"));
+        mWatchList.add(new Ticker("BRES.QA"));
+    }
+
+    public void updateWatchList(String json) throws JSONException{
+
+        JSONParser jsonParser = new JSONParser(json);
+        mWatchList = jsonParser.updateStocks(mWatchList);
+
+    }
+
+    public String getAPIKey(){
+        String APICode="";
+        for(Ticker stock:mWatchList){
+            APICode=APICode+stock.getAPICode()+"+";
+        }
+        return APICode;
+    }
+
+
 }

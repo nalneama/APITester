@@ -7,7 +7,7 @@ import com.nasserapps.apitester.R;
  * Stock Object
  * Has the following attributes: Price, volume, symbol, name, supply(ask), demand(bid), PE Ratio, Price-to-Book Value.
  */
-public class Stock {
+public class Ticker {
     String mSymbol;
     String mName;
     double mPrice;
@@ -18,6 +18,15 @@ public class Stock {
     double mPBV;
     String percentage;
     double change;
+    final String APICode;
+
+    public Ticker(String APICode) {
+        this.APICode = APICode;
+    }
+
+    public Ticker() {
+        APICode="";
+    }
 
     public double getChange() {
         return change;
@@ -109,5 +118,9 @@ public class Stock {
         else{
             return R.color.yellow;
         }
+    }
+
+    public String getAPICode() {
+        return APICode;
     }
 }

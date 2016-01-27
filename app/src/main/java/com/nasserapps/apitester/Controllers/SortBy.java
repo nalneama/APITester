@@ -5,7 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 
-import com.nasserapps.apitester.Model.Stock;
+import com.nasserapps.apitester.Model.Ticker;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class SortBy extends AlertDialogFragment {
 
-    private List<Stock> mStocks;
+    private List<Ticker> mStocks;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -27,17 +27,17 @@ public class SortBy extends AlertDialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         switch(which){
                             case 0:
-                                Collections.sort(mStocks, new Comparator<Stock>() {
+                                Collections.sort(mStocks, new Comparator<Ticker>() {
                                     @Override
-                                    public int compare(Stock stock1, Stock stock2) {
+                                    public int compare(Ticker stock1, Ticker stock2) {
                                         return (int) (stock2.getPrice() - stock1.getPrice());
                                     }
                                 });
                                 break;
                             case 1:
-                                Collections.sort(mStocks, new Comparator<Stock>() {
+                                Collections.sort(mStocks, new Comparator<Ticker>() {
                                     @Override
-                                    public int compare(Stock stock1, Stock stock2) {
+                                    public int compare(Ticker stock1, Ticker stock2) {
                                         return (int) (stock1.getPrice() - stock2.getPrice());
                                     }
                                 });

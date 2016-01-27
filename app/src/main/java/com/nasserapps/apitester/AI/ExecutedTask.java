@@ -10,7 +10,7 @@ import android.net.NetworkInfo;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.nasserapps.apitester.Model.Stock;
+import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.JSONParser;
 import com.nasserapps.apitester.Controllers.MainActivity;
 import com.squareup.okhttp.Call;
@@ -33,7 +33,7 @@ import java.io.IOException;
  */
 public class ExecutedTask extends IntentService {
 
-    private Stock mStock;
+    private Ticker mStock;
     public SharedPreferences memory;
     SharedPreferences.Editor memoryWriter;
 
