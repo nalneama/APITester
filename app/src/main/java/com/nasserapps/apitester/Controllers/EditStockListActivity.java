@@ -29,9 +29,10 @@ public class EditStockListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_stock_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mStocksList= new ArrayList<>();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+        mStocksList= new ArrayList<>();
         mStocksViewList = new ArrayList<>();
         mStocksViewList.add("MERS - Al-Meera");
         mStocksViewList.add("BRES - Barwa");

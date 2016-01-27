@@ -28,7 +28,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.nasserapps.apitester.AI.InformAI;
 import com.nasserapps.apitester.Model.JSONParser;
 import com.nasserapps.apitester.Model.Ticker;
-import com.nasserapps.apitester.Model.StocksDataSource;
+import com.nasserapps.apitester.Model.DataSource;
 import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
 import com.nasserapps.apitester.exchangeTime;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
 
     private Ticker mStock;
-    StocksDataSource mStocksDataSource;
+    DataSource mDataSource;
 
     @Bind(R.id.nameView) TextView nameView;
     @Bind(R.id.PercentageView) TextView percentageView;
@@ -82,15 +82,15 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mProgressBar.setVisibility(View.INVISIBLE);
 
-        mStocksDataSource = new StocksDataSource(getApplicationContext());
+        mDataSource = new DataSource(getApplicationContext());
 
         //update Display with data from memory
         JSONParser jsonParser;
 
         try {
-            //jsonParser = new JSONParser(mStocksDataSource.getStoredStockData());
+            //jsonParser = new JSONParser(mDataSource.getStoredStockData());
             //mStock = jsonParser.getStocks().get(0);
-            mStock = mStocksDataSource.loadStocksDataFromMemory().get(0);
+            mStock = mDataSource.loadStocksDataFromMemory().get(0);
             updateDisplay();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
 
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(mStocksDataSource.getAPIURL((new Wallet()).getAPIKey()))
+                    .url(mDataSource.getAPIURL((new Wallet()).getAPIKey()))
                     .build();
 
             Call call = client.newCall(request);
@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
                                     updateDisplay();
                                 }
                             });
-                            mStocksDataSource.saveStockDataInMemory(jsonData);
+                            mDataSource.saveStockDataInMemory(jsonData);
                         } else {
                             alertUserAboutError();
                         }
@@ -309,13 +309,13 @@ public class MainActivity extends AppCompatActivity {
     //Start AI Assistant if it is not activated (Only allow AI Assistant activation if SharedPreferences indicates that the AI is off).
     public void startAI() {
 
-        boolean isAIActivated = mStocksDataSource.isAIActivated();
+        boolean isAIActivated = mDataSource.isAIActivated();
 
         if(isAIActivated){
             Snackbar.make(fab, "AI Assistance already working", Snackbar.LENGTH_LONG).show();
         }
         else {
-            mStocksDataSource.setIsAIActivated(true);
+            mDataSource.setIsAIActivated(true);
             // Construct an intent that will execute the AlarmReceiver
             Intent intent = new Intent(getApplicationContext(), InformAI.class);
             // Create a PendingIntent to be triggered when the alarm goes off
@@ -336,14 +336,14 @@ public class MainActivity extends AppCompatActivity {
     //Stop AI Assistant if it is activated (Only allow AI Assistant de-activation if SharedPreferences indicates that the AI is on).
     public void stopAI() {
 
-        boolean isAIActivated = mStocksDataSource.isAIActivated();
+        boolean isAIActivated = mDataSource.isAIActivated();
 
         if(!isAIActivated){
             Snackbar.make(fab, "AI Assistance already not working", Snackbar.LENGTH_LONG).show();
         }
 
         else{
-            mStocksDataSource.setIsAIActivated(false);
+            mDataSource.setIsAIActivated(false);
             Intent intent = new Intent(getApplicationContext(), InformAI.class);
             final PendingIntent pIntent = PendingIntent.getBroadcast(this, InformAI.REQUEST_CODE,
                     intent, PendingIntent.FLAG_UPDATE_CURRENT);

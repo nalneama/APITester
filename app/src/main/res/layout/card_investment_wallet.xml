@@ -63,6 +63,7 @@
                     android:layout_height="match_parent"
                     android:paddingBottom="16dp"
                     android:scaleType="fitEnd"
+                    android:id="@+id/InvestmentSetupButton"
                     android:src="@android:drawable/arrow_up_float"/>
 
                 <TextView

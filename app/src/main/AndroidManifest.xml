@@ -55,6 +55,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nasserapps.apitester.Controllers.HomePage"/>
         </activity>
+        <activity
+            android:name=".Controllers.EditInvestmentListActivity"
+            android:label="@string/title_activity_edit_investment_list"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

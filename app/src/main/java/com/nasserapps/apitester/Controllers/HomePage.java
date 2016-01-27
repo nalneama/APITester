@@ -24,11 +24,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nasserapps.apitester.Model.DataSource;
 import com.nasserapps.apitester.Model.Investment;
 import com.nasserapps.apitester.Model.Ticker;
-import com.nasserapps.apitester.Model.StocksDataSource;
 import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
 import com.squareup.okhttp.Call;
@@ -48,20 +49,22 @@ import java.util.List;
 public class HomePage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    StocksDataSource mStocksDataSource;
-    List<Ticker> mWatchList;
-    List<Ticker> mIndexes;
+    DataSource mDataSource;
+    List<Ticker> mStockWatchList;
+    List<Ticker> mIndexWatchList;
     Wallet mWallet;
 
-    private RecyclerView recyclerView;
-    private RecyclerView indexView;
-    TextView capital;
-    //TextView indexPrice;
+    private RecyclerView mStockWatchListView;
+    private RecyclerView mIndexWatchListView;
+    private TextView mCapitalView;
+    private TextView mCapitalChangeView;
+    private TextView mCapitalProfitView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
 
 
         //1.0 Linking the views to variables in code
@@ -76,63 +79,50 @@ public class HomePage extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        //1.3 The Watch Card list
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        //1.4 The Followed Indexes List
-        indexView = (RecyclerView) findViewById(R.id.my_index_view);
-        indexView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
+        //1.3 The StockWatchList Card
+        mStockWatchListView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        mStockWatchListView.setHasFixedSize(true);
+        mStockWatchListView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mStockWatchListView.setItemAnimator(new DefaultItemAnimator());
+        //1.4 The IndexWatchList Card
+        mIndexWatchListView = (RecyclerView) findViewById(R.id.my_index_view);
+        mIndexWatchListView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
+        //1.5 The Wallet Card
 
-        //TODO Wallet Object initialization
+
+
+
+        //2.0 Initialize variables for display
+        //2.1 The DataSource (Object responsible to work with the application memory)
+        mDataSource = new DataSource(getApplicationContext());
+        //2.2 The Wallet
         mWallet = new Wallet();
-        //Initiating DataSource Object
-        mStocksDataSource = new StocksDataSource(getApplicationContext());
+        //2.2a Checking if data is available in memory: if yes, then get wallet data from memory
+            if(mDataSource.isStoredDataAvailable()) {
+                    mWallet = mDataSource.getWallet();
+            }
+        //2.2b Else,this is first time opening of app, set the wallet to initial data
+            else{
+                mWallet.setInitialWatchList();
+            }
+        //2.3 The WatchList
+        mStockWatchList =mWallet.getWatchList();
+        //Log.e("zxc", "mStockWatchList=mWallet.getWatchList():"+ mWallet.getWatchList().get(0).getAPICode());
 
-        Log.e("zxc","mStocksDataSource.isStoredDataAvailable(): "+mStocksDataSource.isStoredDataAvailable()+"");
-        Log.e("zxc","mWallet.getInvestmentList().isEmpty() "+mWallet.getInvestmentList().isEmpty()+"");
 
 
-        //Checking if data is available in memory: if yes, then get data from memory
-        if(mStocksDataSource.isStoredDataAvailable()) {//TODO if not the first time get watchlist from memory
-                //mWatchList = mStocksDataSource.loadStocksDataFromMemory();
-                //mIndexes = mStocksDataSource.loadIndexesDataFromMemory();
-                mWallet = mStocksDataSource.getWallet();
-                //mWallet.setWatchList(mStocksDataSource.loadStocksDataFromMemory());
-                // same to this mIndexes = mStocksDataSource.loadIndexesDataFromMemory();
+        //3.0 Set the Display with Initial Data
+        //TODO set the Wallet Card and Watchlist
+        setDisplay();
 
-                Log.e("zxc", "mWalet is :  " + mWallet.getAPIKey() + "");
 
-        }
-        else{//Else,this is first time opening of app, get the initial watchlist
-            mWallet.setInitialWatchList();
-            Log.e("zxc", "mWallet.setInitialWatchList()" + mWallet.getAPIKey() + "");
-        }
 
-        //mWallet.setInitialWatchList();
-            mWatchList=mWallet.getWatchList();
-        Log.e("zxc", "mWatchList=mWallet.getWatchList():"+ mWallet.getWatchList().get(0).getAPICode());
-            //TODO set the Wallet Card and Watchlist
-            setDisplay();
-
-            //setWallet();
-            // TODO update the Wallet Card with new Data;
-            getStock();
+        //4.0 Get the updated data and set the display with the updated data
+        //getUpdatedData();
 
 
     }
 
-    private void setWallet() {
-        ArrayList<Investment> investmentList = new ArrayList<Investment>();
-        investmentList.add(new Investment(mWatchList.get(0),20,300));
-        investmentList.add(new Investment(mWatchList.get(1),60,1000));
-        mWallet = new Wallet(investmentList);
-
-        capital = (TextView)findViewById(R.id.capitalInvested);
-        capital.setText(mWallet.getCapital()+"");
-        //Link views to items;
-    }
 
     @Override
     public void onBackPressed() {
@@ -158,17 +148,15 @@ public class HomePage extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-
         if (id == R.id.detailed_view) {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
             return true;
         }
         if (id == R.id.refresh_data) {
-            Snackbar.make(this.recyclerView, "Refreshing Data", Snackbar.LENGTH_LONG)
+            Snackbar.make(this.mStockWatchListView, "Refreshing Data", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
-            getStock();
+            getUpdatedData();
             return true;
         }
 
@@ -185,7 +173,7 @@ public class HomePage extends AppCompatActivity
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
                         case 0:
-                            Collections.sort(mWatchList, new Comparator<Ticker>() {
+                            Collections.sort(mStockWatchList, new Comparator<Ticker>() {
                                 @Override
                                 public int compare(Ticker stock1, Ticker stock2) {
                                     return stock1.getSymbol().compareTo(stock2.getName());
@@ -195,7 +183,7 @@ public class HomePage extends AppCompatActivity
                             updateDisplay();
                             break;
                         case 1:
-                            Collections.sort(mWatchList, new Comparator<Ticker>() {
+                            Collections.sort(mStockWatchList, new Comparator<Ticker>() {
                                 @Override
                                 public int compare(Ticker stock1, Ticker stock2) {
                                     return Double.compare(stock1.getPBV(), stock2.getPBV());
@@ -206,7 +194,7 @@ public class HomePage extends AppCompatActivity
                             break;
 
                         case 2:
-                            Collections.sort(mWatchList, new Comparator<Ticker>() {
+                            Collections.sort(mStockWatchList, new Comparator<Ticker>() {
                                 @Override
                                 public int compare(Ticker stock1, Ticker stock2) {
                                     return Double.compare(Double.parseDouble(stock2.getPercentage().substring(0,stock2.getPercentage().length()-1)), Double.parseDouble(stock1.getPercentage().substring(0,stock1.getPercentage().length()-1)));
@@ -217,7 +205,7 @@ public class HomePage extends AppCompatActivity
                             break;
 
                         case 3:
-                            Collections.sort(mWatchList, new Comparator<Ticker>() {
+                            Collections.sort(mStockWatchList, new Comparator<Ticker>() {
                                 @Override
                                 public int compare(Ticker stock1, Ticker stock2) {
                                     return Double.compare(stock1.getPERatio(), stock2.getPERatio());
@@ -227,7 +215,7 @@ public class HomePage extends AppCompatActivity
                             updateDisplay();
                             break;
                         case 4:
-                            Collections.sort(mWatchList, new Comparator<Ticker>() {
+                            Collections.sort(mStockWatchList, new Comparator<Ticker>() {
                                 @Override
                                 public int compare(Ticker stock1, Ticker stock2) {
                                     return Double.compare(stock2.getPrice(), stock1.getPrice());
@@ -270,13 +258,13 @@ public class HomePage extends AppCompatActivity
         return true;
     }
 
-    private void getStock() {
+    private void getUpdatedData() {
 
         if(isNetworkAvailable()) {
 
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(mStocksDataSource.getAPIURL(mWallet.getAPIKey()))
+                    .url(mDataSource.getAPIURL(mWallet.getAPIKey()))
                     .build();
 
             Call call = client.newCall(request);
@@ -303,16 +291,15 @@ public class HomePage extends AppCompatActivity
                             //TODO get the Data from internet based on the current API of the mWatchlist followed by the index list;based on received JSON Object, convert string to list of Stocks
                             //TODO update the display
                             mWallet.updateWatchList(jsonData);
-                            mWatchList = mWallet.getWatchList();
-                            //mWatchList = mStocksDataSource.loadStockDataFromResponse(jsonData);
-                            mIndexes = mStocksDataSource.loadIndexDataFromResponse(jsonData);
+                            mStockWatchList = mWallet.getWatchList();
+                            //mStockWatchList = mDataSource.loadStockDataFromResponse(jsonData);
+                            mIndexWatchList = mDataSource.loadIndexDataFromResponse(jsonData);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     updateDisplay();
-                                    //mStocksDataSource.saveStockDataInMemory(jsonData);
-                                    mStocksDataSource.saveWallet(mWallet);
-                                    //Log.e("zxc", "mWallet. String is: " + mStocksDataSource.getWallet().getAPIKey() + "");
+                                    mDataSource.saveWallet(mWallet);
+                                    //Log.e("zxc", "mWallet. String is: " + mDataSource.getWallet().getAPIKey() + "");
                                 }
                             });
                         } else {
@@ -333,14 +320,14 @@ public class HomePage extends AppCompatActivity
     }
 
     public void updateDisplay() {
-        if(mStocksDataSource.isStoredDataAvailable()) {
-            recyclerView.setAdapter(new StockAdapter(mWatchList));
-            //indexView.setAdapter(new IndexAdapter(mIndexes));
-            //capital.setText(mWallet.getCapital() + "");
+        if(mDataSource.isStoredDataAvailable()) {
+            mStockWatchListView.setAdapter(new StockAdapter(mStockWatchList));
+            //mIndexWatchListView.setAdapter(new IndexAdapter(mIndexWatchList));
+            //mCapitalView.setText(mWallet.getCapital() + "");
         }
         else {
-            recyclerView.swapAdapter(new StockAdapter(mWatchList), false);
-            //indexView.swapAdapter(new IndexAdapter(mIndexes), false);
+            mStockWatchListView.swapAdapter(new StockAdapter(mStockWatchList), false);
+            //mIndexWatchListView.swapAdapter(new IndexAdapter(mIndexWatchList), false);
         }
     }
 
@@ -356,9 +343,27 @@ public class HomePage extends AppCompatActivity
     }
 
     public void setDisplay(){
-        recyclerView.setAdapter(new StockAdapter(mWatchList));
-        //indexView.setAdapter(new IndexAdapter(mIndexes));
+        mStockWatchListView.setAdapter(new StockAdapter(mStockWatchList));
+        //mIndexWatchListView.setAdapter(new IndexAdapter(mIndexWatchList));
+        ArrayList<Investment> investmentList = new ArrayList<Investment>();
+        investmentList.add(new Investment(mStockWatchList.get(0), 20, 300));
+        investmentList.add(new Investment(mStockWatchList.get(1), 60, 1000));
+        mWallet.setInvestmentList(investmentList);
 
+        mCapitalView = (TextView)findViewById(R.id.capitalInvested);
+        mCapitalView.setText(mWallet.getCurrentWorth() + "");
+
+        ImageView walletSetUpButton = (ImageView)findViewById(R.id.walletSettings);
+        walletSetUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), EditInvestmentListActivity.class);
+                startActivity(i);
+            }
+        });
+
+        //mCapitalChangeView.setText(mWallet.getReturn() + "");
+        //mCapitalProfitView.setText("Profit:    "+mWallet.getProfit()+"QR");
 
 
     }
