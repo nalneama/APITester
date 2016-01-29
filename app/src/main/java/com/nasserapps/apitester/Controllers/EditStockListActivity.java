@@ -1,7 +1,6 @@
 package com.nasserapps.apitester.Controllers;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.nasserapps.apitester.Model.DataSource;
+import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
 
 import java.util.ArrayList;
@@ -20,8 +22,10 @@ import java.util.List;
 public class EditStockListActivity extends AppCompatActivity {
 
     private RecyclerView mEditStocksRecyclerView ;
-    private ArrayList<String> mStocksViewList;
-    private ArrayList<String> mStocksList;
+    private ArrayList<String> mAllStocksList;
+    private ArrayList<Ticker> mWatchList;
+    private Wallet mWallet;
+    private DataSource mDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +35,26 @@ public class EditStockListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mDataSource = new DataSource(getApplicationContext());
+        mWallet = mDataSource.getWallet();
 
-        mStocksList= new ArrayList<>();
-        mStocksViewList = new ArrayList<>();
-        mStocksViewList.add("MERS - Al-Meera");
-        mStocksViewList.add("BRES - Barwa");
-        mStocksViewList.add("QIB - Qatar Islamic Bank");
+        mWatchList = new ArrayList<>();
+        mWatchList =(ArrayList) mWallet.getWatchList();
+
+        mAllStocksList = new ArrayList<>();
+        mAllStocksList.add("MERS - Al-Meera");
+        mAllStocksList.add("BRES - Barwa");
+        mAllStocksList.add("QIBK - Qatar Islamic Bank");
+        mAllStocksList.add("QIIK - Qatar International Islamic Bank");
+        mAllStocksList.add("MRDS.QA");
+        mAllStocksList.add("MARK.QA");
+        mAllStocksList.add("AKHI.QA");
+        mAllStocksList.add("QIGD.QA");
 
         mEditStocksRecyclerView = (RecyclerView) findViewById(R.id.edit_stock_list_recyclerview);
         mEditStocksRecyclerView.setHasFixedSize(true);
         mEditStocksRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        mEditStocksRecyclerView.setAdapter(new StockListAdapter(mStocksViewList));
+        mEditStocksRecyclerView.setAdapter(new StockListAdapter(mAllStocksList));
 
 
         //Filter items by three parameters: Islamic, Mixed, Non-Islamic
@@ -90,23 +103,36 @@ public class EditStockListActivity extends AppCompatActivity {
         public void bindStock(String stock){
             mStockName=stock;
             mStockNameView.setText(mStockName);
+            for(Ticker ticker:mWatchList){
+                if(ticker.getAPICode().contains(stock.substring(0,4))){
+                    mStockCheckbox.setChecked(true);
+                }
+            }
 
             mStockCheckbox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mStockCheckbox.isChecked()){
-                        mStocksList.add(mStockName);
-                        Snackbar.make(v, mStocksList.toString(), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                        mWatchList.add(new Ticker(mStockName.substring(0, 4) + ".QA"));
                     }
                     else {
-                        mStocksList.remove(mStockName);
-                        Snackbar.make(v, mStocksList.toString(), Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
+                        Ticker stock= new Ticker();
+                        for(Ticker ticker:mWatchList){
+                            if(ticker.getAPICode().contains(mStockName.substring(0,4))){
+                                stock=ticker;
+                            }
+                        }
+                        mWatchList.remove(stock);
                     }
                 }
             });
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mWallet.setWatchList(mWatchList);
+        mDataSource.saveWallet(mWallet);
+    }
 }

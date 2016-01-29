@@ -11,7 +11,10 @@
     android:scrollbars="vertical"
     tools:showIn="@layout/app_bar_home_page">
 
+
     <include layout="@layout/card_investment_wallet"></include>
+
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"

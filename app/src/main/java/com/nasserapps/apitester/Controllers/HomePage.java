@@ -88,23 +88,27 @@ public class HomePage extends AppCompatActivity
         mIndexWatchListView = (RecyclerView) findViewById(R.id.my_index_view);
         mIndexWatchListView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 1));
         //1.5 The Wallet Card
+        mCapitalProfitView = (TextView)findViewById(R.id.capitalProfit);
+        mCapitalView = (TextView) findViewById(R.id.capitalInvested);
+        mCapitalChangeView = (TextView)findViewById(R.id.percentageCIChange);
+    }
 
-
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
         //2.0 Initialize variables for display
         //2.1 The DataSource (Object responsible to work with the application memory)
         mDataSource = new DataSource(getApplicationContext());
         //2.2 The Wallet
         mWallet = new Wallet();
         //2.2a Checking if data is available in memory: if yes, then get wallet data from memory
-            if(mDataSource.isStoredDataAvailable()) {
-                    mWallet = mDataSource.getWallet();
-            }
+        if(mDataSource.isStoredDataAvailable()) {
+            mWallet = mDataSource.getWallet();
+        }
         //2.2b Else,this is first time opening of app, set the wallet to initial data
-            else{
-                mWallet.setInitialWatchList();
-            }
+        else{
+            mWallet.setInitialWatchList();
+        }
         //2.3 The WatchList
         mStockWatchList =mWallet.getWatchList();
         //Log.e("zxc", "mStockWatchList=mWallet.getWatchList():"+ mWallet.getWatchList().get(0).getAPICode());
@@ -116,13 +120,9 @@ public class HomePage extends AppCompatActivity
         setDisplay();
 
 
-
         //4.0 Get the updated data and set the display with the updated data
         //getUpdatedData();
-
-
     }
-
 
     @Override
     public void onBackPressed() {
@@ -346,13 +346,32 @@ public class HomePage extends AppCompatActivity
         mStockWatchListView.setAdapter(new StockAdapter(mStockWatchList));
         //mIndexWatchListView.setAdapter(new IndexAdapter(mIndexWatchList));
         ArrayList<Investment> investmentList = new ArrayList<Investment>();
-        investmentList.add(new Investment(mStockWatchList.get(0), 20, 300));
-        investmentList.add(new Investment(mStockWatchList.get(1), 60, 1000));
-        mWallet.setInvestmentList(investmentList);
+        investmentList = (ArrayList) mWallet.getInvestmentList();
+        if(investmentList.size()>0) {
+            //investmentList.add(new Investment(mStockWatchList.get(0), 20, 300));
+            //investmentList.add(new Investment(mStockWatchList.get(1), 60, 1000));
+            //mWallet.setInvestmentList(investmentList);
+            //http://developer.android.com/reference/java/util/Formatter.html
+            mCapitalView.setText(String.format("%,6.0f",mWallet.getCurrentWorth()));
+            String profitorLoss = "Profit";
+            int color=R.color.green;
+            if (mWallet.getProfit()<0){
+                profitorLoss="Loss";
+                color=R.color.red;
+            }
 
-        mCapitalView = (TextView)findViewById(R.id.capitalInvested);
-        mCapitalView.setText(mWallet.getCurrentWorth() + "");
 
+            mCapitalProfitView.setText(profitorLoss+":     "+String.format("%,6.0f", mWallet.getProfit()));
+            mCapitalChangeView.setText(String.format("%.2f%%", mWallet.getPercentageChange()));
+            mCapitalChangeView.setTextColor(getResources().getColor(color));
+            mCapitalView.setTextColor(getResources().getColor(color));
+
+        }
+        else{
+            mCapitalView.setText("-------");
+            mCapitalProfitView.setText("Profit:     "+"-----");
+            mCapitalChangeView.setText("---");
+        }
         ImageView walletSetUpButton = (ImageView)findViewById(R.id.walletSettings);
         walletSetUpButton.setOnClickListener(new View.OnClickListener() {
             @Override

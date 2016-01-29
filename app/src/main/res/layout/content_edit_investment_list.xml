@@ -13,9 +13,53 @@
     tools:context="com.nasserapps.apitester.Controllers.EditInvestmentListActivity"
     tools:showIn="@layout/activity_edit_investment_list">
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="60dp"
+                  android:padding="16dp"
+                  android:background="@color/colorPrimaryDark"
+                  android:id="@+id/investments_titles"
+                  xmlns:tools="http://schemas.android.com/tools"
+                  android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            android:text="Company"
+            android:id="@+id/edit_investment_name"/>
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:text="Av. Price"
+
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:paddingRight="4dp"
+            android:textAlignment="textEnd"
+            android:id="@+id/investmentPrice"
+            />
+        <TextView
+            android:layout_width="70dp"
+
+            android:textColor="@android:color/white"
+            android:layout_height="match_parent"
+
+            android:textSize="17sp"
+            android:textAlignment="textEnd"
+            android:text="Quantity"
+            android:paddingRight="4dp"
+            android:id="@+id/investmentQuantity"/>
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:elevation="4dp"
+        android:layout_below="@+id/investments_titles"
         android:id="@+id/edit_investment_list_recyclerview">
     </android.support.v7.widget.RecyclerView>
 
