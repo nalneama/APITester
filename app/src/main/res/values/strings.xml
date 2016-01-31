@@ -11,6 +11,7 @@
     <string name="title_activity_edit_investment_list">Edit Investments</string>
     <string name="dialog_add_investments_title">New Investment</string>
     <string name="dialog_add_investments_add_button">Add</string>
+    <string name="Profit">Profit</string>
 
 
     <string-array name="companies_array">

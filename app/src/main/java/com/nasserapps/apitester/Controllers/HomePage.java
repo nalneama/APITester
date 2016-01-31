@@ -354,7 +354,7 @@ public class HomePage extends AppCompatActivity
             //mWallet.setInvestmentList(investmentList);
             //http://developer.android.com/reference/java/util/Formatter.html
             mCapitalView.setText(String.format("%,6.0f",mWallet.getCurrentWorth()));
-            String profitorLoss = "Profit";
+            String profitorLoss = getString(R.string.Profit);
             int color=R.color.green;
             int arrow = R.drawable.green_arrow;
             if (mWallet.getProfit()<0){
