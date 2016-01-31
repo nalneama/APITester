@@ -69,7 +69,7 @@ public class EditInvestmentListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setTitle("Add an Investment")
+                builder.setTitle("New Investment")
                         .setView(R.layout.dialog_add_investments)
                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                             @Override
