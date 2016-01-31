@@ -19,14 +19,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nasserapps.apitester.Controllers.Adapters.StockAdapter;
 import com.nasserapps.apitester.Model.DataSource;
 import com.nasserapps.apitester.Model.Investment;
 import com.nasserapps.apitester.Model.Ticker;
@@ -321,12 +320,12 @@ public class HomePage extends AppCompatActivity
 
     public void updateDisplay() {
         if(mDataSource.isStoredDataAvailable()) {
-            mStockWatchListView.setAdapter(new StockAdapter(mStockWatchList));
+            mStockWatchListView.setAdapter(new StockAdapter(getApplicationContext(),mStockWatchList));
             //mIndexWatchListView.setAdapter(new IndexAdapter(mIndexWatchList));
             //mCapitalView.setText(mWallet.getCapital() + "");
         }
         else {
-            mStockWatchListView.swapAdapter(new StockAdapter(mStockWatchList), false);
+            mStockWatchListView.swapAdapter(new StockAdapter(getApplicationContext(),mStockWatchList), false);
             //mIndexWatchListView.swapAdapter(new IndexAdapter(mIndexWatchList), false);
         }
     }
@@ -343,7 +342,7 @@ public class HomePage extends AppCompatActivity
     }
 
     public void setDisplay(){
-        mStockWatchListView.setAdapter(new StockAdapter(mStockWatchList));
+        mStockWatchListView.setAdapter(new StockAdapter(getApplicationContext(),mStockWatchList));
         //mIndexWatchListView.setAdapter(new IndexAdapter(mIndexWatchList));
         ArrayList<Investment> investmentList = new ArrayList<Investment>();
         investmentList = (ArrayList) mWallet.getInvestmentList();
@@ -387,141 +386,4 @@ public class HomePage extends AppCompatActivity
 
     }
 
-
-
-
-    private class StockHolder extends RecyclerView.ViewHolder{
-
-        //View Declaration
-        private TextView mStockNameView;
-        private TextView mStockSymbol;
-        private TextView mStockPrice;
-        private TextView mStockPBValue;
-        private TextView mStockPERatio;
-        private TextView mStockChange;
-        private TextView mStockPercentage;
-
-        private Ticker mStock;
-
-        public StockHolder(View itemView) {
-            super(itemView);
-            //Find view by ID
-            mStockNameView = (TextView)itemView.findViewById(R.id.stockName);
-            mStockSymbol = (TextView) itemView.findViewById(R.id.stockSymbol);
-            mStockPrice = (TextView) itemView.findViewById(R.id.stockPrice);
-            mStockPBValue = (TextView) itemView.findViewById(R.id.bpvalue);
-            mStockPERatio = (TextView) itemView.findViewById(R.id.peratio);
-            mStockChange = (TextView) itemView.findViewById(R.id.change);
-            mStockPercentage = (TextView) itemView.findViewById(R.id.percentage);
-        }
-
-        public void bindStock(Ticker stock){
-            mStock=stock;
-            mStockNameView.setText(mStock.getName());
-            mStockSymbol.setText(mStock.getSymbol());
-            mStockPrice.setText(mStock.getPrice()+"");
-            mStockPBValue.setText("BP: " + mStock.getPBV());
-            mStockPERatio.setText("PE: " + mStock.getPERatio());
-
-            mStockPrice.setTextColor(getResources().getColor(mStock.getPriceColor()));
-
-
-
-            mStockChange.setText("" + mStock.getChange());
-            mStockPercentage.setText("(" + mStock.getPercentage() + ")");
-
-            mStockChange.setTextColor(getResources().getColor(mStock.getPriceColor()));
-            mStockPercentage.setTextColor(getResources().getColor(mStock.getPriceColor()));
-        }
-    }
-
-    private class StockAdapter extends RecyclerView.Adapter<StockHolder>{
-
-        private List<Ticker> mStockList;
-
-        public StockAdapter(List<Ticker> stockList) {
-            mStockList = stockList;
-        }
-
-        @Override
-        public StockHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-            View view = layoutInflater.inflate(R.layout.list_item_stocks,parent,false);
-            return new StockHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(StockHolder holder, int position) {
-            Ticker stock = mStockList.get(position);
-            holder.bindStock(stock);
-        }
-
-        @Override
-        public int getItemCount() {
-            return mStockList.size();
-        }
-    }
-
-
-    private class IndexAdapter extends RecyclerView.Adapter<IndexHolder> {
-
-        private List<Ticker> mIndexList;
-
-        public IndexAdapter(List<Ticker> indexes) {
-            mIndexList=indexes;
-        }
-
-        @Override
-        public IndexHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-            View view = layoutInflater.inflate(R.layout.list_item_indexs,parent,false);
-            return new IndexHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(IndexHolder holder, int position) {
-            Ticker index= mIndexList.get(position);
-            holder.bindIndex(index);
-        }
-
-        @Override
-        public int getItemCount() {
-            return mIndexList.size();
-        }
-    }
-
-    private class IndexHolder extends RecyclerView.ViewHolder{
-        //View Declaration
-        private TextView mIndexSymbol;
-        private TextView mIndexPrice;
-        private TextView mIndexPercentage;
-        private TextView mIndexChange;
-
-        private Ticker mIndex;
-
-        public IndexHolder(View itemView) {
-            super(itemView);
-            //Find view by ID
-
-            mIndexSymbol = (TextView) itemView.findViewById(R.id.indexSymbol);
-            mIndexPrice = (TextView) itemView.findViewById(R.id.indexPrice);
-            mIndexPercentage = (TextView) itemView.findViewById(R.id.indexPercentage);
-            mIndexChange = (TextView) itemView.findViewById(R.id.indexChange);
-        }
-
-        public void bindIndex(Ticker index){
-            mIndex=index;
-            mIndexSymbol.setText(mIndex.getSymbol());
-            mIndexPrice.setText(mIndex.getPrice()+"");
-
-            mIndexPrice.setTextColor(getResources().getColor(mIndex.getPriceColor()));
-
-
-            mIndexChange.setText("" + mIndex.getChange());
-            mIndexPercentage.setText("(" + mIndex.getPercentage() + ")");
-
-            mIndexChange.setTextColor(getResources().getColor(mIndex.getPriceColor()));
-            mIndexPercentage.setTextColor(getResources().getColor(mIndex.getPriceColor()));
-        }
-    }
 }

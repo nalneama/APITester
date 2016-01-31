@@ -1,10 +1,11 @@
-package com.nasserapps.apitester.Controllers;
+package com.nasserapps.apitester.Controllers.Dialogs;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 
+import com.nasserapps.apitester.Controllers.AlertDialogFragment;
 import com.nasserapps.apitester.Model.Ticker;
 
 import java.util.Collections;
