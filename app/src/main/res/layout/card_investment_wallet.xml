@@ -28,10 +28,16 @@
                 android:textStyle="bold"
                 android:textColor="@color/cardview_dark_background"
                 android:text="Wallet"/>
+
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/walletSettings"/>
+                    android:src="@drawable/ic_card_menu"
+                    android:background="@null"
+                    android:id="@+id/walletSettings"
+                    android:scaleType="fitEnd"
+                    />
+
             </LinearLayout>
             <TextView
                 android:layout_marginTop="12dp"
@@ -59,12 +65,13 @@
                     android:id="@+id/capitalInvested"/>
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingBottom="16dp"
-                    android:scaleType="fitEnd"
-                    android:id="@+id/InvestmentSetupButton"
-                    android:src="@android:drawable/arrow_up_float"/>
+                    android:layout_width="24dp"
+                    android:layout_height="35dp"
+                    android:scaleType="fitStart"
+                    android:layout_gravity="bottom"
+                    android:id="@+id/InvestmentArrow"
+                    android:src="@drawable/red_arrow"
+                    android:cropToPadding="false"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -74,7 +81,6 @@
                     android:textSize="14sp"
                     android:text="1.30%"
                     android:textColor="@color/green"
-                    android:paddingLeft="4dp"
                     android:id="@+id/percentageCIChange"/>
 
             </LinearLayout>

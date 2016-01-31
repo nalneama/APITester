@@ -58,6 +58,7 @@ public class HomePage extends AppCompatActivity
     private TextView mCapitalView;
     private TextView mCapitalChangeView;
     private TextView mCapitalProfitView;
+    private ImageView mInvestmentArrow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +91,7 @@ public class HomePage extends AppCompatActivity
         mCapitalProfitView = (TextView)findViewById(R.id.capitalProfit);
         mCapitalView = (TextView) findViewById(R.id.capitalInvested);
         mCapitalChangeView = (TextView)findViewById(R.id.percentageCIChange);
+        mInvestmentArrow = (ImageView)findViewById(R.id.InvestmentArrow);
     }
 
     @Override
@@ -354,9 +356,11 @@ public class HomePage extends AppCompatActivity
             mCapitalView.setText(String.format("%,6.0f",mWallet.getCurrentWorth()));
             String profitorLoss = "Profit";
             int color=R.color.green;
+            int arrow = R.drawable.green_arrow;
             if (mWallet.getProfit()<0){
                 profitorLoss="Loss";
                 color=R.color.red;
+                arrow = R.drawable.red_arrow;
             }
 
 
@@ -364,12 +368,14 @@ public class HomePage extends AppCompatActivity
             mCapitalChangeView.setText(String.format("%.2f%%", mWallet.getPercentageChange()));
             mCapitalChangeView.setTextColor(getResources().getColor(color));
             mCapitalView.setTextColor(getResources().getColor(color));
+            mInvestmentArrow.setImageDrawable(getResources().getDrawable(arrow));
 
         }
         else{
             mCapitalView.setText("-------");
             mCapitalProfitView.setText("Profit:     "+"-----");
             mCapitalChangeView.setText("---");
+            mInvestmentArrow.setVisibility(View.INVISIBLE);
         }
         ImageView walletSetUpButton = (ImageView)findViewById(R.id.walletSettings);
         walletSetUpButton.setOnClickListener(new View.OnClickListener() {

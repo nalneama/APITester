@@ -9,7 +9,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_edit_stock_list">Edit Stocks Watch List</string>
     <string name="title_activity_edit_investment_list">Edit Investments</string>
-
+    <string name="dialog_add_investments_title">New Investment</string>
+    <string name="dialog_add_investments_add_button">Add</string>
 
 
     <string-array name="companies_array">

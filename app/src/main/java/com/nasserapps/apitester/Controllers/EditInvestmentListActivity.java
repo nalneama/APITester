@@ -69,9 +69,9 @@ public class EditInvestmentListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setTitle("New Investment")
+                builder.setTitle(getString(R.string.dialog_add_investments_title))
                         .setView(R.layout.dialog_add_investments)
-                        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(getString(R.string.dialog_add_investments_add_button), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 mPrice = Double.parseDouble(dPurchasedPrice.getText().toString());
@@ -176,7 +176,7 @@ public class EditInvestmentListActivity extends AppCompatActivity {
                             mInvestmentsList.remove(mPosition);
                             mWallet.setInvestmentList(mInvestmentsList);
                             mDataSource.saveWallet(mWallet);
-                            mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mInvestmentsList),false);
+                            mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mInvestmentsList), false);
                         }
                     });
                     builder.create();
