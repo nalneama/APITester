@@ -12,13 +12,102 @@
     <string name="dialog_add_investments_title">New Investment</string>
     <string name="dialog_add_investments_add_button">Add</string>
     <string name="Profit">Profit</string>
+    <string name="Format_Capital">%,6.0f</string>
+    <string name="Loss">Loss</string>
 
 
-    <string-array name="companies_array">
-        <item>MERS: Al-Meera</item>
+    <string-array name="Companies_Names">
+        <item>ABQK: Ahli Bank</item>
+        <item>AHCS: Aamal Holding</item>
+        <item>AKHI: Khaleej Takaful</item>
         <item>BRES: Barwa</item>
+        <item>CBQK: Commercial Bank</item>
+        <item>DBIS: Dalalah</item>
+        <item>DHBK: Doha Bank</item>
+        <item>DOHI: Doha Insurance</item>
+        <item>ERES: EZDAN</item>
+        <item>GISS: Gulf International</item>
+        <item>GWCS: Gulf Warehouse</item>
+        <item>IHGS: Islamic Holding</item>
+        <item>IQCD: Industries Qatar</item>
+        <item>KCBK: Khaliji Bank</item>
+        <item>MARK: Rayyan Bank</item>
+        <item>MCCS: Mannaai</item>
+        <item>MCGS: Medicare</item>
+        <item>MERS: Al Meera</item>
+        <item>MPHC: Mesaied Petro.</item>
         <item>MRDS: Mazaya</item>
-        <item>QIIK: Qatar Islamic Bank</item>
+        <item>NLCS: National Leasing</item>
+        <item>ORDS: Ooredoo</item>
+        <item>QATI: Qatar Insurance</item>
+        <item>QCFS: CINEMA</item>
+        <item>QEWS: Electricity</item>
+        <item>QFLS: Qatar Fuel</item>
+        <item>IQCD: Industries Qatar</item>
+        <item>QGMD: Qatar German Med.</item>
+        <item>QGRI: General Insurance</item>
+        <item>QGTS: Qatar Gas Transport</item>
+        <item>QIBK: QIB</item>
+        <item>QIGD: Investors Group</item>
+        <item>QIIK: Int. Islamic Bank</item>
+        <item>QIMD: Ind. Manf Co.</item>
+        <item>QISI: Islamic Insurance</item>
+        <item>QNBK: QNB</item>
+        <item>QNCD: Qatar Cement</item>
+        <item>QNNS: Navigation</item>
+        <item>QOIS: Qatar and Oman Inv</item>
+        <item>SIIS: Salam International</item>
+        <item>UDCD: United Dev.</item>
+        <item>VFQS: Vodafon Qatar</item>
+        <item>WDAM: Widam</item>
+        <item>ZHCD: ZAD</item>
+    </string-array>
+
+    <string-array name="Companies_API_Codes">
+        <item>ABQK.QA</item>
+        <item>AHCS.QA</item>
+        <item>AKHI.QA</item>
+        <item>BRES.QA</item>
+        <item>CBQK.QA</item>
+        <item>DBIS.QA</item>
+        <item>DHBK.QA</item>
+        <item>DOHI.QA</item>
+        <item>ERES.QA</item>
+        <item>GISS.QA</item>
+        <item>GWCS.QA</item>
+        <item>IHGS.QA</item>
+        <item>IQCD.QA</item>
+        <item>KCBK.QA</item>
+        <item>MARK.QA</item>
+        <item>MCCS.QA</item>
+        <item>MCGS.QA</item>
+        <item>MERS.QA</item>
+        <item>MPHC.QA</item>
+        <item>MRDS.QA</item>
+        <item>NLCS.QA</item>
+        <item>ORDS.QA</item>
+        <item>QATI.QA</item>
+        <item>QCFS.QA</item>
+        <item>QEWS.QA</item>
+        <item>QFLS.QA</item>
+        <item>IQCD.QA</item>
+        <item>QGMD.QA</item>
+        <item>QGRI.QA</item>
+        <item>QGTS.QA</item>
+        <item>QIBK.QA</item>
+        <item>QIGD.QA</item>
+        <item>QIIK.QA</item>
+        <item>QIMD.QA</item>
+        <item>QISI.QA</item>
+        <item>QNBK.QA</item>
+        <item>QNCD.QA</item>
+        <item>QNNS.QA</item>
+        <item>QOIS.QA</item>
+        <item>SIIS.QA</item>
+        <item>UDCD.QA</item>
+        <item>VFQS.QA</item>
+        <item>WDAM.QA</item>
+        <item>ZHCD.QA</item>
     </string-array>
 
 </resources>

@@ -105,13 +105,20 @@ public class HomePage extends AppCompatActivity
         //2.2a Checking if data is available in memory: if yes, then get wallet data from memory
         if(mDataSource.isStoredDataAvailable()) {
             mWallet = mDataSource.getWallet();
+            mStockWatchList =mWallet.getWatchList();
         }
         //2.2b Else,this is first time opening of app, set the wallet to initial data
         else{
-            mWallet.setInitialWatchList();
+           // mWallet.setInitialWatchList();
+            mStockWatchList = new ArrayList<>();
+        String[] companies = getApplicationContext().getResources().getStringArray(R.array.Companies_API_Codes);
+        for (String code:companies){
+            mStockWatchList.add(new Ticker(code));
+        }
+            mWallet.setInitialWatchList(mStockWatchList);
         }
         //2.3 The WatchList
-        mStockWatchList =mWallet.getWatchList();
+        //mStockWatchList =mWallet.getWatchList(); Moved inside the if statemnet
         //Log.e("zxc", "mStockWatchList=mWallet.getWatchList():"+ mWallet.getWatchList().get(0).getAPICode());
 
 
@@ -322,7 +329,8 @@ public class HomePage extends AppCompatActivity
 
     public void updateDisplay() {
         if(mDataSource.isStoredDataAvailable()) {
-            mStockWatchListView.setAdapter(new StockAdapter(getApplicationContext(),mStockWatchList));
+            setDisplay();
+            //mStockWatchListView.setAdapter(new StockAdapter(getApplicationContext(),mStockWatchList));
             //mIndexWatchListView.setAdapter(new IndexAdapter(mIndexWatchList));
             //mCapitalView.setText(mWallet.getCapital() + "");
         }
@@ -353,18 +361,18 @@ public class HomePage extends AppCompatActivity
             //investmentList.add(new Investment(mStockWatchList.get(1), 60, 1000));
             //mWallet.setInvestmentList(investmentList);
             //http://developer.android.com/reference/java/util/Formatter.html
-            mCapitalView.setText(String.format("%,6.0f",mWallet.getCurrentWorth()));
+            mCapitalView.setText(String.format(getString(R.string.Format_Capital),mWallet.getCurrentWorth()));
             String profitorLoss = getString(R.string.Profit);
             int color=R.color.green;
             int arrow = R.drawable.green_arrow;
             if (mWallet.getProfit()<0){
-                profitorLoss="Loss";
+                profitorLoss=getString(R.string.Loss);
                 color=R.color.red;
                 arrow = R.drawable.red_arrow;
             }
 
 
-            mCapitalProfitView.setText(profitorLoss+":     "+String.format("%,6.0f", mWallet.getProfit()));
+            mCapitalProfitView.setText(profitorLoss+":     "+String.format(getString(R.string.Format_Capital), mWallet.getProfit()));
             mCapitalChangeView.setText(String.format("%.2f%%", mWallet.getPercentageChange()));
             mCapitalChangeView.setTextColor(getResources().getColor(color));
             mCapitalView.setTextColor(getResources().getColor(color));
