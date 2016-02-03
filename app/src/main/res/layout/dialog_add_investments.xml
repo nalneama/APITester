@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:layout_width="match_parent"
+              android:layout_width="300dp"
               android:padding="16dp"
               android:layout_height="match_parent">
 
     <AutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Company"
+        android:inputType="textAutoComplete"
+        android:completionThreshold="1"
+        android:singleLine="true"
         android:id="@+id/autoCompleteTextView"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:imeOptions="actionNext"/>
 
 
     <LinearLayout
@@ -34,7 +37,8 @@
             android:textAlignment="textEnd"
             android:layout_weight="1"
             android:id="@+id/investmentPrice"
-            android:text="149.11"/>
+            android:inputType="number"
+            android:nextFocusForward="@id/investmentQuantity"/>
     </LinearLayout>
 
     <LinearLayout
@@ -55,9 +59,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAlignment="textEnd"
-            android:text="10000"
+            android:inputType="number"
             android:paddingRight="4dp"
-            android:id="@+id/investmentQuantity"/>
+            android:id="@+id/investmentQuantity"
+            android:imeOptions="actionDone"/>
 
     </LinearLayout>
 

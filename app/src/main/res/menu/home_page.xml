@@ -20,8 +20,14 @@
         app:showAsAction="never"/>
 
     <item
-        android:id="@+id/refresh_data"
+        android:id="@+id/calculator"
         android:orderInCategory="400"
+        android:title="Calculator"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/refresh_data"
+        android:orderInCategory="500"
         android:title="Refresh Data"
         app:showAsAction="never"/>
 </menu>

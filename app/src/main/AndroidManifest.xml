@@ -60,6 +60,15 @@
             android:label="@string/title_activity_edit_investment_list"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".Controllers.CalculatorActivity"
+            android:label="@string/title_activity_calculator"
+            android:parentActivityName=".Controllers.HomePage"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nasserapps.apitester.Controllers.HomePage"/>
+        </activity>
     </application>
 
 </manifest>

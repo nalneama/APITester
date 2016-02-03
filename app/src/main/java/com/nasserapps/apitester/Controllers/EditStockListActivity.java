@@ -17,6 +17,7 @@ import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class EditStockListActivity extends AppCompatActivity {
@@ -41,15 +42,7 @@ public class EditStockListActivity extends AppCompatActivity {
         mWatchList = new ArrayList<>();
         mWatchList =(ArrayList) mWallet.getWatchList();
 
-        mAllStocksList = new ArrayList<>();
-        mAllStocksList.add("MERS - Al-Meera");
-        mAllStocksList.add("BRES - Barwa");
-        mAllStocksList.add("QIBK - Qatar Islamic Bank");
-        mAllStocksList.add("QIIK - Qatar International Islamic Bank");
-        mAllStocksList.add("MRDS.QA");
-        mAllStocksList.add("MARK.QA");
-        mAllStocksList.add("AKHI.QA");
-        mAllStocksList.add("QIGD.QA");
+        mAllStocksList = new ArrayList<>(Arrays.asList(getApplicationContext().getResources().getStringArray(R.array.Companies_Names)));
 
         mEditStocksRecyclerView = (RecyclerView) findViewById(R.id.edit_stock_list_recyclerview);
         mEditStocksRecyclerView.setHasFixedSize(true);

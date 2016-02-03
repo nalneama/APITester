@@ -10,7 +10,7 @@ public class Wallet {
     List<Investment> mInvestmentList;
     ArrayList<Ticker> mWatchList;
 
-    public Wallet(List<Investment> investmentList) {
+    public Wallet( List<Investment> investmentList) {
         mInvestmentList = investmentList;
     }
 
@@ -76,16 +76,12 @@ public class Wallet {
         mWatchList = watchList;
     }
 
-    public void setInitialWatchList(){
-        mWatchList = new ArrayList<>();
-        mWatchList.add(new Ticker("MERS.QA"));
-        mWatchList.add(new Ticker("BRES.QA"));
-        mWatchList.add(new Ticker("MRDS.QA"));
-        mWatchList.add(new Ticker("QIIK.QA"));
-        mWatchList.add(new Ticker("QIBK.QA"));
-        mWatchList.add(new Ticker("MARK.QA"));
-        mWatchList.add(new Ticker("AKHI.QA"));
-        mWatchList.add(new Ticker("QIGD.QA"));
+    public void setInitialWatchList(List<Ticker> watchList){
+        mWatchList = (ArrayList) watchList;
+//        String[] companies = mContext.getResources().getStringArray(R.array.Companies_API_Codes);
+//        for (String code:companies){
+//            mWatchList.add(new Ticker(code));
+//        }
     }
 
 

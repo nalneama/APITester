@@ -9,11 +9,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -99,8 +101,36 @@ public class EditInvestmentListActivity extends AppCompatActivity {
                 AlertDialog alertDialog = builder.show();
                 dAutoCompleteTextView = (AutoCompleteTextView)alertDialog.findViewById(R.id.autoCompleteTextView);
                 dInvestmentQuantity = (EditText) alertDialog.findViewById(R.id.investmentQuantity);
+                dInvestmentQuantity.setImeOptions(EditorInfo.IME_ACTION_DONE);
+                dInvestmentQuantity.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        mPrice = Double.parseDouble(dPurchasedPrice.getText().toString());
+                        mQuantity = Integer.parseInt(dInvestmentQuantity.getText().toString());
+                        String stock = dAutoCompleteTextView.getText().toString();
+                        Investment i = new Investment(new Ticker("Empty"), 0, 0);
+                        for (Ticker s : mStockWatchList) {
+                            if (stock.contains(s.getSymbol())) {
+                                i = new Investment(s, mPrice, mQuantity);
+                            }
+                        }
+                        if (!i.getStock().getAPICode().contains("Empty")) {
+                            mInvestmentsList.add(i);
+                            mWallet.setInvestmentList(mInvestmentsList);
+                            mDataSource.saveWallet(mWallet);
+                        }
+                        //if not correct show snakbar
+                        //Snackbar.make(mEditStocksRecyclerView, "hahaha", Snackbar.LENGTH_LONG).show();
+                        mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mInvestmentsList), false);
+                        return true;
+                    }
+                });
+
+                //dAutoCompleteTextView.requestFocus();
+                //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                 dPurchasedPrice = (EditText) alertDialog.findViewById(R.id.investmentPrice);
-                String[] companies = getResources().getStringArray(R.array.companies_array);
+                String[] companies = getResources().getStringArray(R.array.Companies_Names);
                 ArrayAdapter<String> adapter =
                         new ArrayAdapter<>(v.getContext(), android.R.layout.simple_list_item_1, companies);
                 dAutoCompleteTextView.setAdapter(adapter);
@@ -189,7 +219,7 @@ public class EditInvestmentListActivity extends AppCompatActivity {
                     dAutoCompleteTextView.setText(mInvestmentNameView.getText());
                     dInvestmentQuantity.setText(mInvestmentQuantity.getText());
                     dPurchasedPrice.setText(mPurchasedPrice.getText());
-                    String[] companies = getResources().getStringArray(R.array.companies_array);
+                    String[] companies = getResources().getStringArray(R.array.Companies_Names);
                     ArrayAdapter<String> adapter =
                             new ArrayAdapter<>(v.getContext(), android.R.layout.simple_list_item_1, companies);
                     dAutoCompleteTextView.setAdapter(adapter);

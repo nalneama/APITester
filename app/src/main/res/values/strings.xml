@@ -109,5 +109,6 @@
         <item>WDAM.QA</item>
         <item>ZHCD.QA</item>
     </string-array>
+    <string name="title_activity_calculator">Calculator</string>
 
 </resources>

@@ -156,6 +156,12 @@ public class HomePage extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if (id == R.id.calculator) {
+            Intent i = new Intent(this, CalculatorActivity.class);
+            startActivity(i);
+            return true;
+        }
+
         if (id == R.id.detailed_view) {
             Intent i = new Intent(this, MainActivity.class);
             startActivity(i);
@@ -296,8 +302,7 @@ public class HomePage extends AppCompatActivity
                     try {
                         final String jsonData = response.body().string();
                         if (response.isSuccessful()) {
-                            //TODO get the Data from internet based on the current API of the mWatchlist followed by the index list;based on received JSON Object, convert string to list of Stocks
-                            //TODO update the display
+                            //TODO add the index list
                             mWallet.updateWatchList(jsonData);
                             mStockWatchList = mWallet.getWatchList();
                             //mStockWatchList = mDataSource.loadStockDataFromResponse(jsonData);
@@ -311,7 +316,7 @@ public class HomePage extends AppCompatActivity
                                 }
                             });
                         } else {
-                            //alertUserAboutError();
+                            //TODO alertUserAboutError();
                         }
                     } catch (IOException e) {
                         Log.e("error", "IO Exception caught", e);
@@ -330,9 +335,7 @@ public class HomePage extends AppCompatActivity
     public void updateDisplay() {
         if(mDataSource.isStoredDataAvailable()) {
             setDisplay();
-            //mStockWatchListView.setAdapter(new StockAdapter(getApplicationContext(),mStockWatchList));
             //mIndexWatchListView.setAdapter(new IndexAdapter(mIndexWatchList));
-            //mCapitalView.setText(mWallet.getCapital() + "");
         }
         else {
             mStockWatchListView.swapAdapter(new StockAdapter(getApplicationContext(),mStockWatchList), false);
@@ -357,9 +360,6 @@ public class HomePage extends AppCompatActivity
         ArrayList<Investment> investmentList = new ArrayList<Investment>();
         investmentList = (ArrayList) mWallet.getInvestmentList();
         if(investmentList.size()>0) {
-            //investmentList.add(new Investment(mStockWatchList.get(0), 20, 300));
-            //investmentList.add(new Investment(mStockWatchList.get(1), 60, 1000));
-            //mWallet.setInvestmentList(investmentList);
             //http://developer.android.com/reference/java/util/Formatter.html
             mCapitalView.setText(String.format(getString(R.string.Format_Capital),mWallet.getCurrentWorth()));
             String profitorLoss = getString(R.string.Profit);
@@ -393,11 +393,6 @@ public class HomePage extends AppCompatActivity
                 startActivity(i);
             }
         });
-
-        //mCapitalChangeView.setText(mWallet.getReturn() + "");
-        //mCapitalProfitView.setText("Profit:    "+mWallet.getProfit()+"QR");
-
-
     }
 
 }
