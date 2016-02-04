@@ -110,5 +110,6 @@
         <item>ZHCD.QA</item>
     </string-array>
     <string name="title_activity_calculator">Calculator</string>
+    <string name="title_activity_rules">RulesActivity</string>
 
 </resources>

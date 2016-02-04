@@ -52,12 +52,6 @@ public class CalculatorFragment extends Fragment {
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             // Add numbers for each view
-            mFinalPrice.setText(Calculator.getAveragePrice(Double.parseDouble(mCurrentPrice.getText().toString()),
-                    Double.parseDouble(mAddedPrice.getText().toString()),
-                    Integer.parseInt(mCurrentQuantity.getText().toString()),
-                    Integer.parseInt(mAddedQuantity.getText().toString()))+"");
-            mFinalQuantity.setText((Integer.parseInt((mCurrentQuantity.getText().toString())+Integer.parseInt(mAddedQuantity.getText().toString())))+"");
-
 
             String currentPrice = mCurrentPrice.getText().toString();
             String addedPrice = mAddedPrice.getText().toString();
@@ -71,7 +65,7 @@ public class CalculatorFragment extends Fragment {
                     Double.parseDouble(addedPrice),
                     Integer.parseInt(currentQuantity),
                     Integer.parseInt(addedQuantity))+"");
-            mFinalQuantity.setText((Integer.parseInt(currentQuantity +Integer.parseInt(addedQuantity)))+"");
+            mFinalQuantity.setText((Integer.parseInt(currentQuantity) + Integer.parseInt(addedQuantity))+"");
             }
 
 

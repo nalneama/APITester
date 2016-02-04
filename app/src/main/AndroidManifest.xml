@@ -69,6 +69,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nasserapps.apitester.Controllers.HomePage"/>
         </activity>
+        <activity
+            android:name=".Controllers.RulesActivity"
+            android:label="@string/title_activity_rules"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
