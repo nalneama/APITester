@@ -57,6 +57,26 @@ public class CalculatorFragment extends Fragment {
                     Integer.parseInt(mCurrentQuantity.getText().toString()),
                     Integer.parseInt(mAddedQuantity.getText().toString()))+"");
             mFinalQuantity.setText((Integer.parseInt((mCurrentQuantity.getText().toString())+Integer.parseInt(mAddedQuantity.getText().toString())))+"");
+
+
+            String currentPrice = mCurrentPrice.getText().toString();
+            String addedPrice = mAddedPrice.getText().toString();
+            String currentQuantity = mCurrentQuantity.getText().toString();
+            String addedQuantity = mAddedQuantity.getText().toString();
+            String finalQuantity = mFinalQuantity.getText().toString();
+            String finalPrice = mFinalPrice.getText().toString();
+
+            if(!currentPrice.isEmpty() && !addedPrice.isEmpty() && !currentQuantity.isEmpty() && !addedQuantity.isEmpty()){
+            mFinalPrice.setText(Calculator.getAveragePrice(Double.parseDouble(currentPrice),
+                    Double.parseDouble(addedPrice),
+                    Integer.parseInt(currentQuantity),
+                    Integer.parseInt(addedQuantity))+"");
+            mFinalQuantity.setText((Integer.parseInt(currentQuantity +Integer.parseInt(addedQuantity)))+"");
+            }
+
+
+            //TODO add reverse calculations for averages by putting action go
+
             return false;
         }
     };
