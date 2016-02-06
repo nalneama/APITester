@@ -25,6 +25,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nasserapps.apitester.AI.CustomNotificationStatement.Checklist;
+import com.nasserapps.apitester.AI.CustomNotificationStatement.ExpressionParser;
+import com.nasserapps.apitester.AI.CustomNotificationStatement.Rule;
 import com.nasserapps.apitester.Controllers.Adapters.StockAdapter;
 import com.nasserapps.apitester.Model.DataSource;
 import com.nasserapps.apitester.Model.Investment;
@@ -59,6 +62,7 @@ public class HomePage extends AppCompatActivity
     private TextView mCapitalChangeView;
     private TextView mCapitalProfitView;
     private ImageView mInvestmentArrow;
+    private TextView mExplorButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +96,14 @@ public class HomePage extends AppCompatActivity
         mCapitalView = (TextView) findViewById(R.id.capitalInvested);
         mCapitalChangeView = (TextView)findViewById(R.id.percentageCIChange);
         mInvestmentArrow = (ImageView)findViewById(R.id.InvestmentArrow);
+        mExplorButton = (TextView)findViewById(R.id.exploreButton);
+        mExplorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(), WalletAnalysisActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -177,6 +189,22 @@ public class HomePage extends AppCompatActivity
         if (id == R.id.add_stocks) {
             Intent i = new Intent(this, EditStockListActivity.class);
             startActivity(i);
+            return true;
+        }
+        if (id == R.id.add_rules) {
+            Intent i = new Intent(this, RulesActivity.class);
+            startActivity(i);
+            return true;
+        }
+
+        if (id == R.id.evaluate_stocks) {
+            //TODO Filter stocks by checklists
+            ArrayList<Rule> rules = new ArrayList<>();
+            rules.add(new ExpressionParser().getRule("PE Ratio", "<", "15.0"));
+            rules.add(new ExpressionParser().getRule("PE Ratio", ">","10.0"));
+            Checklist checklist = new Checklist(rules);
+            mStockWatchList=checklist.getPassingStocks(mWallet);
+            updateDisplay();
             return true;
         }
 

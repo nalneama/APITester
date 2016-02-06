@@ -2,6 +2,8 @@ package com.nasserapps.apitester.Controllers;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,10 +42,15 @@ public class CalculatorFragment extends Fragment {
         mAddedQuantity = (EditText)v.findViewById(R.id.requiredQuantity);
         mFinalQuantity = (EditText)v.findViewById(R.id.FinalQuantity);
 
-        mCurrentPrice.setOnEditorActionListener(editor);
-        mAddedPrice.setOnEditorActionListener(editor);
-        mAddedQuantity.setOnEditorActionListener(editor);
-        mCurrentQuantity.setOnEditorActionListener(editor);
+//        mCurrentPrice.setOnEditorActionListener(editor);
+//        mAddedPrice.setOnEditorActionListener(editor);
+//        mAddedQuantity.setOnEditorActionListener(editor);
+//        mCurrentQuantity.setOnEditorActionListener(editor);
+
+        mCurrentPrice.addTextChangedListener(mTextWatcher);
+        mAddedPrice.addTextChangedListener(mTextWatcher);
+        mAddedQuantity.addTextChangedListener(mTextWatcher);
+        mCurrentQuantity.addTextChangedListener(mTextWatcher);
 
         return v;
     }
@@ -61,17 +68,50 @@ public class CalculatorFragment extends Fragment {
             String finalPrice = mFinalPrice.getText().toString();
 
             if(!currentPrice.isEmpty() && !addedPrice.isEmpty() && !currentQuantity.isEmpty() && !addedQuantity.isEmpty()){
-            mFinalPrice.setText(Calculator.getAveragePrice(Double.parseDouble(currentPrice),
+            mFinalPrice.setText(String.format("%.2f",Calculator.getAveragePrice(Double.parseDouble(currentPrice),
                     Double.parseDouble(addedPrice),
                     Integer.parseInt(currentQuantity),
-                    Integer.parseInt(addedQuantity))+"");
-            mFinalQuantity.setText((Integer.parseInt(currentQuantity) + Integer.parseInt(addedQuantity))+"");
+                    Integer.parseInt(addedQuantity))));
+                int finalQuantityNumber=Integer.parseInt(currentQuantity) + Integer.parseInt(addedQuantity);
+            mFinalQuantity.setText(String.format("%,d",finalQuantityNumber));
             }
 
 
             //TODO add reverse calculations for averages by putting action go
 
             return false;
+        }
+    };
+
+
+    private TextWatcher mTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            String currentPrice = mCurrentPrice.getText().toString();
+            String addedPrice = mAddedPrice.getText().toString();
+            String currentQuantity = mCurrentQuantity.getText().toString();
+            String addedQuantity = mAddedQuantity.getText().toString();
+            String finalQuantity = mFinalQuantity.getText().toString();
+            String finalPrice = mFinalPrice.getText().toString();
+
+            if(!currentPrice.isEmpty() && !addedPrice.isEmpty() && !currentQuantity.isEmpty() && !addedQuantity.isEmpty()){
+                mFinalPrice.setText(String.format("%.2f",Calculator.getAveragePrice(Double.parseDouble(currentPrice),
+                        Double.parseDouble(addedPrice),
+                        Integer.parseInt(currentQuantity),
+                        Integer.parseInt(addedQuantity))));
+                int finalQuantityNumber=Integer.parseInt(currentQuantity) + Integer.parseInt(addedQuantity);
+                mFinalQuantity.setText(String.format("%,d",finalQuantityNumber));
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
         }
     };
 }

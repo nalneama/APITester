@@ -8,6 +8,12 @@
         android:title="Sort by"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/evaluate_stocks"
+        android:orderInCategory="2500"
+        android:title="Evaluate Stocks"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/add_stocks"
         android:orderInCategory="200"
         android:title="Add Stocks"
@@ -24,6 +30,13 @@
         android:orderInCategory="400"
         android:title="Calculator"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/add_rules"
+        android:orderInCategory="450"
+        android:title="Add Rules"
+        app:showAsAction="never"/>
+
 
     <item
         android:id="@+id/refresh_data"

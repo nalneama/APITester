@@ -13,4 +13,12 @@
     tools:context="com.nasserapps.apitester.Controllers.RulesActivity"
     tools:showIn="@layout/activity_rules">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textViewContact"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="134dp"/>
 </RelativeLayout>

@@ -15,9 +15,9 @@ public class ExpressionParserTest {
     @Test
     public void testGetRule() throws Exception {
         ArrayList<Rule> rules = new ArrayList<>();
-        rules.add(new ExpressionParser().getRule("13.0", "PE Ratio", ">"));
-        rules.add(new ExpressionParser().getRule("100000", "Volume", "<"));
-        rules.add(new ExpressionParser().getRule("500000", "Volume", "="));
+        rules.add(new ExpressionParser().getRule("PE Ratio", "<", "15.0"));
+        rules.add(new ExpressionParser().getRule("PE Ratio", ">","10.0"));
+        rules.add(new ExpressionParser().getRule( "Volume", "=", "500000"));
         Ticker stock= new Ticker();
         stock.setPERatio(22);
         stock.setVolume(500000);

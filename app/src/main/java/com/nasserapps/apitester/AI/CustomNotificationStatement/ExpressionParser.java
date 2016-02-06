@@ -13,7 +13,7 @@ public class ExpressionParser {
     //Expression Chooser
     ArrayList<String> mExpression_options =new ArrayList(Arrays.asList(new String[] {">","=","<"}));
 
-    public Rule getRule(String condition, String variable_option, String expression_option){
+    public Rule getRule(String variable_option, String expression_option, String condition){
         int variable_case = mVariable_options.indexOf(variable_option);
         int expression_case = mExpression_options.indexOf(expression_option);
         switch (variable_case){

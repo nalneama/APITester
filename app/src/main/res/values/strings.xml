@@ -111,5 +111,6 @@
     </string-array>
     <string name="title_activity_calculator">Calculator</string>
     <string name="title_activity_rules">RulesActivity</string>
+    <string name="title_activity_wallet_analysis">WalletAnalysisActivity</string>
 
 </resources>
