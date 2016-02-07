@@ -18,13 +18,18 @@ import com.nasserapps.apitester.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class EditStockListActivity extends AppCompatActivity {
 
+    //Filtering lists
+    //https://www.youtube.com/watch?v=c9yC8XGaSv4
+
     private RecyclerView mEditStocksRecyclerView ;
     private ArrayList<String> mAllStocksList;
     private ArrayList<Ticker> mWatchList;
+    private HashMap<String,Ticker> mWatchMap;
     private Wallet mWallet;
     private DataSource mDataSource;
 
@@ -41,6 +46,12 @@ public class EditStockListActivity extends AppCompatActivity {
 
         mWatchList = new ArrayList<>();
         mWatchList =(ArrayList) mWallet.getWatchList();
+
+        //*****New addition
+        mWatchMap = new HashMap<>();
+        mWatchMap = Wallet.getWatchMap(mWatchList);
+
+        //*****
 
         mAllStocksList = new ArrayList<>(Arrays.asList(getApplicationContext().getResources().getStringArray(R.array.Companies_Names)));
 
@@ -96,23 +107,23 @@ public class EditStockListActivity extends AppCompatActivity {
         public void bindStock(String stock){
             mStockName=stock;
             mStockNameView.setText(mStockName);
-            for(Ticker ticker:mWatchList){
-                if(ticker.getAPICode().contains(stock.substring(0,4))){
+                if(mWatchMap.containsKey(stock.substring(0,4))){
                     mStockCheckbox.setChecked(true);
                 }
-            }
+            else {
+                    mStockCheckbox.setChecked(false);
+                }
 
             mStockCheckbox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mStockCheckbox.isChecked()){
+                    if (mStockCheckbox.isChecked()) {
                         mWatchList.add(new Ticker(mStockName.substring(0, 4) + ".QA"));
-                    }
-                    else {
-                        Ticker stock= new Ticker();
-                        for(Ticker ticker:mWatchList){
-                            if(ticker.getAPICode().contains(mStockName.substring(0,4))){
-                                stock=ticker;
+                    } else {
+                        Ticker stock = new Ticker();
+                        for (Ticker ticker : mWatchList) {
+                            if (ticker.getAPICode().contains(mStockName.substring(0, 4))) {
+                                stock = ticker;
                             }
                         }
                         mWatchList.remove(stock);

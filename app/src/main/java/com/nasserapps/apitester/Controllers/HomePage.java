@@ -44,8 +44,6 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class HomePage extends AppCompatActivity
@@ -215,58 +213,23 @@ public class HomePage extends AppCompatActivity
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
                         case 0:
-                            Collections.sort(mStockWatchList, new Comparator<Ticker>() {
-                                @Override
-                                public int compare(Ticker stock1, Ticker stock2) {
-                                    return stock1.getSymbol().compareTo(stock2.getName());
-                                }
-                            });
-                            dialog.dismiss();
-                            updateDisplay();
+                            mStockWatchList=mWallet.sort(mStockWatchList, "A-Z");
                             break;
                         case 1:
-                            Collections.sort(mStockWatchList, new Comparator<Ticker>() {
-                                @Override
-                                public int compare(Ticker stock1, Ticker stock2) {
-                                    return Double.compare(stock1.getPBV(), stock2.getPBV());
-                                }
-                            });
-                            dialog.dismiss();
-                            updateDisplay();
+                            mStockWatchList=mWallet.sort(mStockWatchList,"Book Value");
                             break;
-
                         case 2:
-                            Collections.sort(mStockWatchList, new Comparator<Ticker>() {
-                                @Override
-                                public int compare(Ticker stock1, Ticker stock2) {
-                                    return Double.compare(Double.parseDouble(stock2.getPercentage().substring(0,stock2.getPercentage().length()-1)), Double.parseDouble(stock1.getPercentage().substring(0,stock1.getPercentage().length()-1)));
-                                }
-                            });
-                            dialog.dismiss();
-                            updateDisplay();
+                            mStockWatchList=mWallet.sort(mStockWatchList,"Gain");
                             break;
-
                         case 3:
-                            Collections.sort(mStockWatchList, new Comparator<Ticker>() {
-                                @Override
-                                public int compare(Ticker stock1, Ticker stock2) {
-                                    return Double.compare(stock1.getPERatio(), stock2.getPERatio());
-                                }
-                            });
-                            dialog.dismiss();
-                            updateDisplay();
+                            mStockWatchList=mWallet.sort(mStockWatchList,"PE Ratio");
                             break;
                         case 4:
-                            Collections.sort(mStockWatchList, new Comparator<Ticker>() {
-                                @Override
-                                public int compare(Ticker stock1, Ticker stock2) {
-                                    return Double.compare(stock2.getPrice(), stock1.getPrice());
-                                }
-                            });
-                            dialog.dismiss();
-                            updateDisplay();
+                            mStockWatchList= mWallet.sort(mStockWatchList,"Price");
                             break;
                     }
+                    dialog.dismiss();
+                    updateDisplay();
                 }
             });
             dialog.create().show();
