@@ -226,8 +226,7 @@ public class HomePage extends AppCompatActivity
                             break;
                         case 4:
                             mStockWatchList= mWallet.sort(mStockWatchList,"Price");
-                            break;
-                    }
+                            break;}
                     dialog.dismiss();
                     updateDisplay();
                 }

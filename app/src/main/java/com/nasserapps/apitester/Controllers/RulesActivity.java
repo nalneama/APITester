@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.nasserapps.apitester.Model.Contact;
+import com.nasserapps.apitester.Model.SqlLiteDbHelper;
 import com.nasserapps.apitester.R;
 
 public class RulesActivity extends AppCompatActivity {

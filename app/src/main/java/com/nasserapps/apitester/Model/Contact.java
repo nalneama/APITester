@@ -1,4 +1,4 @@
-package com.nasserapps.apitester.Controllers;
+package com.nasserapps.apitester.Model;
 
 public class Contact {
 

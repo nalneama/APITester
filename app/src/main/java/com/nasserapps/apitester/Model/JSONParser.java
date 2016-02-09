@@ -86,8 +86,10 @@ public class JSONParser {
         stock.setVolume(mQuote.getLong("Volume"));
         //stock.setPBV(mQuote.getDouble("PriceBook"));
         stock.setPrice(mQuote.getDouble("LastTradePriceOnly"));
-        stock.setDemand(mQuote.getDouble("Bid"));
-        stock.setSupply(mQuote.getDouble("Ask"));
+        if(!mQuote.isNull("Bid")){
+        stock.setDemand(mQuote.getDouble("Bid"));}
+        if(!mQuote.isNull("Ask")){
+        stock.setSupply(mQuote.getDouble("Ask"));}
         stock.setName(mQuote.getString("Name"));
         stock.setPercentage(mQuote.getString("PercentChange"));
         stock.setChange(mQuote.getDouble("Change"));

@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                             });
                             mDataSource.saveStockDataInMemory(jsonData);
                         } else {
-                            alertUserAboutError();
+                            //alertUserAboutError();
                         }
                     } catch (IOException e) {
                         Log.e(TAG, "IO Exception caught", e);
@@ -296,12 +296,6 @@ public class MainActivity extends AppCompatActivity {
         else {
             pbvRatio.setTextColor(Color.RED);
         }
-    }
-
-    //Show Dialog form AlertDialogFragment
-    private void alertUserAboutError() {
-        AlertDialogFragment dialogFragment = new AlertDialogFragment();
-        dialogFragment.show(getFragmentManager(), "error dialog");
     }
 
 
