@@ -1,0 +1,30 @@
+<PreferenceScreen  xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- opens a subscreen of settings -->
+    <PreferenceCategory
+        android:title="@string/action_notification"
+        android:key="pref_key_notifications_settings">
+        <CheckBoxPreference
+            android:key="pref_key_enable_notifications"
+            android:title="Enable"
+            android:defaultValue="false" />
+        <Preference
+            android:key="pref_key_sms_delete_limit"
+            android:dependency="pref_key_enable_notifications"
+            android:summary="pref_summary_delete_limit"
+            android:title="pref_title_sms_delete"/>
+        <Preference
+            android:key="pref_key_mms_delete_limit"
+            android:dependency="pref_key_enable_notifications"
+            android:summary="pref_summary_delete_limit"
+            android:title="pref_title_mms_delete"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="About">
+        <Preference
+            android:summary="Nasser Al-Neama"
+            android:title="Developer"/>
+        <Preference
+            android:summary="Version 0.8.0"
+            android:title="Build version"/>
+    </PreferenceCategory>
+</PreferenceScreen>

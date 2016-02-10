@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.nasserapps.apitester.Controllers.CalculatorFragment;
+import com.nasserapps.apitester.Controllers.Fragments.IndexesListFragment;
 import com.nasserapps.apitester.Controllers.Fragments.StocksListFragment;
 import com.nasserapps.apitester.Controllers.Fragments.WalletFragment;
 import com.nasserapps.apitester.R;
@@ -29,7 +29,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return new WalletFragment();
             case 2:
-                return new CalculatorFragment();
+                return new IndexesListFragment();
         }
         return null;
     }

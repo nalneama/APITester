@@ -29,6 +29,10 @@ import com.nasserapps.apitester.AI.CustomNotificationStatement.Checklist;
 import com.nasserapps.apitester.AI.CustomNotificationStatement.ExpressionParser;
 import com.nasserapps.apitester.AI.CustomNotificationStatement.Rule;
 import com.nasserapps.apitester.Controllers.Adapters.StockAdapter;
+import com.nasserapps.apitester.Controllers.InProgress.EditInvestmentListActivity;
+import com.nasserapps.apitester.Controllers.InProgress.EditStockListActivity;
+import com.nasserapps.apitester.Controllers.InProgress.MainActivity;
+import com.nasserapps.apitester.Controllers.InProgress.RulesActivity;
 import com.nasserapps.apitester.Model.DataSource;
 import com.nasserapps.apitester.Model.Investment;
 import com.nasserapps.apitester.Model.Ticker;
@@ -94,14 +98,6 @@ public class HomePage extends AppCompatActivity
         mCapitalView = (TextView) findViewById(R.id.capitalInvested);
         mCapitalChangeView = (TextView)findViewById(R.id.percentageCIChange);
         mInvestmentArrow = (ImageView)findViewById(R.id.InvestmentArrow);
-        mExplorButton = (TextView)findViewById(R.id.exploreButton);
-        mExplorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(), WalletAnalysisActivity.class);
-                startActivity(i);
-            }
-        });
     }
 
     @Override
@@ -165,12 +161,6 @@ public class HomePage extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        if (id == R.id.calculator) {
-            Intent i = new Intent(this, CalculatorActivity.class);
-            startActivity(i);
-            return true;
-        }
 
         if (id == R.id.detailed_view) {
             Intent i = new Intent(this, MainActivity.class);

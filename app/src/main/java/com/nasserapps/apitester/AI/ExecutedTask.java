@@ -12,7 +12,7 @@ import android.util.Log;
 
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.JSONParser;
-import com.nasserapps.apitester.Controllers.MainActivity;
+import com.nasserapps.apitester.Controllers.InProgress.MainActivity;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;

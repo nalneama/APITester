@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Controllers.MainActivity"
+            android:name=".Controllers.InProgress.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -42,7 +42,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".Controllers.EditStockListActivity"
+            android:name=".Controllers.InProgress.EditStockListActivity"
             android:label="@string/title_activity_edit_stock_list"
             android:parentActivityName=".Controllers.HomePage"
             android:theme="@style/AppTheme.NoActionBar">
@@ -51,28 +51,20 @@
                 android:value="com.nasserapps.apitester.Controllers.HomePage"/>
         </activity>
         <activity
-            android:name=".Controllers.EditInvestmentListActivity"
+            android:name=".Controllers.InProgress.EditInvestmentListActivity"
             android:label="@string/title_activity_edit_investment_list"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".Controllers.CalculatorActivity"
-            android:label="@string/title_activity_calculator"
-            android:parentActivityName=".Controllers.HomePage"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nasserapps.apitester.Controllers.HomePage"/>
-        </activity>
-        <activity
-            android:name=".Controllers.RulesActivity"
+            android:name=".Controllers.InProgress.RulesActivity"
             android:label="@string/title_activity_rules"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".Controllers.WalletAnalysisActivity"
-            android:label="@string/title_activity_wallet_analysis"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".Controllers.Activities.SettingsActivity"
+            android:label="@string/action_settings"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:parentActivityName=".Controllers.Activities.HomeActivity">
         </activity>
         <activity
             android:name=".Controllers.Activities.HomeActivity"

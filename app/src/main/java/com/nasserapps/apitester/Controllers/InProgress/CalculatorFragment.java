@@ -1,4 +1,4 @@
-package com.nasserapps.apitester.Controllers;
+package com.nasserapps.apitester.Controllers.InProgress;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
