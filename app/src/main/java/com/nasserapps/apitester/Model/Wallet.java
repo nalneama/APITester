@@ -13,6 +13,7 @@ public class Wallet {
     //Wallet
     List<Investment> mInvestmentList;
 
+    private HashMap<String,Ticker> StocksData;
     //User
     ArrayList<Ticker> mWatchList;
 
@@ -75,6 +76,7 @@ public class Wallet {
     //User
     public ArrayList<Ticker> getWatchList() {
         return mWatchList;
+        //(ArrayList)StocksData.values();
     }
 
     //Wallet
@@ -85,6 +87,10 @@ public class Wallet {
     //User
     public void setWatchList(ArrayList<Ticker> watchList) {
         mWatchList = watchList;
+    }
+
+    public void setStocksData(ArrayList<Ticker> watchList){
+        StocksData=getWatchMap(watchList);
     }
 
     //User

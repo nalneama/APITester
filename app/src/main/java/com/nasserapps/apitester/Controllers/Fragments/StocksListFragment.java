@@ -32,6 +32,7 @@ import com.nasserapps.apitester.Model.DataSource;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
+import com.nasserapps.apitester.util.SimpleDividerItemDecoration;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -69,7 +70,7 @@ public class StocksListFragment extends Fragment {
         mStockWatchListView.setHasFixedSize(true);
         mStockWatchListView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mStockWatchListView.setItemAnimator(new DefaultItemAnimator());
-
+        mStockWatchListView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
         //2.0 Initialize variables for display
         //2.1 The DataSource (Object responsible to work with the application memory)
         mDataSource = new DataSource(getActivity());

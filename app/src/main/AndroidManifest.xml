@@ -37,18 +37,9 @@
             android:exported="false"/>
 
         <activity
-            android:name=".Controllers.HomePage"
-            android:label="@string/title_activity_home_page"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
             android:name=".Controllers.InProgress.EditStockListActivity"
             android:label="@string/title_activity_edit_stock_list"
-            android:parentActivityName=".Controllers.HomePage"
             android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nasserapps.apitester.Controllers.HomePage"/>
         </activity>
         <activity
             android:name=".Controllers.InProgress.EditInvestmentListActivity"

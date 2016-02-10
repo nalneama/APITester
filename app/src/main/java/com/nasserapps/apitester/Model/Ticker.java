@@ -20,12 +20,24 @@ public class Ticker {
     double change;
     final String APICode;
 
+    public void setInWatchList(boolean inWatchList) {
+        this.inWatchList = inWatchList;
+    }
+
+    public boolean isInWatchList() {
+        return inWatchList;
+    }
+
+    boolean inWatchList;
+
     public Ticker(String APICode) {
         this.APICode = APICode;
+        inWatchList=true;
     }
 
     public Ticker() {
         APICode="";
+        inWatchList=true;
     }
 
     public double getChange() {

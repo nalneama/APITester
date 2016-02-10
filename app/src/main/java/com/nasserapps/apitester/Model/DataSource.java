@@ -17,9 +17,14 @@ public class DataSource {
     Context mContext;
     private ArrayList<String> mStocksList;
 
+    private static final String MEMORY_KEY="appMemory";
+    private static final String SETTINGS_AI_ACTIVATED ="isAIActivated";
+    private static final String MEMORY_WALLET_DATA="WalletData";
+    private static final String SETTINGS_NOTIFICATION_STATUS="isNotificationEnabled";
+
     public DataSource(Context context){
         mContext = context;
-        memory = mContext.getSharedPreferences("appMemory", mContext.MODE_PRIVATE);
+        memory = mContext.getSharedPreferences(MEMORY_KEY, mContext.MODE_PRIVATE);
     }
 
     public boolean isStoredDataAvailable (){
@@ -50,7 +55,7 @@ public class DataSource {
     private String getStoredStockData(){
 
         //Initiate SharedPreferences
-        return memory.getString("WalletData","No Data");
+        return memory.getString("WalletData", "No Data");
     }
 
     //To be made private
@@ -78,7 +83,7 @@ public class DataSource {
     }
 
     public Wallet getWallet(){
-        String data = memory.getString("WalletData", null);
+        String data = memory.getString(MEMORY_WALLET_DATA, null);
         Gson gson = new Gson();
         Wallet wallet = gson.fromJson(data,
                 Wallet.class);
@@ -86,13 +91,26 @@ public class DataSource {
         return wallet;
     }
 
+
+
+
+
+    public boolean isNotificationEnabled(){
+        return memory.getBoolean(SETTINGS_NOTIFICATION_STATUS, false);
+    }
+
+    public void setNotificationStatus(boolean b){
+        memoryWriter = memory.edit();
+        memoryWriter.putBoolean(SETTINGS_NOTIFICATION_STATUS,b).apply();
+    }
+
     public boolean isAIActivated(){
-        return memory.getBoolean("isAIActivated", false);
+        return memory.getBoolean(SETTINGS_AI_ACTIVATED, false);
     }
 
     public void setIsAIActivated(boolean b){
         memoryWriter = memory.edit();
-        memoryWriter.putBoolean("isAIActivated",b).apply();
+        memoryWriter.putBoolean(SETTINGS_AI_ACTIVATED,b).apply();
     }
 
 }

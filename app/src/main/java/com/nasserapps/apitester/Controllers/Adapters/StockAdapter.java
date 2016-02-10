@@ -42,6 +42,9 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockHolder>
 
     public class StockHolder extends RecyclerView.ViewHolder{
 
+        private TextView mStockHigh;
+        private TextView mStockLow;
+        private TextView mStockVolume;
         //View Declaration
         private TextView mStockNameView;
         private TextView mStockSymbol;
@@ -59,10 +62,13 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockHolder>
             mStockNameView = (TextView)itemView.findViewById(R.id.stockName);
             mStockSymbol = (TextView) itemView.findViewById(R.id.stockSymbol);
             mStockPrice = (TextView) itemView.findViewById(R.id.stockPrice);
-            mStockPBValue = (TextView) itemView.findViewById(R.id.bpvalue);
+            mStockPBValue = (TextView) itemView.findViewById(R.id.pbvalue);
             mStockPERatio = (TextView) itemView.findViewById(R.id.peratio);
             mStockChange = (TextView) itemView.findViewById(R.id.change);
             mStockPercentage = (TextView) itemView.findViewById(R.id.percentage);
+            mStockVolume = (TextView)itemView.findViewById(R.id.volume);
+            mStockHigh = (TextView) itemView.findViewById(R.id.high);
+            mStockLow = (TextView) itemView.findViewById(R.id.low);
         }
 
         public void bindStock(Ticker stock){
@@ -70,9 +76,9 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockHolder>
             mStockNameView.setText(mStock.getName());
             mStockSymbol.setText(mStock.getSymbol());
             mStockPrice.setText(mStock.getPrice()+"");
-            mStockPBValue.setText("BP: " + mStock.getPBV());
+            mStockPBValue.setText("High: " + mStock.getPBV());
             mStockPERatio.setText("PE: " + mStock.getPERatio());
-
+            mStockVolume.setText("Ask: "+mStock.getVolume());
             mStockPrice.setTextColor(mContext.getResources().getColor(mStock.getPriceColor()));
 
 

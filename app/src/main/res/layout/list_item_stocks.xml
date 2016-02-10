@@ -8,21 +8,22 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/stockSymbol"
+        android:id="@+id/stockName"
         android:paddingBottom="6dp"
         android:textStyle="bold"
         android:textColor="#424242"
-        android:textSize="18sp"
-        tool:text="QIBK"/>
+        android:textSize="14sp"
+        tool:text="Qatar Islamic Bank"/>
 
     <TextView
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:singleLine="true"
-        android:id="@+id/stockName"
-        tool:text="Qatar Islamic Bank"
+        android:id="@+id/stockSymbol"
+        tool:text="QIIK"
+        android:textStyle="bold"
         android:paddingBottom="12dp"
-        android:layout_below="@id/stockSymbol"/>
+        android:layout_below="@id/stockName"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,60 +33,39 @@
         android:textColor="#9E9E9E"
         android:textSize="22sp"
         tool:text="79.11"
-        android:layout_above="@+id/textView"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="16dp"/>
+        android:layout_alignParentEnd="true"/>
 
     <TextView
+        tool:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
-        android:layout_marginStart="67dp"
-        android:id="@+id/textView2"
-        android:layout_alignBottom="@+id/stockPrice"
-        android:layout_toEndOf="@+id/stockName"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
-        android:id="@+id/textView"
-        android:layout_marginLeft="45dp"
-        android:layout_alignTop="@+id/stockName"
-        android:layout_alignEnd="@+id/textView2"/>
-
-    <TextView
-        tool:text="BP: 1.56"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
-        android:text="BP:"
+        android:text=""
         android:textSize="12sp"
-        android:id="@+id/bpvalue"
-        android:layout_below="@+id/textView2"
-        android:layout_alignStart="@+id/peratio"/>
+        android:id="@+id/low"
+        android:layout_below="@+id/high"
+        android:layout_alignStart="@+id/high"/>
 
     <TextView
-        tool:text="PE: 10.56"
+        tool:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
-        android:id="@+id/peratio"
-        android:text="PE:"
+        android:id="@+id/high"
+        android:text=""
         android:textSize="12sp"
         android:layout_alignTop="@+id/stockPrice"
-        android:layout_toStartOf="@+id/stockPrice"
-        android:layout_marginEnd="46dp"/>
+        android:layout_toStartOf="@+id/stockPrice"/>
 
     <TextView
         tool:text="-1.7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
-        android:text="BP:"
+        android:text="--"
         android:textSize="12sp"
         android:id="@+id/change"
-        android:layout_alignTop="@+id/bpvalue"
+        android:layout_alignTop="@+id/low"
         android:layout_toStartOf="@+id/percentage"/>
 
     <TextView
@@ -93,11 +73,91 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp"
+        android:text="(---)"
         android:textSize="12sp"
         android:layout_marginLeft="2dp"
         android:id="@+id/percentage"
         android:layout_alignTop="@+id/change"
         android:layout_alignEnd="@+id/stockPrice"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/stockSymbol"
+        android:id="@+id/linearlayout"
+        android:orientation="horizontal">
+
+        <TextView
+            tool:text="Volume: 100k"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Ask: N/A"
+            android:id="@+id/volume"
+            android:textSize="11sp"
+            android:layout_marginEnd="46dp"/>
+
+        <TextView
+            tool:text="PE: 10.56"
+            android:layout_weight="0.9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="PE: N/A"
+            android:id="@+id/peratio"
+            android:textAlignment="center"
+            android:textSize="11sp"
+            android:layout_marginEnd="46dp"/>
+
+
+
+        <TextView
+            tool:text="PBV: 1.56"
+            android:id="@+id/pbvalue"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="High: N/A"
+            android:textAlignment="viewEnd"
+            android:textSize="11sp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/linearlayout"
+        android:orientation="horizontal">
+
+        <TextView
+            tool:text="Volume: 100k"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Bid: N/A"
+            android:textSize="11sp"
+            android:layout_marginEnd="46dp"/>
+
+        <TextView
+            tool:text="PE: 10.56"
+            android:layout_weight="0.9"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="PBV: N/A"
+            android:textAlignment="center"
+            android:textSize="11sp"
+            android:layout_marginEnd="46dp"/>
+
+
+
+        <TextView
+            tool:text="PBV: 1.56"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Low: N/A"
+            android:textAlignment="viewEnd"
+            android:textSize="11sp"/>
+    </LinearLayout>
 
 </RelativeLayout>
