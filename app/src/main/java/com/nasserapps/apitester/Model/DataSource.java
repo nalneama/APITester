@@ -11,10 +11,11 @@ import java.util.ArrayList;
 
 public class DataSource {
 
-
+    private Context mContext;
+    private SqlLiteDbHelper mSqlLiteDbHelper;
     private SharedPreferences memory;
     private SharedPreferences.Editor memoryWriter;
-    Context mContext;
+
     private ArrayList<String> mStocksList;
 
     private static final String MEMORY_KEY="appMemory";
@@ -24,8 +25,44 @@ public class DataSource {
 
     public DataSource(Context context){
         mContext = context;
+
+//      mSqlLiteDbHelper = new SqlLiteDbHelper(mContext);
+//      SQLiteDatabase database = mSqlLiteDbHelper.getReadableDatabase();
+//      database.close();
+
         memory = mContext.getSharedPreferences(MEMORY_KEY, mContext.MODE_PRIVATE);
     }
+
+//    private SQLiteDatabase open(){
+//        return mSqlLiteDbHelper.getWritableDatabase();
+//    }
+//
+//    private void close(SQLiteDatabase database){
+//        database.close();
+//    }
+//
+//    public Ticker getStock(){
+//        SQLiteDatabase database = open();
+//
+//        Cursor cursor = database.rawQuery("SELECT * FROM stocks_db", null);
+//        if (cursor != null && cursor.moveToFirst()){
+//            // Get the API code from cursor.getString(2)
+//            Ticker ticker = new Ticker(cursor.getString(2));
+//            // return stock
+//            cursor.close();
+//            close(database);
+//
+//            return ticker;
+//
+//        }
+//        return new Ticker("else");
+//    }
+
+
+
+
+
+
 
     public boolean isStoredDataAvailable (){
         return !getStoredStockData().contains("No Data");

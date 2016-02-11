@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,6 +22,7 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "database.sqlite";
     private static final String DB_PATH_SUFFIX = "/databases/";
     static Context ctx;
+
     public SqlLiteDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         ctx = context;
@@ -41,6 +43,24 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
 
         }
         return null;
+    }
+
+    public Ticker Get_StockDetails(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM stocks_db", null);
+        if (cursor != null && cursor.moveToFirst()){
+            // Get the API code from cursor.getString(2)
+            Ticker ticker = new Ticker(cursor.getString(1));
+            // return stock
+            cursor.close();
+            db.close();
+
+            return ticker;
+
+        }
+        return new Ticker("else");
+
     }
 
     public void CopyDataBaseFromAsset() throws IOException{
@@ -69,8 +89,9 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
         myOutput.flush();
         myOutput.close();
         myInput.close();
-
+        Toast.makeText(ctx,"Application is ready",Toast.LENGTH_LONG).show();
     }
+
     private static String getDatabasePath() {
         return ctx.getApplicationInfo().dataDir + DB_PATH_SUFFIX
                 + DATABASE_NAME;

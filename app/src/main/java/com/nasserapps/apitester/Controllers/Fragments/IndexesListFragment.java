@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import com.nasserapps.apitester.Controllers.Dialogs.AlertDialogFragment;
 import com.nasserapps.apitester.Model.DataSource;
 import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.UserData;
 import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
 import com.squareup.okhttp.Call;
@@ -38,6 +39,7 @@ public class IndexesListFragment extends Fragment {
     DataSource mDataSource;
     List<Ticker> mStockWatchList;
     List<Ticker> mIndexWatchList;
+    private UserData mUserData;
     Wallet mWallet;
 
     private RecyclerView mIndexWatchListView;
@@ -56,10 +58,11 @@ public class IndexesListFragment extends Fragment {
         //2.0 Initialize variables for display
         //2.1 The DataSource (Object responsible to work with the application memory)
         mDataSource = new DataSource(getActivity());
+        mUserData = new UserData(getActivity());
         //2.2 The Wallet
         mWallet = new Wallet();
         //2.2a Checking if data is available in memory: if yes, then get wallet data from memory
-        if(mDataSource.isStoredDataAvailable()) {
+        if(mUserData.isUserDataAvailable()) {
             mWallet = mDataSource.getWallet();
             mStockWatchList =mWallet.getWatchList();
         }
@@ -107,7 +110,7 @@ public class IndexesListFragment extends Fragment {
     }
 
     public void updateDisplay() {
-        if(mDataSource.isStoredDataAvailable()) {
+        if(mUserData.isUserDataAvailable()) {
             setDisplay();
         }
         else {

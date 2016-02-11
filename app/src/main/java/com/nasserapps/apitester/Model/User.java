@@ -16,10 +16,13 @@ public class User {
 
 
     public User(Context context) {
+        // New Items
         mContext = context;
         mWallet= new Wallet();
-        mAllStocks = new HashMap<>();
         mUserData = new UserData(mContext);
+
+        //Get mAllStocks from SQLDatabase
+        mAllStocks = new HashMap<>();
     }
 
 
@@ -30,7 +33,7 @@ public class User {
     public ArrayList<Ticker> getAllStocks(){
         return sort((ArrayList) mAllStocks.values(), mUserData.getSortPreference());
     }
-    public ArrayList<Ticker> getWatchLists(){
+    public ArrayList<Ticker> getWatchList(){
         ArrayList<Ticker> watchlist = new ArrayList<>();
         for(Ticker ticker:mAllStocks.values()){
             if (ticker.isInWatchList()){
@@ -88,6 +91,5 @@ public class User {
 
         return list;
     }
-
 
 }

@@ -8,8 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import com.nasserapps.apitester.Model.Contact;
 import com.nasserapps.apitester.Model.SqlLiteDbHelper;
+import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.R;
 
 public class RulesActivity extends AppCompatActivity {
@@ -17,9 +17,9 @@ public class RulesActivity extends AppCompatActivity {
 
 
     SqlLiteDbHelper dbHelper;
-    Contact contacts ;
     TextView tv1;
 
+    //DataSource mDataSource;
 
 
     @Override
@@ -31,6 +31,7 @@ public class RulesActivity extends AppCompatActivity {
 
         dbHelper = new SqlLiteDbHelper(this);
 
+        //mDataSource = new DataSource(this);
         tv1 = (TextView)findViewById(R.id.textViewContact);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -42,9 +43,16 @@ public class RulesActivity extends AppCompatActivity {
 
 
                 dbHelper.openDataBase();
-                contacts = new Contact();
-                contacts = dbHelper.Get_ContactDetails();
-                tv1.setText("Name: "+contacts.getName()+"\n Mobile No: "+contacts.getMobileNo());
+                Ticker ticker = dbHelper.Get_StockDetails();
+
+
+                //contacts = new Contact();
+                //contacts = dbHelper.Get_ContactDetails();
+                //tv1.setText("Name: " + contacts.getName() + "\n Mobile No: " + contacts.getMobileNo());
+
+                //Ticker ticker = mDataSource.getStock();
+                tv1.setText("Name: "+ticker.getAPICode());
+
             }
         });
 

@@ -13,19 +13,15 @@ public class Wallet {
     //Wallet
     List<Investment> mInvestmentList;
 
-    private HashMap<String,Ticker> StocksData;
-    //User
-    ArrayList<Ticker> mWatchList;
 
-    //User
-    private String mSortType = "A-Z";
+    public Wallet(){
+        mInvestmentList= new ArrayList<>();
+    }
 
-    //Wallet
     public Wallet( List<Investment> investmentList) {
         mInvestmentList = investmentList;
     }
 
-    //Wallet
     public double getProfit(){
         double profit=0;
         for (int i=0; i<mInvestmentList.size();i++){
@@ -34,7 +30,6 @@ public class Wallet {
         return profit;
     }
 
-    //Wallet
     public double getCapital(){
         double capital=0;
         for (int i=0; i<mInvestmentList.size();i++){
@@ -43,7 +38,6 @@ public class Wallet {
         return capital;
     }
 
-    //Wallet
     public double getCurrentWorth(){
         double worth=0;
         for (int i=0; i<mInvestmentList.size();i++){
@@ -52,39 +46,35 @@ public class Wallet {
         return worth;
     }
 
-    //Wallet
     public double getReturn(){
         return getProfit()/getCapital();
     }
 
-
-    //Wallet
     public double getPercentageChange(){
         return (getCurrentWorth()-getCapital())/getCapital();
     }
 
-    //Wallet
     public List<Investment> getInvestmentList() {
-        return mInvestmentList;
+            return mInvestmentList;
     }
 
-    //Wallet
     public void setInvestmentList(List<Investment> investmentList) {
         mInvestmentList = investmentList;
     }
 
+
+
+
+
     //User
+    ArrayList<Ticker> mWatchList;
+    private HashMap<String,Ticker> StocksData;
+
     public ArrayList<Ticker> getWatchList() {
         return mWatchList;
         //(ArrayList)StocksData.values();
     }
 
-    //Wallet
-    public Wallet(){
-        mInvestmentList= new ArrayList<>();
-    }
-
-    //User
     public void setWatchList(ArrayList<Ticker> watchList) {
         mWatchList = watchList;
     }
@@ -93,7 +83,6 @@ public class Wallet {
         StocksData=getWatchMap(watchList);
     }
 
-    //User
     public void setInitialWatchList(List<Ticker> watchList){
         mWatchList = (ArrayList) watchList;
 //        String[] companies = mContext.getResources().getStringArray(R.array.Companies_API_Codes);
@@ -102,7 +91,6 @@ public class Wallet {
 //        }
     }
 
-    //User
     public void updateWatchList(String json) throws JSONException{
 
         JSONParser jsonParser = new JSONParser(json);
@@ -110,16 +98,6 @@ public class Wallet {
 
     }
 
-    //Preference
-    public String getAPIKey(){
-        String APICode="";
-        for(Ticker stock:mWatchList){
-            APICode=APICode+stock.getAPICode()+"+";
-        }
-        return APICode;
-    }
-
-    //User
     public static HashMap<String, Ticker> getWatchMap(ArrayList<Ticker> list){
             HashMap<String, Ticker> watchMap = new HashMap<>();
             for(Ticker stock:list){
@@ -128,7 +106,6 @@ public class Wallet {
             return watchMap;
         }
 
-    //User
     public List<Ticker> sort(List<Ticker> list, String string){
         //mSortType = string;
         HashMap<String, Comparator<Ticker>> comparatorHashMap =  new HashMap<>();
@@ -173,4 +150,16 @@ public class Wallet {
         return list;
         }
 
+
+
+
+
+    //Preference
+    public String getAPIKey(){
+        String APICode="";
+        for(Ticker stock:mWatchList){
+            APICode=APICode+stock.getAPICode()+"+";
+        }
+        return APICode;
+    }
 }
