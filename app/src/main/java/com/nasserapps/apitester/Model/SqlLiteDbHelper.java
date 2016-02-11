@@ -1,10 +1,10 @@
 package com.nasserapps.apitester.Model;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
@@ -16,7 +16,7 @@ import java.io.OutputStream;
 public class SqlLiteDbHelper extends SQLiteOpenHelper {
 
     // All Static variables
-// Database Version
+    // Database Version
     private static final int DATABASE_VERSION = 1;
     // Database Name
     private static final String DATABASE_NAME = "database.sqlite";
@@ -28,68 +28,34 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
         ctx = context;
     }
 
-    // Getting single contact
-    public Contact Get_ContactDetails() {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("SELECT * FROM contacts_db", null);
-        if (cursor != null && cursor.moveToFirst()){
-            Contact cont = new Contact(cursor.getInt(0),cursor.getString(1), cursor.getString(2));
-// return contact
-            cursor.close();
-            db.close();
-
-            return cont;
-
-        }
-        return null;
-    }
-
-    public Ticker Get_StockDetails(){
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("SELECT * FROM stocks_db", null);
-        if (cursor != null && cursor.moveToFirst()){
-            // Get the API code from cursor.getString(2)
-            Ticker ticker = new Ticker(cursor.getString(1));
-            // return stock
-            cursor.close();
-            db.close();
-
-            return ticker;
-
-        }
-        return new Ticker("else");
-
-    }
-
     public void CopyDataBaseFromAsset() throws IOException{
 
         InputStream myInput = ctx.getAssets().open(DATABASE_NAME);
 
-// Path to the just created empty db
+        // Path to the just created empty db
         String outFileName = getDatabasePath();
 
-// if the path doesn't exist first, create it
+      // if the path doesn't exist first, create it
         File f = new File(ctx.getApplicationInfo().dataDir + DB_PATH_SUFFIX);
         if (!f.exists())
             f.mkdir();
 
-// Open the empty db as the output stream
+        // Open the empty db as the output stream
         OutputStream myOutput = new FileOutputStream(outFileName);
 
-// transfer bytes from the inputfile to the outputfile
+        // transfer bytes from the inputfile to the outputfile
         byte[] buffer = new byte[1024];
         int length;
         while ((length = myInput.read(buffer)) > 0) {
             myOutput.write(buffer, 0, length);
         }
 
-// Close the streams
+        // Close the streams
         myOutput.flush();
         myOutput.close();
         myInput.close();
         Toast.makeText(ctx,"Application is ready",Toast.LENGTH_LONG).show();
+        Log.d("zxc","Database copied from Assets folder");
     }
 
     private static String getDatabasePath() {

@@ -60,6 +60,7 @@ public class WalletFragment extends Fragment {
         super.onResume();
         UserData mUserData = new UserData(getActivity());
         if(mUserData.isUserDataAvailable()) {
+            // Get Wallet Data from User Object
             mDataSource = new DataSource(getActivity().getApplicationContext());
             mWallet = new Wallet();
             mWallet = mDataSource.getWallet();

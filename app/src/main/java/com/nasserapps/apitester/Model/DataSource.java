@@ -2,12 +2,15 @@ package com.nasserapps.apitester.Model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DataSource {
 
@@ -21,71 +24,65 @@ public class DataSource {
     private static final String MEMORY_KEY="appMemory";
     private static final String SETTINGS_AI_ACTIVATED ="isAIActivated";
     private static final String MEMORY_WALLET_DATA="WalletData";
-    private static final String SETTINGS_NOTIFICATION_STATUS="isNotificationEnabled";
 
     public DataSource(Context context){
         mContext = context;
 
-//      mSqlLiteDbHelper = new SqlLiteDbHelper(mContext);
-//      SQLiteDatabase database = mSqlLiteDbHelper.getReadableDatabase();
-//      database.close();
+        mSqlLiteDbHelper = new SqlLiteDbHelper(mContext);
+        SQLiteDatabase database = mSqlLiteDbHelper.openDataBase();
+        database.close();
 
         memory = mContext.getSharedPreferences(MEMORY_KEY, mContext.MODE_PRIVATE);
     }
 
-//    private SQLiteDatabase open(){
-//        return mSqlLiteDbHelper.getWritableDatabase();
-//    }
-//
-//    private void close(SQLiteDatabase database){
-//        database.close();
-//    }
-//
-//    public Ticker getStock(){
-//        SQLiteDatabase database = open();
-//
-//        Cursor cursor = database.rawQuery("SELECT * FROM stocks_db", null);
-//        if (cursor != null && cursor.moveToFirst()){
-//            // Get the API code from cursor.getString(2)
-//            Ticker ticker = new Ticker(cursor.getString(2));
-//            // return stock
-//            cursor.close();
-//            close(database);
-//
-//            return ticker;
-//
-//        }
-//        return new Ticker("else");
-//    }
+    //For testing only
+    public Ticker getStock(){
+        SQLiteDatabase database = mSqlLiteDbHelper.openDataBase();
 
+        Cursor cursor = database.rawQuery("SELECT * FROM stocks_db", null);
+        if (cursor != null && cursor.moveToFirst()){
+            // Get the API code from cursor.getString(2)
+            Ticker ticker = new Ticker(cursor.getString(2));
+            // return stock
+            cursor.close();
+            database.close();
 
+            return ticker;
 
-
-
-
-
-    public boolean isStoredDataAvailable (){
-        return !getStoredStockData().contains("No Data");
+        }
+        return new Ticker("else");
     }
+
+    public HashMap<String,Ticker> getStocks(){
+        SQLiteDatabase database = mSqlLiteDbHelper.openDataBase();
+
+        HashMap<String,Ticker> AllStocks= new HashMap<>();
+
+        Cursor cursor = database.rawQuery("SELECT * FROM stocks_db", null);
+        if (cursor != null && cursor.moveToFirst()){
+            do {
+                // Get the API code from cursor.getString(2)
+                Ticker ticker = new Ticker(cursor.getString(1));
+                AllStocks.put(ticker.APICode,ticker);
+                // return stock
+            }while(cursor.moveToNext());
+            cursor.close();
+            database.close();
+
+            return AllStocks;
+
+        }
+        return null;
+    }
+
+
+
+
+
+
 
     public ArrayList<Ticker> loadStocksDataFromMemory() throws JSONException{
         return new JSONParser(getStoredStockData()).getStocks();
-    }
-    public ArrayList<Ticker> loadIndexesDataFromMemory() throws JSONException{
-        return new JSONParser(getStoredStockData()).getIndexes();
-    }
-
-    public ArrayList<Ticker> loadStockDataFromResponse(String data) throws JSONException{
-        return new JSONParser(data).getStocks();
-    }
-
-    public ArrayList<Ticker> loadIndexDataFromResponse(String data) throws JSONException{
-        return new JSONParser(data).getIndexes();
-    }
-
-    //TODO save the order of stocks in the memory and save the new sort option in memory
-    public ArrayList<String> getStocksNameList() {
-        return mStocksList;
     }
 
     //Can be deleted after refactoring
@@ -128,18 +125,6 @@ public class DataSource {
         return wallet;
     }
 
-
-
-
-
-    public boolean isNotificationEnabled(){
-        return memory.getBoolean(SETTINGS_NOTIFICATION_STATUS, false);
-    }
-
-    public void setNotificationStatus(boolean b){
-        memoryWriter = memory.edit();
-        memoryWriter.putBoolean(SETTINGS_NOTIFICATION_STATUS,b).apply();
-    }
 
     public boolean isAIActivated(){
         return memory.getBoolean(SETTINGS_AI_ACTIVATED, false);

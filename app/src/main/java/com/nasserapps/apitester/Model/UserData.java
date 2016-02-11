@@ -50,4 +50,13 @@ public class UserData {
     public void setSortPreference(String sortPreference) {
         mSortPreference = sortPreference;
     }
+
+    public boolean isNotificationEnabled(){
+        return memory.getBoolean(SETTINGS_NOTIFICATION_STATUS, false);
+    }
+
+    public void setNotificationStatus(boolean b){
+        memoryWriter = memory.edit();
+        memoryWriter.putBoolean(SETTINGS_NOTIFICATION_STATUS,b).apply();
+    }
 }

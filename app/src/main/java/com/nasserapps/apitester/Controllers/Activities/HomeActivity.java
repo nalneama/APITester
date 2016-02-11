@@ -10,7 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.nasserapps.apitester.Controllers.Adapters.SectionsPagerAdapter;
-import com.nasserapps.apitester.Model.DataSource;
+import com.nasserapps.apitester.Model.User;
+import com.nasserapps.apitester.Model.UserData;
 import com.nasserapps.apitester.R;
 
 public class HomeActivity extends AppCompatActivity {
@@ -18,33 +19,40 @@ public class HomeActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private ViewPager mViewPager;
-    private DataSource mDataSource;
-    Toolbar toolbar;
+    private UserData mUserData;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        // 1.0 Initialize the toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        // TODO Check if user is available or should create a user
-
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
+        // 1.1 Create the adapter that will return a fragment for each of the three primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(this,getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
+        // 1.2 Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(1);
         mViewPager.setOffscreenPageLimit(2);
-
-        mDataSource = new DataSource(this);
-
+        // 1.3 Add the ViewPager to the Tab layout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+
+        // 2.0 Initialize the UserData.
+        mUserData = new UserData(this);
+
+
+
+        // TODO 2.0 Check if user is new or existing
+        // 2.1a If user is available (mUserData.isUserDataAvailable), then get the user
+
+
+
+        // 2.1b Else, create a new User.
+        User mUser = new User(this);
 
     }
 
@@ -54,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home, menu);
         MenuItem menuItem = toolbar.getMenu().getItem(0);
-        if(!mDataSource.isNotificationEnabled()) {
+        if(!mUserData.isNotificationEnabled()) {
             menuItem.setIcon(R.drawable.ic_notifications_none_white_24dp);
         }
         else{
@@ -70,13 +78,13 @@ public class HomeActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.action_notification:
-                if(mDataSource.isNotificationEnabled()) {
+                if(mUserData.isNotificationEnabled()) {
                     item.setIcon(R.drawable.ic_notifications_none_white_24dp);
-                    mDataSource.setNotificationStatus(false);
+                    mUserData.setNotificationStatus(false);
                 }
                 else{
                     item.setIcon(R.drawable.ic_notifications_active_white_24dp);
-                    mDataSource.setNotificationStatus(true);
+                    mUserData.setNotificationStatus(true);
                 }
                 break;
             case R.id.action_settings:

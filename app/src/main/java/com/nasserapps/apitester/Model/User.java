@@ -13,26 +13,29 @@ public class User {
     private HashMap<String,Ticker> mAllStocks;
     private Context mContext;
     private UserData mUserData;
+    private DataSource mDataSource;
 
 
     public User(Context context) {
         // New Items
-        mContext = context;
+        mContext=context;
+
         mWallet= new Wallet();
+
+        mDataSource = new DataSource(mContext);
+
+        mAllStocks = mDataSource.getStocks();
         mUserData = new UserData(mContext);
-
         //Get mAllStocks from SQLDatabase
-        mAllStocks = new HashMap<>();
-    }
-
-
-    public Ticker getStock(String key){
-        return mAllStocks.get(key);
     }
 
     public ArrayList<Ticker> getAllStocks(){
-        return sort((ArrayList) mAllStocks.values(), mUserData.getSortPreference());
+        ArrayList<Ticker> allStocks = new ArrayList<>();
+        allStocks.addAll(mAllStocks.values());
+        //return sort(allStocks, mUserData.getSortPreference());
+        return allStocks;
     }
+
     public ArrayList<Ticker> getWatchList(){
         ArrayList<Ticker> watchlist = new ArrayList<>();
         for(Ticker ticker:mAllStocks.values()){
