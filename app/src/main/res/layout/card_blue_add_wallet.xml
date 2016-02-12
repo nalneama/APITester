@@ -12,7 +12,7 @@
         android:textSize="24sp"
         android:layout_weight="1"
         android:textStyle="bold"
-        android:textColor="@color/cardview_dark_background"
+        android:textColor="@android:color/white"
         android:text="Portfolio Analysis"/>
 
     <TextView
@@ -20,5 +20,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:text="Current stock worth"/>
+        android:textColor="@android:color/white"
+        android:text="Start now by adding your investments."/>
 </LinearLayout>

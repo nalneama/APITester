@@ -3,12 +3,12 @@ package com.nasserapps.apitester.Controllers.InProgress;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,8 +22,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.nasserapps.apitester.Model.DataSource;
-import com.nasserapps.apitester.Model.Investment;
 import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
 
@@ -32,12 +32,13 @@ import java.util.ArrayList;
 public class EditInvestmentListActivity extends AppCompatActivity {
 
     private RecyclerView mEditStocksRecyclerView ;
-    private ArrayList<Investment> mInvestmentsList;
+    private ArrayList<Ticker> mInvestmentsList;
     private ArrayList<Ticker> mStockWatchList;
     EditText dInvestmentQuantity;
     EditText dPurchasedPrice;
     AutoCompleteTextView dAutoCompleteTextView;
     private int mQuantity;
+    private User mUser;
     DataSource mDataSource;
     Wallet mWallet;
     private double mPrice;
@@ -49,18 +50,10 @@ public class EditInvestmentListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mDataSource = new DataSource(getApplicationContext());
-        mWallet = mDataSource.getWallet();
-        mStockWatchList =mWallet.getWatchList();
+        mDataSource = new DataSource(this);
+        mUser = new User(this);
+        mInvestmentsList = mUser.getWallet().getInvestments();
 
-        Log.e("zxc",mStockWatchList.isEmpty()+"");
-        mInvestmentsList =new ArrayList<>();
-        mInvestmentsList=(ArrayList)mWallet.getInvestmentList();
-        //for(Ticker stock:mStockWatchList){
-          //  mInvestmentsList.add(new Investment(stock, 0, 0));
-//        }
-
-        //Log.e("zxc", mInvestmentsList.get(0).getStock().getName()+"");
 
         mEditStocksRecyclerView = (RecyclerView) findViewById(R.id.edit_investment_list_recyclerview);
         mEditStocksRecyclerView.setHasFixedSize(true);
@@ -79,19 +72,14 @@ public class EditInvestmentListActivity extends AppCompatActivity {
                                 mPrice = Double.parseDouble(dPurchasedPrice.getText().toString());
                                 mQuantity = Integer.parseInt(dInvestmentQuantity.getText().toString());
                                 String stock = dAutoCompleteTextView.getText().toString();
-                                Investment i = new Investment(new Ticker("Empty"), 0, 0);
-                                for (Ticker s : mStockWatchList) {
-                                    if (stock.contains(s.getSymbol())) {
-                                        i = new Investment(s, mPrice, mQuantity);
-                                    }
-                                }
-                                if (!i.getStock().getAPICode().contains("Empty")) {
-                                    mInvestmentsList.add(i);
-                                    mWallet.setInvestmentList(mInvestmentsList);
-                                    mDataSource.saveWallet(mWallet);
-                                }
+
+                                Ticker ticker = mDataSource.getStock(stock);
+                                ticker.setPurchasedPrice(mPrice);
+                                ticker.setQuantity(mQuantity);
+                                mInvestmentsList.add(ticker);
+
                                 //if not correct show snakbar
-                                //Snackbar.make(mEditStocksRecyclerView, "hahaha", Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(mEditStocksRecyclerView, "hahaha", Snackbar.LENGTH_LONG).show();
                                 mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mInvestmentsList), false);
                             }
                         });
@@ -106,23 +94,23 @@ public class EditInvestmentListActivity extends AppCompatActivity {
 
                     @Override
                     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                        mPrice = Double.parseDouble(dPurchasedPrice.getText().toString());
-                        mQuantity = Integer.parseInt(dInvestmentQuantity.getText().toString());
-                        String stock = dAutoCompleteTextView.getText().toString();
-                        Investment i = new Investment(new Ticker("Empty"), 0, 0);
-                        for (Ticker s : mStockWatchList) {
-                            if (stock.contains(s.getSymbol())) {
-                                i = new Investment(s, mPrice, mQuantity);
-                            }
-                        }
-                        if (!i.getStock().getAPICode().contains("Empty")) {
-                            mInvestmentsList.add(i);
-                            mWallet.setInvestmentList(mInvestmentsList);
-                            mDataSource.saveWallet(mWallet);
-                        }
-                        //if not correct show snakbar
-                        //Snackbar.make(mEditStocksRecyclerView, "hahaha", Snackbar.LENGTH_LONG).show();
-                        mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mInvestmentsList), false);
+//                        mPrice = Double.parseDouble(dPurchasedPrice.getText().toString());
+//                        mQuantity = Integer.parseInt(dInvestmentQuantity.getText().toString());
+//                        String stock = dAutoCompleteTextView.getText().toString();
+//                        Investment i = new Investment(new Ticker("Empty"), 0, 0);
+//                        for (Ticker s : mStockWatchList) {
+//                            if (stock.contains(s.getSymbol())) {
+//                                i = new Investment(s, mPrice, mQuantity);
+//                            }
+//                        }
+//                        if (!i.getStock().getAPICode().contains("Empty")) {
+//                            mInvestmentsList.add(i);
+//                            mWallet.setInvestmentList(mInvestmentsList);
+//                            mDataSource.saveWallet(mWallet);
+//                        }
+//                        //if not correct show snakbar
+//                        //Snackbar.make(mEditStocksRecyclerView, "hahaha", Snackbar.LENGTH_LONG).show();
+//                        mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mInvestmentsList), false);
                         return true;
                     }
                 });
@@ -142,9 +130,9 @@ public class EditInvestmentListActivity extends AppCompatActivity {
 
     private class InvestmentListAdapter extends RecyclerView.Adapter<InvestmentListHolder> {
 
-        private ArrayList<Investment> mInvestments;
+        private ArrayList<Ticker> mInvestments;
 
-        public InvestmentListAdapter(ArrayList<Investment> investmentsList) {
+        public InvestmentListAdapter(ArrayList<Ticker> investmentsList) {
             mInvestments =investmentsList;
         }
 
@@ -157,7 +145,7 @@ public class EditInvestmentListActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(InvestmentListHolder holder, int position) {
-            Investment investment = mInvestments.get(position);
+            Ticker investment = mInvestments.get(position);
             holder.bindStock(investment,position);
         }
 
@@ -173,7 +161,7 @@ public class EditInvestmentListActivity extends AppCompatActivity {
         private TextView mInvestmentQuantity;
         private TextView mPurchasedPrice;
         private int mPosition;
-        private Investment mInvestment;
+        private Ticker mInvestment;
 
         public InvestmentListHolder(View itemView) {
             super(itemView);
@@ -189,24 +177,24 @@ public class EditInvestmentListActivity extends AppCompatActivity {
                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    mPrice = Double.parseDouble(dPurchasedPrice.getText().toString());
-                                    mQuantity = Integer.parseInt(dInvestmentQuantity.getText().toString());
-                                    mInvestment.setQuantity(mQuantity);
-                                    mInvestment.setPurchasedPrice(mPrice);
-                                    //if not correct show snakbar
-                                    mInvestmentsList.set(mPosition,mInvestment);
-                                    mWallet.setInvestmentList(mInvestmentsList);
-                                    mDataSource.saveWallet(mWallet);
-                                    mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mInvestmentsList),false);
+//                                    mPrice = Double.parseDouble(dPurchasedPrice.getText().toString());
+//                                    mQuantity = Integer.parseInt(dInvestmentQuantity.getText().toString());
+//                                    mInvestment.setQuantity(mQuantity);
+//                                    mInvestment.setPurchasedPrice(mPrice);
+//                                    //if not correct show snakbar
+//                                    mInvestmentsList.set(mPosition,mInvestment);
+//                                    mWallet.setInvestmentList(mInvestmentsList);
+//                                    mDataSource.saveWallet(mWallet);
+//                                    mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mInvestmentsList),false);
                                 }
                             })
                     .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            mInvestmentsList.remove(mPosition);
-                            mWallet.setInvestmentList(mInvestmentsList);
-                            mDataSource.saveWallet(mWallet);
-                            mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mInvestmentsList), false);
+//                            mInvestmentsList.remove(mPosition);
+//                            mWallet.setInvestmentList(mInvestmentsList);
+//                            mDataSource.saveWallet(mWallet);
+//                            mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mInvestmentsList), false);
                         }
                     });
                     builder.create();
@@ -228,10 +216,10 @@ public class EditInvestmentListActivity extends AppCompatActivity {
             });
         }
 
-        public void bindStock(Investment investment,int position){
+        public void bindStock(Ticker investment,int position){
             mInvestment=investment;
             mPosition=position;
-            mInvestmentNameView.setText(investment.getStock().getSymbol()+"");
+            mInvestmentNameView.setText(investment.getSymbol()+"");
             mInvestmentQuantity.setText(investment.getQuantity() + "");
             mPurchasedPrice.setText(investment.getPurchasedPrice() + "");
         }
@@ -251,10 +239,10 @@ public class EditInvestmentListActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.reset_investment_list) {
-            mInvestmentsList.clear();
-            mWallet.setInvestmentList(mInvestmentsList);
-            mDataSource.saveWallet(mWallet);
-            mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mInvestmentsList),false);
+//            mInvestmentsList.clear();
+//            mWallet.setInvestmentList(mInvestmentsList);
+//            mDataSource.saveWallet(mWallet);
+//            mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mInvestmentsList),false);
             return true;
         }
         return super.onOptionsItemSelected(item);

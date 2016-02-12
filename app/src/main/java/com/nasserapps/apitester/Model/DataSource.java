@@ -63,7 +63,8 @@ public class DataSource {
             do {
                 // Get the API code from cursor.getString(2)
                 //Ticker ticker = new Ticker(cursor.getString(1));
-                Ticker ticker = new Ticker(cursor.getString(0),cursor.getString(1),cursor.getDouble(15),cursor.getDouble(11),cursor.getLong(6),cursor.getDouble(10),cursor.getDouble(9),cursor.getDouble(12),cursor.getString(14),cursor.getDouble(13),cursor.getString(2),cursor.getInt(5)==1);
+                //Ticker ticker = new Ticker(cursor.getString(0),cursor.getString(1),cursor.getDouble(15),cursor.getDouble(11),cursor.getLong(6),cursor.getDouble(10),cursor.getDouble(9),cursor.getDouble(12),cursor.getString(14),cursor.getDouble(13),cursor.getString(2),cursor.getInt(5)==1);
+                Ticker ticker = new Ticker(cursor.getString(0),cursor.getString(1),cursor.getDouble(15),cursor.getDouble(11),cursor.getLong(6),cursor.getDouble(10),cursor.getDouble(9),cursor.getDouble(12),cursor.getString(14),cursor.getDouble(13),cursor.getString(2),cursor.getInt(5)==1,cursor.getDouble(25),cursor.getInt(26),cursor.getInt(24)==1);
                 AllStocks.put(ticker.APICode,ticker);
                 // return stock
             }while(cursor.moveToNext());
@@ -76,7 +77,9 @@ public class DataSource {
         return null;
     }
 
-
+    public Ticker getStock(String symbol){
+        return getStocks().get(symbol);
+    }
 
 
 

@@ -19,6 +19,10 @@ public class Ticker {
     String percentage;
     double change;
     final String APICode;
+    boolean inWatchList;
+    private double mPurchasedPrice;
+    private int mQuantity;
+    private boolean inInvestments;
 
     public Ticker(String symbol, String name, double price, double PERatio, long volume, double bid, double ask, double PBV, String percentage, double change, String APICode, boolean inWatchList) {
         mSymbol = symbol;
@@ -43,7 +47,23 @@ public class Ticker {
         return inWatchList;
     }
 
-    boolean inWatchList;
+    public Ticker(String symbol, String name, double price, double PERatio, long volume, double bid, double ask, double PBV, String percentage, double change, String APICode, boolean inWatchList, double purchasedPrice, int quantity, boolean inInvestments) {
+        mSymbol = symbol;
+        mName = name;
+        mPrice = price;
+        mPERatio = PERatio;
+        mVolume = volume;
+        mBid = bid;
+        mAsk = ask;
+        mPBV = PBV;
+        this.percentage = percentage;
+        this.change = change;
+        this.APICode = APICode;
+        this.inWatchList = inWatchList;
+        mPurchasedPrice = purchasedPrice;
+        mQuantity = quantity;
+        this.inInvestments = inInvestments;
+    }
 
     public Ticker(String APICode) {
         this.APICode = APICode;
@@ -149,5 +169,29 @@ public class Ticker {
 
     public String getAPICode() {
         return APICode;
+    }
+
+    public double getPurchasedPrice() {
+        return mPurchasedPrice;
+    }
+
+    public void setPurchasedPrice(double purchasedPrice) {
+        mPurchasedPrice = purchasedPrice;
+    }
+
+    public int getQuantity() {
+        return mQuantity;
+    }
+
+    public void setQuantity(int quantity) {
+        mQuantity = quantity;
+    }
+
+    public boolean isInInvestments() {
+        return inInvestments;
+    }
+
+    public void setInInvestments(boolean inInvestments) {
+        this.inInvestments = inInvestments;
     }
 }

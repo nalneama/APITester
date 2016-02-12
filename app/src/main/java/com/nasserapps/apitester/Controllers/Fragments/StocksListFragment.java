@@ -34,6 +34,7 @@ import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.Model.UserData;
 import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
+import com.nasserapps.apitester.Tools;
 import com.nasserapps.apitester.util.SimpleDividerItemDecoration;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
@@ -45,12 +46,11 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class StocksListFragment extends Fragment {
 
     private DataSource mDataSource;
-    private List<Ticker> mStockWatchList;
+    private ArrayList<Ticker> mStockWatchList;
     private Wallet mWallet;
     private UserData mUserData;
     private User mUser;
@@ -287,19 +287,19 @@ public class StocksListFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                mStockWatchList=mWallet.sort(mStockWatchList, "A-Z");
+                                mStockWatchList= Tools.sort(mStockWatchList, "A-Z");
                                 break;
                             case 1:
-                                mStockWatchList=mWallet.sort(mStockWatchList,"Book Value");
+                                mStockWatchList=Tools.sort(mStockWatchList,"Book Value");
                                 break;
                             case 2:
-                                mStockWatchList=mWallet.sort(mStockWatchList,"Gain");
+                                mStockWatchList=Tools.sort(mStockWatchList,"Gain");
                                 break;
                             case 3:
-                                mStockWatchList=mWallet.sort(mStockWatchList,"PE Ratio");
+                                mStockWatchList=Tools.sort(mStockWatchList,"PE Ratio");
                                 break;
                             case 4:
-                                mStockWatchList= mWallet.sort(mStockWatchList,"Price");
+                                mStockWatchList= Tools.sort(mStockWatchList,"Price");
                                 break;}
                         dialog.dismiss();
                         updateDisplay();

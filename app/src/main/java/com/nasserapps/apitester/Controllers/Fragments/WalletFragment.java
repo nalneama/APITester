@@ -21,7 +21,7 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.nasserapps.apitester.Controllers.InProgress.EditInvestmentListActivity;
 import com.nasserapps.apitester.Controllers.InProgress.RulesActivity;
 import com.nasserapps.apitester.Model.DataSource;
-import com.nasserapps.apitester.Model.Investment;
+import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.UserData;
 import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 public class WalletFragment extends Fragment {
 
-    private ArrayList<Investment> mInvestmentsList;
+    private ArrayList<Ticker> mInvestmentsList;
     DataSource mDataSource;
     Wallet mWallet;
     private CardView mWalletCard;
@@ -64,11 +64,12 @@ public class WalletFragment extends Fragment {
         if(mUserData.isUserDataAvailable()) {
             // Get Wallet Data from User Object
             mDataSource = new DataSource(getActivity().getApplicationContext());
+            //TODO get wallet from user
             mWallet = new Wallet();
             mWallet = mDataSource.getWallet();
             mInvestmentsList = new ArrayList<>();
             mWallet.setInvestmentList(mInvestmentsList);
-            mInvestmentsList = (ArrayList) mWallet.getInvestmentList();
+            mInvestmentsList =  mWallet.getInvestments();
             if (mInvestmentsList.size() == 0) {
                 mWalletCard.setVisibility(View.GONE);
                 mBlueCard.setVisibility(View.VISIBLE);
@@ -89,13 +90,13 @@ public class WalletFragment extends Fragment {
             // xIndex (even if from different DataSets), since no values can be
             // drawn above each other.
             for (int i = 0; i < mInvestmentsList.size(); i++) {
-                yVals.add(new Entry((float) mInvestmentsList.get(i).getCurrentWorth(), i));
+                yVals.add(new Entry((float) mInvestmentsList.get(i).getQuantity(), i));
             }
 
             ArrayList<String> xVals = new ArrayList<>();
 
             for (int i = 0; i < mInvestmentsList.size(); i++)
-                xVals.add(mInvestmentsList.get(i).getStock().getName());
+                xVals.add(mInvestmentsList.get(i).getName());
 
             PieDataSet dataSet = new PieDataSet(yVals, "");
             dataSet.setSliceSpace(2f);
@@ -120,6 +121,7 @@ public class WalletFragment extends Fragment {
         }
         else{
             mWalletCard.setVisibility(View.GONE);
+            mBlueCard.setVisibility(View.VISIBLE);
         }
 
     }

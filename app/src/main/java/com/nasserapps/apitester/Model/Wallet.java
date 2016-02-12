@@ -11,21 +11,21 @@ import java.util.List;
 public class Wallet {
 
     //Wallet
-    List<Investment> mInvestmentList;
+    ArrayList<Ticker> mInvestmentList;
 
 
     public Wallet(){
         mInvestmentList= new ArrayList<>();
     }
 
-    public Wallet( List<Investment> investmentList) {
+    public Wallet( ArrayList<Ticker> investmentList) {
         mInvestmentList = investmentList;
     }
 
     public double getProfit(){
         double profit=0;
         for (int i=0; i<mInvestmentList.size();i++){
-            profit= profit + mInvestmentList.get(i).getProfit();
+            profit= profit + mInvestmentList.get(i).getQuantity()*mInvestmentList.get(i).getPurchasedPrice();
         }
         return profit;
     }
@@ -33,7 +33,7 @@ public class Wallet {
     public double getCapital(){
         double capital=0;
         for (int i=0; i<mInvestmentList.size();i++){
-            capital= capital + mInvestmentList.get(i).getCapitalInvested();
+            capital= capital + mInvestmentList.get(i).getQuantity();
         }
         return capital;
     }
@@ -41,7 +41,7 @@ public class Wallet {
     public double getCurrentWorth(){
         double worth=0;
         for (int i=0; i<mInvestmentList.size();i++){
-            worth= worth + mInvestmentList.get(i).getCurrentWorth();
+            worth= worth + mInvestmentList.get(i).getPrice();
         }
         return worth;
     }
@@ -54,11 +54,17 @@ public class Wallet {
         return (getCurrentWorth()-getCapital())/getCapital();
     }
 
-    public List<Investment> getInvestmentList() {
-            return mInvestmentList;
+    public ArrayList<Ticker> getInvestments(){
+        ArrayList<Ticker> stocklist = new ArrayList<>();
+        for(Ticker ticker:mInvestmentList){
+            if (ticker.isInInvestments()){
+                stocklist.add(ticker);
+            }
+        }
+        return stocklist;
     }
 
-    public void setInvestmentList(List<Investment> investmentList) {
+    public void setInvestmentList(ArrayList<Ticker> investmentList) {
         mInvestmentList = investmentList;
     }
 

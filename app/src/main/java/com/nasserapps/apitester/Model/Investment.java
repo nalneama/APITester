@@ -6,10 +6,10 @@ public class Investment {
     private double mPurchasedPrice;
     private int mQuantity;
 
-    public Investment(Ticker stock, double purchasedPrice, int quantity) {
+    public Investment(Ticker stock) {
         mStock = stock;
-        mPurchasedPrice = purchasedPrice;
-        mQuantity = quantity;
+        mPurchasedPrice = stock.getPurchasedPrice();
+        mQuantity = stock.getQuantity();
     }
 
     public Ticker getStock() {
