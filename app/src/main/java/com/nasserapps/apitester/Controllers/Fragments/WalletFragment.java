@@ -34,6 +34,7 @@ public class WalletFragment extends Fragment {
     DataSource mDataSource;
     Wallet mWallet;
     private CardView mWalletCard;
+    private CardView mBlueCard;
     PieChart pieChart;
 
     @Override
@@ -51,6 +52,7 @@ public class WalletFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_wallet, container, false);
         mWalletCard = (CardView) view.findViewById(R.id.walletCard);
         pieChart = (PieChart)view.findViewById(R.id.pieChart);
+        mBlueCard = (CardView) view.findViewById(R.id.blue_card);
 
         return view;
     }
@@ -69,9 +71,11 @@ public class WalletFragment extends Fragment {
             mInvestmentsList = (ArrayList) mWallet.getInvestmentList();
             if (mInvestmentsList.size() == 0) {
                 mWalletCard.setVisibility(View.GONE);
+                mBlueCard.setVisibility(View.VISIBLE);
                 //Show the other card
             } else {
                 mWalletCard.setVisibility(View.VISIBLE);
+                mBlueCard.setVisibility(View.GONE);
                 //Hide the other card
             }
 

@@ -22,7 +22,6 @@ public class DataSource {
     private ArrayList<String> mStocksList;
 
     private static final String MEMORY_KEY="appMemory";
-    private static final String SETTINGS_AI_ACTIVATED ="isAIActivated";
     private static final String MEMORY_WALLET_DATA="WalletData";
 
     public DataSource(Context context){
@@ -43,6 +42,7 @@ public class DataSource {
         if (cursor != null && cursor.moveToFirst()){
             // Get the API code from cursor.getString(2)
             Ticker ticker = new Ticker(cursor.getString(2));
+
             // return stock
             cursor.close();
             database.close();
@@ -62,7 +62,8 @@ public class DataSource {
         if (cursor != null && cursor.moveToFirst()){
             do {
                 // Get the API code from cursor.getString(2)
-                Ticker ticker = new Ticker(cursor.getString(1));
+                //Ticker ticker = new Ticker(cursor.getString(1));
+                Ticker ticker = new Ticker(cursor.getString(0),cursor.getString(1),cursor.getDouble(15),cursor.getDouble(11),cursor.getLong(6),cursor.getDouble(10),cursor.getDouble(9),cursor.getDouble(12),cursor.getString(14),cursor.getDouble(13),cursor.getString(2),cursor.getInt(5)==1);
                 AllStocks.put(ticker.APICode,ticker);
                 // return stock
             }while(cursor.moveToNext());
@@ -126,13 +127,5 @@ public class DataSource {
     }
 
 
-    public boolean isAIActivated(){
-        return memory.getBoolean(SETTINGS_AI_ACTIVATED, false);
-    }
-
-    public void setIsAIActivated(boolean b){
-        memoryWriter = memory.edit();
-        memoryWriter.putBoolean(SETTINGS_AI_ACTIVATED,b).apply();
-    }
 
 }

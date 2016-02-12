@@ -11,14 +11,11 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.nasserapps.apitester.Model.DataSource;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
-import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class EditStockListActivity extends AppCompatActivity {
@@ -28,10 +25,6 @@ public class EditStockListActivity extends AppCompatActivity {
 
     private RecyclerView mEditStocksRecyclerView ;
     private ArrayList<Ticker> mAllStocksList;
-    private ArrayList<Ticker> mWatchList;
-    private HashMap<String,Ticker> mWatchMap;
-    private Wallet mWallet;
-    private DataSource mDataSource;
     private User mUser;
 
     @Override
@@ -47,6 +40,7 @@ public class EditStockListActivity extends AppCompatActivity {
 
         mAllStocksList = new ArrayList<>();
         mAllStocksList = mUser.getAllStocks();
+        mUser.sort(mAllStocksList,"A-Z");
 
         mEditStocksRecyclerView = (RecyclerView) findViewById(R.id.edit_stock_list_recyclerview);
         mEditStocksRecyclerView.setHasFixedSize(true);
@@ -89,7 +83,6 @@ public class EditStockListActivity extends AppCompatActivity {
 
         private TextView mStockNameView;
         private CheckBox mStockCheckbox;
-        private String mStockName;
 
         public StockListHolder(View itemView) {
             super(itemView);
@@ -98,8 +91,7 @@ public class EditStockListActivity extends AppCompatActivity {
         }
 
         public void bindStock(final Ticker stock){
-            mStockName=stock.getAPICode();
-            mStockNameView.setText(mStockName);
+            mStockNameView.setText(stock.getSymbol()+": "+stock.getName());
             mStockCheckbox.setChecked(stock.isInWatchList());
 
             mStockCheckbox.setOnClickListener(new View.OnClickListener() {
@@ -123,110 +115,6 @@ public class EditStockListActivity extends AppCompatActivity {
         //Save to database
     }
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_edit_stock_list);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//
-//        //Todo fix right now
-//        mUser= new User(getApplicationContext());
-//
-//        //mDataSource = new DataSource(getApplicationContext());
-//        mUser= new User(getApplicationContext());
-//        mWallet = mDataSource.getWallet();
-//
-//        mWatchList = new ArrayList<>();
-//        mWatchList =(ArrayList) mWallet.getWatchList();
-//
-//        //*****New addition
-//        mWatchMap = new HashMap<>();
-//        mWatchMap = Wallet.getWatchMap(mWatchList);
-//
-//        //*****
-//
-//        mAllStocksList = new ArrayList<>(Arrays.asList(getApplicationContext().getResources().getStringArray(R.array.Companies_Names)));
-//
-//        mEditStocksRecyclerView = (RecyclerView) findViewById(R.id.edit_stock_list_recyclerview);
-//        mEditStocksRecyclerView.setHasFixedSize(true);
-//        mEditStocksRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-//        mEditStocksRecyclerView.setAdapter(new StockListAdapter(mAllStocksList));
-//
-//
-//        //Filter items by three parameters: Islamic, Mixed, Non-Islamic
-//
-//    }
-//
-//    private class StockListAdapter extends RecyclerView.Adapter<StockListHolder> {
-//
-//        private List<String> stocks;
-//
-//        public StockListAdapter(ArrayList<String> stocksList) {
-//            stocks=stocksList;
-//        }
-//
-//        @Override
-//        public StockListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-//            View view = layoutInflater.inflate(R.layout.list_item_stock_names,parent,false);
-//            return new StockListHolder(view);
-//        }
-//
-//        @Override
-//        public void onBindViewHolder(StockListHolder holder, int position) {
-//            String stock = stocks.get(position);
-//            holder.bindStock(stock);
-//        }
-//
-//        @Override
-//        public int getItemCount() {
-//            return stocks.size();
-//        }
-//    }
-//
-//    private class StockListHolder extends RecyclerView.ViewHolder {
-//
-//        private TextView mStockNameView;
-//        private CheckBox mStockCheckbox;
-//        private String mStockName;
-//
-//        public StockListHolder(View itemView) {
-//            super(itemView);
-//            mStockNameView = (TextView)itemView.findViewById(R.id.edit_stock_name);
-//            mStockCheckbox = (CheckBox) itemView.findViewById(R.id.edit_stock_checkbox);
-//        }
-//
-//        public void bindStock(String stock){
-//            mStockName=stock;
-//            mStockNameView.setText(mStockName);
-//            if(mWatchMap.containsKey(stock.substring(0,4))){
-//                mStockCheckbox.setChecked(true);
-//            }
-//            else {
-//                mStockCheckbox.setChecked(false);
-//            }
-//
-//            mStockCheckbox.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (mStockCheckbox.isChecked()) {
-//                        mWatchList.add(new Ticker(mStockName.substring(0, 4) + ".QA"));
-//                    } else {
-//                        Ticker stock = new Ticker();
-//                        for (Ticker ticker : mWatchList) {
-//                            if (ticker.getAPICode().contains(mStockName.substring(0, 4))) {
-//                                stock = ticker;
-//                            }
-//                        }
-//                        mWatchList.remove(stock);
-//                    }
-//                }
-//            });
-//        }
-//    }
-//
 //    @Override
 //    protected void onPause() {
 //        super.onPause();

@@ -36,28 +36,6 @@
         android:layout_alignParentEnd="true"/>
 
     <TextView
-        tool:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
-        android:text=""
-        android:textSize="12sp"
-        android:id="@+id/low"
-        android:layout_below="@+id/high"
-        android:layout_alignStart="@+id/high"/>
-
-    <TextView
-        tool:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
-        android:id="@+id/high"
-        android:text=""
-        android:textSize="12sp"
-        android:layout_alignTop="@+id/stockPrice"
-        android:layout_toStartOf="@+id/stockPrice"/>
-
-    <TextView
         tool:text="-1.7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,7 +43,7 @@
         android:text="--"
         android:textSize="12sp"
         android:id="@+id/change"
-        android:layout_alignTop="@+id/low"
+        android:layout_below="@+id/stockPrice"
         android:layout_toStartOf="@+id/percentage"/>
 
     <TextView
@@ -88,12 +66,12 @@
         android:orientation="horizontal">
 
         <TextView
-            tool:text="Volume: 100k"
+            tool:text="Ask: 100k"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Ask: N/A"
-            android:id="@+id/volume"
+            android:id="@+id/ask"
             android:textSize="11sp"
             android:layout_marginEnd="46dp"/>
 
@@ -111,8 +89,8 @@
 
 
         <TextView
-            tool:text="PBV: 1.56"
-            android:id="@+id/pbvalue"
+            tool:text="High: 1.56"
+            android:id="@+id/high"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -130,32 +108,34 @@
         android:orientation="horizontal">
 
         <TextView
-            tool:text="Volume: 100k"
+            tool:text="Bid: 100k"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Bid: N/A"
+            android:id="@+id/bid"
             android:textSize="11sp"
             android:layout_marginEnd="46dp"/>
 
         <TextView
-            tool:text="PE: 10.56"
+            tool:text="PBV: 2.56"
             android:layout_weight="0.9"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="PBV: N/A"
+            android:id="@+id/pbvalue"
             android:textAlignment="center"
             android:textSize="11sp"
             android:layout_marginEnd="46dp"/>
 
 
-
         <TextView
-            tool:text="PBV: 1.56"
+            tool:text="Low: 11.56"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Low: N/A"
+            android:id="@+id/low"
             android:textAlignment="viewEnd"
             android:textSize="11sp"/>
     </LinearLayout>

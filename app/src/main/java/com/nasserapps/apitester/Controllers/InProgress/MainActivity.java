@@ -29,6 +29,7 @@ import com.nasserapps.apitester.AI.InformAI;
 import com.nasserapps.apitester.Model.JSONParser;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.DataSource;
+import com.nasserapps.apitester.Model.UserData;
 import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
 import com.nasserapps.apitester.exchangeTime;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Ticker mStock;
     DataSource mDataSource;
+    private UserData mUserData;
 
     @Bind(R.id.nameView) TextView nameView;
     @Bind(R.id.PercentageView) TextView percentageView;
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         mProgressBar.setVisibility(View.INVISIBLE);
 
         mDataSource = new DataSource(getApplicationContext());
+        mUserData = new UserData(this);
 
         //update Display with data from memory
         JSONParser jsonParser;
@@ -303,13 +306,13 @@ public class MainActivity extends AppCompatActivity {
     //Start AI Assistant if it is not activated (Only allow AI Assistant activation if SharedPreferences indicates that the AI is off).
     public void startAI() {
 
-        boolean isAIActivated = mDataSource.isAIActivated();
+        boolean isAIActivated = mUserData.isAIActivated();
 
         if(isAIActivated){
             Snackbar.make(fab, "AI Assistance already working", Snackbar.LENGTH_LONG).show();
         }
         else {
-            mDataSource.setIsAIActivated(true);
+            mUserData.setIsAIActivated(true);
             // Construct an intent that will execute the AlarmReceiver
             Intent intent = new Intent(getApplicationContext(), InformAI.class);
             // Create a PendingIntent to be triggered when the alarm goes off
@@ -330,14 +333,14 @@ public class MainActivity extends AppCompatActivity {
     //Stop AI Assistant if it is activated (Only allow AI Assistant de-activation if SharedPreferences indicates that the AI is on).
     public void stopAI() {
 
-        boolean isAIActivated = mDataSource.isAIActivated();
+        boolean isAIActivated = mUserData.isAIActivated();
 
         if(!isAIActivated){
             Snackbar.make(fab, "AI Assistance already not working", Snackbar.LENGTH_LONG).show();
         }
 
         else{
-            mDataSource.setIsAIActivated(false);
+            mUserData.setIsAIActivated(false);
             Intent intent = new Intent(getApplicationContext(), InformAI.class);
             final PendingIntent pIntent = PendingIntent.getBroadcast(this, InformAI.REQUEST_CODE,
                     intent, PendingIntent.FLAG_UPDATE_CURRENT);

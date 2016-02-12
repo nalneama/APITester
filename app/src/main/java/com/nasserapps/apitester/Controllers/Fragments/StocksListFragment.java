@@ -30,6 +30,7 @@ import com.nasserapps.apitester.Controllers.InProgress.MainActivity;
 import com.nasserapps.apitester.Controllers.InProgress.RulesActivity;
 import com.nasserapps.apitester.Model.DataSource;
 import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.Model.UserData;
 import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
@@ -52,6 +53,7 @@ public class StocksListFragment extends Fragment {
     private List<Ticker> mStockWatchList;
     private Wallet mWallet;
     private UserData mUserData;
+    private User mUser;
 
     private RecyclerView mStockWatchListView;
 
@@ -83,6 +85,8 @@ public class StocksListFragment extends Fragment {
         if(mUserData.isUserDataAvailable()) {
             mWallet = mDataSource.getWallet();
             mStockWatchList =mWallet.getWatchList();
+            mUser = new User(getActivity());
+            mStockWatchList = mUser.getWatchList();
         }
         //2.2b Else,this is first time opening of app, set the wallet to initial data
         else{
@@ -93,6 +97,32 @@ public class StocksListFragment extends Fragment {
                 mStockWatchList.add(new Ticker(code));
             }
             mWallet.setInitialWatchList(mStockWatchList);
+            mUser = new User(getActivity());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            mStockWatchList = mUser.getAllStocks();
         }
 
 

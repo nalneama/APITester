@@ -69,9 +69,9 @@ public class JSONParser {
         stock.setPBV(mQuote.getDouble("PriceBook"));
         stock.setPrice(mQuote.getDouble("LastTradePriceOnly"));
         if(!mQuote.isNull("Bid")){
-        stock.setDemand(mQuote.getDouble("Bid"));}
+        stock.setBid(mQuote.getDouble("Bid"));}
         if(!mQuote.isNull("Ask")){
-        stock.setSupply(mQuote.getDouble("Ask"));}
+        stock.setAsk(mQuote.getDouble("Ask"));}
         stock.setName(mQuote.getString("Name"));
         stock.setPercentage(mQuote.getString("PercentChange"));
         stock.setChange(mQuote.getDouble("Change"));
@@ -87,9 +87,9 @@ public class JSONParser {
         //stock.setPBV(mQuote.getDouble("PriceBook"));
         stock.setPrice(mQuote.getDouble("LastTradePriceOnly"));
         if(!mQuote.isNull("Bid")){
-        stock.setDemand(mQuote.getDouble("Bid"));}
+        stock.setBid(mQuote.getDouble("Bid"));}
         if(!mQuote.isNull("Ask")){
-        stock.setSupply(mQuote.getDouble("Ask"));}
+        stock.setAsk(mQuote.getDouble("Ask"));}
         stock.setName(mQuote.getString("Name"));
         stock.setPercentage(mQuote.getString("PercentChange"));
         stock.setChange(mQuote.getDouble("Change"));
@@ -115,9 +115,9 @@ public class JSONParser {
             stock.setPBV(mQuote.getDouble("PriceBook"));
             stock.setPrice(mQuote.getDouble("LastTradePriceOnly"));
             if(!mQuote.isNull("Bid")){
-                stock.setDemand(mQuote.getDouble("Bid"));}
+                stock.setBid(mQuote.getDouble("Bid"));}
             if(!mQuote.isNull("Ask")){
-                stock.setSupply(mQuote.getDouble("Ask"));}
+                stock.setAsk(mQuote.getDouble("Ask"));}
             stock.setName(mQuote.getString("Name"));
             stock.setPercentage(mQuote.getString("PercentChange"));
             stock.setChange(mQuote.getDouble("Change"));

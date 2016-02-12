@@ -13,12 +13,27 @@ public class Ticker {
     double mPrice;
     double mPERatio;
     long mVolume;
-    double mDemand;
-    double mSupply;
+    double mBid;
+    double mAsk;
     double mPBV;
     String percentage;
     double change;
     final String APICode;
+
+    public Ticker(String symbol, String name, double price, double PERatio, long volume, double bid, double ask, double PBV, String percentage, double change, String APICode, boolean inWatchList) {
+        mSymbol = symbol;
+        mName = name;
+        mPrice = price;
+        mPERatio = PERatio;
+        mVolume = volume;
+        mBid = bid;
+        mAsk = ask;
+        mPBV = PBV;
+        this.percentage = percentage;
+        this.change = change;
+        this.APICode = APICode;
+        this.inWatchList = inWatchList;
+    }
 
     public void setInWatchList(boolean inWatchList) {
         this.inWatchList = inWatchList;
@@ -96,20 +111,20 @@ public class Ticker {
         mVolume = volume;
     }
 
-    public double getDemand() {
-        return mDemand;
+    public double getBid() {
+        return mBid;
     }
 
-    public void setDemand(double demand) {
-        mDemand = demand;
+    public void setBid(double bid) {
+        mBid = bid;
     }
 
-    public double getSupply() {
-        return mSupply;
+    public double getAsk() {
+        return mAsk;
     }
 
-    public void setSupply(double supply) {
-        mSupply = supply;
+    public void setAsk(double ask) {
+        mAsk = ask;
     }
 
     public String getPercentage() {

@@ -59,4 +59,14 @@ public class UserData {
         memoryWriter = memory.edit();
         memoryWriter.putBoolean(SETTINGS_NOTIFICATION_STATUS,b).apply();
     }
+
+
+    public boolean isAIActivated(){
+        return memory.getBoolean(SETTINGS_AI_ACTIVATED, false);
+    }
+
+    public void setIsAIActivated(boolean b){
+        memoryWriter = memory.edit();
+        memoryWriter.putBoolean(SETTINGS_AI_ACTIVATED,b).apply();
+    }
 }

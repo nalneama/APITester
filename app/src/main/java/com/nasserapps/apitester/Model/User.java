@@ -43,7 +43,7 @@ public class User {
                 watchlist.add(ticker);
             }
         }
-        return sort(watchlist,mUserData.getSortPreference());
+        return watchlist;
     }
 
     public Wallet getWallet(){
