@@ -12,7 +12,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,23 +25,12 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.nasserapps.apitester.AI.InformAI;
-import com.nasserapps.apitester.Model.JSONParser;
+import com.nasserapps.apitester.Model.Database.DataSource;
 import com.nasserapps.apitester.Model.Ticker;
-import com.nasserapps.apitester.Model.DataSource;
 import com.nasserapps.apitester.Model.UserData;
-import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
-import com.nasserapps.apitester.exchangeTime;
 import com.nasserapps.apitester.stockHistoricalData;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -80,46 +68,46 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        setSupportActionBar(toolbar);
-        mProgressBar.setVisibility(View.INVISIBLE);
-
-        mDataSource = new DataSource(getApplicationContext());
-        mUserData = new UserData(this);
-
-        //update Display with data from memory
-        JSONParser jsonParser;
-
-        try {
-            //jsonParser = new JSONParser(mDataSource.getStoredStockData());
-            //mStock = jsonParser.getStocks().get(0);
-            mStock = mDataSource.loadStocksDataFromMemory().get(0);
-            updateDisplay();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        //populateTable();
-
-        //Chart Trial
-        constructChart();
-        //priceView.setText(memory.getString("mStockData","nnn"));
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //get stock data when the time is in the exchange period;
-                exchangeTime time = new exchangeTime();
-                if (time.isInTheExchangePeriod()) {
-                    getStock();
-                    Snackbar.make(fab, "1st logic is ok", Snackbar.LENGTH_LONG).show();
-                } else {
-                    Snackbar.make(fab, time.getCurrentTimeString() + " is not in the range // " + time.getmOpenTimeString() + " and " + time.getmCloseTimeString(), Snackbar.LENGTH_LONG).show();
-                }
-
-            }
-        });
+//
+//        setSupportActionBar(toolbar);
+//        mProgressBar.setVisibility(View.INVISIBLE);
+//
+//        mDataSource = new DataSource(getApplicationContext());
+//        mUserData = new UserData(this);
+//
+//        //update Display with data from memory
+//        JSONParser jsonParser;
+//
+//        try {
+//            //jsonParser = new JSONParser(mDataSource.getStoredStockData());
+//            //mStock = jsonParser.getStocks().get(0);
+//            mStock = mDataSource.loadStocksDataFromMemory().get(0);
+//            updateDisplay();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        //populateTable();
+//
+//        //Chart Trial
+//        constructChart();
+//        //priceView.setText(memory.getString("mStockData","nnn"));
+//
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                //get stock data when the time is in the exchange period;
+//                exchangeTime time = new exchangeTime();
+//                if (time.isInTheExchangePeriod()) {
+//                    getStock();
+//                    Snackbar.make(fab, "1st logic is ok", Snackbar.LENGTH_LONG).show();
+//                } else {
+//                    Snackbar.make(fab, time.getCurrentTimeString() + " is not in the range // " + time.getmOpenTimeString() + " and " + time.getmCloseTimeString(), Snackbar.LENGTH_LONG).show();
+//                }
+//
+//            }
+//        });
 
     }
 
@@ -182,65 +170,65 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Get Stock data from Yahoo API TODO save data to SharedPreferences
-    private void getStock() {
-
-        if(isNetworkAvailable()) {
-            toggleRefresh();
-
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(mDataSource.getAPIURL((new Wallet()).getAPIKey()))
-                    .build();
-
-            Call call = client.newCall(request);
-            call.enqueue(new Callback() {
-                @Override
-                public void onFailure(Request request, IOException e) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            toggleRefresh();
-                        }
-                    });
-                }
-
-                @Override
-                public void onResponse(Response response) throws IOException {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            toggleRefresh();
-                        }
-                    });
-                    try {
-                        String jsonData = response.body().string();
-                        if (response.isSuccessful()) {
-                            JSONParser jsonParser = new JSONParser(jsonData);
-                            mStock = jsonParser.getStocks().get(0);
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    updateDisplay();
-                                }
-                            });
-                            mDataSource.saveStockDataInMemory(jsonData);
-                        } else {
-                            //alertUserAboutError();
-                        }
-                    } catch (IOException e) {
-                        Log.e(TAG, "IO Exception caught", e);
-                    } catch (JSONException e) {
-                        Log.e(TAG, "JSON Exception caught", e);
-                    }
-                }
-            });
-        }
-
-        else{
-            Snackbar.make(fab, "No Connection is available", Snackbar.LENGTH_LONG).show();
-
-        }
-    }
+//    private void getStock() {
+//
+//        if(isNetworkAvailable()) {
+//            toggleRefresh();
+//
+//            OkHttpClient client = new OkHttpClient();
+//            Request request = new Request.Builder()
+//                    .url(mDataSource.getAPIURL((new Wallet()).getAPIKey()))
+//                    .build();
+//
+//            Call call = client.newCall(request);
+//            call.enqueue(new Callback() {
+//                @Override
+//                public void onFailure(Request request, IOException e) {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            toggleRefresh();
+//                        }
+//                    });
+//                }
+//
+//                @Override
+//                public void onResponse(Response response) throws IOException {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            toggleRefresh();
+//                        }
+//                    });
+//                    try {
+//                        String jsonData = response.body().string();
+//                        if (response.isSuccessful()) {
+//                            JSONParser jsonParser = new JSONParser(jsonData);
+//                            mStock = jsonParser.getStocks().get(0);
+//                            runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    updateDisplay();
+//                                }
+//                            });
+//                            mDataSource.saveStockDataInMemory(jsonData);
+//                        } else {
+//                            //alertUserAboutError();
+//                        }
+//                    } catch (IOException e) {
+//                        Log.e(TAG, "IO Exception caught", e);
+//                    } catch (JSONException e) {
+//                        Log.e(TAG, "JSON Exception caught", e);
+//                    }
+//                }
+//            });
+//        }
+//
+//        else{
+//            Snackbar.make(fab, "No Connection is available", Snackbar.LENGTH_LONG).show();
+//
+//        }
+//    }
 
 
 

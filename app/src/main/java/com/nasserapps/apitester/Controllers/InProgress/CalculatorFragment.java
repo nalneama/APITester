@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.nasserapps.apitester.Model.Calculator;
 import com.nasserapps.apitester.R;
 
 /**

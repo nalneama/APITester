@@ -1,7 +1,7 @@
 package com.nasserapps.apitester.AI.CustomNotificationStatement;
 
 import com.nasserapps.apitester.Model.Ticker;
-import com.nasserapps.apitester.Model.Wallet;
+import com.nasserapps.apitester.Model.User;
 
 import java.util.ArrayList;
 
@@ -25,9 +25,9 @@ public class Checklist {
         return response;
     }
 
-    public ArrayList<Ticker> getPassingStocks(Wallet mWallet){
+    public ArrayList<Ticker> getPassingStocks(User mUser){
         ArrayList<Ticker> stocksMeetingCriterias = new ArrayList<>();
-        ArrayList<Ticker> watchList = mWallet.getWatchList();
+        ArrayList<Ticker> watchList = mUser.getWatchList();
 
         for (Ticker stock: watchList){
             if (isPassing(stock)){

@@ -21,7 +21,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.nasserapps.apitester.Model.DataSource;
+import com.nasserapps.apitester.Model.Database.DataSource;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.Model.Wallet;
@@ -51,7 +51,7 @@ public class EditInvestmentListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mDataSource = new DataSource(this);
-        mUser = new User(this);
+        mUser = User.getUser(this);
         mInvestmentsList = mUser.getWallet().getInvestments();
 
 

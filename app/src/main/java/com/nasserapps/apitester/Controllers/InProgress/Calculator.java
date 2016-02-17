@@ -1,4 +1,4 @@
-package com.nasserapps.apitester.Model;
+package com.nasserapps.apitester.Controllers.InProgress;
 
 public class Calculator {
 

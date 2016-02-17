@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
         // 2.1b Else, create a new User.
-        User mUser = new User(this);
+        User mUser = User.getUser(this);
 
     }
 

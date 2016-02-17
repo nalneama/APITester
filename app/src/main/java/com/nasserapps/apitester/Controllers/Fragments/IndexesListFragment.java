@@ -4,12 +4,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,20 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nasserapps.apitester.Controllers.Dialogs.AlertDialogFragment;
-import com.nasserapps.apitester.Model.DataSource;
+import com.nasserapps.apitester.Model.Database.DataSource;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.UserData;
 import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,8 +53,8 @@ public class IndexesListFragment extends Fragment {
         mWallet = new Wallet();
         //2.2a Checking if data is available in memory: if yes, then get wallet data from memory
         if(mUserData.isUserDataAvailable()) {
-            mWallet = mDataSource.getWallet();
-            mStockWatchList =mWallet.getWatchList();
+            //mWallet = mDataSource.getWallet();
+            //mStockWatchList =mWallet.getWatchList();
         }
         //2.2b Else,this is first time opening of app, set the wallet to initial data
         else{
@@ -74,7 +64,7 @@ public class IndexesListFragment extends Fragment {
             for (String code:companies){
                 mStockWatchList.add(new Ticker(code));
             }
-            mWallet.setInitialWatchList(mStockWatchList);
+            //mWallet.setInitialWatchList(mStockWatchList);
         }
 
 
@@ -83,7 +73,7 @@ public class IndexesListFragment extends Fragment {
 
 
         //4.0 Get the updated data and set the display with the updated data
-        getUpdatedData();
+        //getUpdatedData();
 
         return view;
     }
@@ -133,63 +123,63 @@ public class IndexesListFragment extends Fragment {
         //mStockWatchListView.setAdapter(new StockAdapter(getActivity().getApplicationContext(), mStockWatchList));
     }
 
-    private void getUpdatedData() {
-
-        if(isNetworkAvailable()) {
-
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(mDataSource.getAPIURL(mWallet.getAPIKey()))
-                    .build();
-
-            Call call = client.newCall(request);
-            call.enqueue(new Callback() {
-                @Override
-                public void onFailure(Request request, IOException e) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            alertUserAboutError();
-                        }
-                    });
-                }
-
-                @Override
-                public void onResponse(Response response) throws IOException {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                        }
-                    });
-                    try {
-                        final String jsonData = response.body().string();
-                        if (response.isSuccessful()) {
-                            mWallet.updateWatchList(jsonData);
-                            mStockWatchList = mWallet.getWatchList();
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    updateDisplay();
-                                    mDataSource.saveWallet(mWallet);
-                                    //Log.e("zxc", "mWallet. String is: " + mDataSource.getWallet().getAPIKey() + "");
-                                }
-                            });
-                        } else {
-                            alertUserAboutError();
-                        }
-                    } catch (IOException e) {
-                        Log.e("error", "IO Exception caught", e);
-                    } catch (JSONException e) {
-                        Log.e("error", "JSON Exception caught", e);
-                    }
-                }
-            });
-        }
-
-        else{
-            Snackbar.make(mIndexWatchListView, "No Network Connection.", Snackbar.LENGTH_LONG).show();
-        }
-    }
+//    private void getUpdatedData() {
+//
+//        if(isNetworkAvailable()) {
+//
+//            OkHttpClient client = new OkHttpClient();
+//            Request request = new Request.Builder()
+//                    .url(mDataSource.getAPIURL(mWallet.getAPIKey()))
+//                    .build();
+//
+//            Call call = client.newCall(request);
+//            call.enqueue(new Callback() {
+//                @Override
+//                public void onFailure(Request request, IOException e) {
+//                    getActivity().runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            alertUserAboutError();
+//                        }
+//                    });
+//                }
+//
+//                @Override
+//                public void onResponse(Response response) throws IOException {
+//                    getActivity().runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                        }
+//                    });
+//                    try {
+//                        final String jsonData = response.body().string();
+//                        if (response.isSuccessful()) {
+//                            mWallet.updateWatchList(jsonData);
+//                            mStockWatchList = mWallet.getWatchList();
+//                            getActivity().runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    updateDisplay();
+//                                    mDataSource.saveWallet(mWallet);
+//                                    //Log.e("zxc", "mWallet. String is: " + mDataSource.getWallet().getAPIKey() + "");
+//                                }
+//                            });
+//                        } else {
+//                            alertUserAboutError();
+//                        }
+//                    } catch (IOException e) {
+//                        Log.e("error", "IO Exception caught", e);
+//                    } catch (JSONException e) {
+//                        Log.e("error", "JSON Exception caught", e);
+//                    }
+//                }
+//            });
+//        }
+//
+//        else{
+//            Snackbar.make(mIndexWatchListView, "No Network Connection.", Snackbar.LENGTH_LONG).show();
+//        }
+//    }
 
     private void alertUserAboutError() {
         AlertDialogFragment dialog = new AlertDialogFragment();

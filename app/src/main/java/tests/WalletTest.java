@@ -10,7 +10,7 @@ public class WalletTest {
 
     @Test
     public void isAPIKeyCorrect(){
-        mWallet= new Wallet(null);
+        mWallet= new Wallet();
         //mWallet.setInitialWatchList();
         //Assert.assertEquals("MERS.QA+BRES.QA+MRDS.QA+QIIK.QA+QIBK.QA+MARK.QA+AKHI.QA+QIGD.QA+",mWallet.getAPIKey());
     }

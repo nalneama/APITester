@@ -1,6 +1,6 @@
 package tests;
 
-import com.nasserapps.apitester.Model.JSONParser;
+import com.nasserapps.apitester.Model.Database.JSONParser;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -20,9 +21,8 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.nasserapps.apitester.Controllers.InProgress.EditInvestmentListActivity;
 import com.nasserapps.apitester.Controllers.InProgress.RulesActivity;
-import com.nasserapps.apitester.Model.DataSource;
 import com.nasserapps.apitester.Model.Ticker;
-import com.nasserapps.apitester.Model.UserData;
+import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
 
@@ -31,11 +31,13 @@ import java.util.ArrayList;
 public class WalletFragment extends Fragment {
 
     private ArrayList<Ticker> mInvestmentsList;
-    DataSource mDataSource;
     Wallet mWallet;
     private CardView mWalletCard;
     private CardView mBlueCard;
+    private TextView mCapitalView;
+    private TextView mProfitView;
     PieChart pieChart;
+    User mUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,12 @@ public class WalletFragment extends Fragment {
         //1.1 Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_wallet, container, false);
         mWalletCard = (CardView) view.findViewById(R.id.walletCard);
+        mCapitalView = (TextView) view.findViewById(R.id.capitalInvested);
+        mProfitView = (TextView)view.findViewById(R.id.capitalProfit);
+
+
+
+
         pieChart = (PieChart)view.findViewById(R.id.pieChart);
         mBlueCard = (CardView) view.findViewById(R.id.blue_card);
 
@@ -60,25 +68,26 @@ public class WalletFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        UserData mUserData = new UserData(getActivity());
-        if(mUserData.isUserDataAvailable()) {
-            // Get Wallet Data from User Object
-            mDataSource = new DataSource(getActivity().getApplicationContext());
+        mUser = User.getUser(getActivity());
+        mWallet = mUser.getWallet();
+        if(mWallet.getInvestments().size()>0) {
             //TODO get wallet from user
-            mWallet = new Wallet();
-            mWallet = mDataSource.getWallet();
-            mInvestmentsList = new ArrayList<>();
-            mWallet.setInvestmentList(mInvestmentsList);
             mInvestmentsList =  mWallet.getInvestments();
-            if (mInvestmentsList.size() == 0) {
-                mWalletCard.setVisibility(View.GONE);
-                mBlueCard.setVisibility(View.VISIBLE);
-                //Show the other card
-            } else {
-                mWalletCard.setVisibility(View.VISIBLE);
-                mBlueCard.setVisibility(View.GONE);
-                //Hide the other card
-            }
+
+            mWalletCard.setVisibility(View.VISIBLE);
+            mBlueCard.setVisibility(View.GONE);
+            //Hide the other card
+            mCapitalView.setText(String.format(getString(R.string.Format_Capital),mWallet.getCurrentWorth()));
+            mCapitalView.setTextColor(getResources().getColor(mWallet.getPriceColor()));
+
+            //TODO change profit and loss statement
+            mProfitView.setText("Profit: "+String.format(getString(R.string.Format_Capital),mWallet.getProfit()));
+
+            //TODO add arrow direction
+            //TODO add percentage change with color
+
+
+
 
             pieChart.setUsePercentValues(true);
             pieChart.setDescription("");
@@ -122,6 +131,7 @@ public class WalletFragment extends Fragment {
         else{
             mWalletCard.setVisibility(View.GONE);
             mBlueCard.setVisibility(View.VISIBLE);
+
         }
 
     }

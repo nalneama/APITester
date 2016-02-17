@@ -1,6 +1,6 @@
 package tests;
 
-import com.nasserapps.apitester.Model.Calculator;
+import com.nasserapps.apitester.Controllers.InProgress.Calculator;
 
 import org.junit.Assert;
 import org.junit.Test;

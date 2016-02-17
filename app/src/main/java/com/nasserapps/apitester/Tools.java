@@ -10,6 +10,7 @@ import java.util.HashMap;
 public class Tools {
 
 
+    // Sort lists as per the following criteria
     public static ArrayList<Ticker> sort(ArrayList<Ticker> list, String string){
         HashMap<String, Comparator<Ticker>> comparatorHashMap =  new HashMap<>();
 
@@ -52,6 +53,9 @@ public class Tools {
         return list;
     }
 
+
+
+    //General handy methods
     public static Ticker getStockFromList(String symbol, ArrayList<Ticker> list){
         return Tools.convertListToMap(list).get(symbol);
     }

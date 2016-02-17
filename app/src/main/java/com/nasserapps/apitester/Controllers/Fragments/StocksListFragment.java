@@ -28,11 +28,8 @@ import com.nasserapps.apitester.Controllers.Dialogs.AlertDialogFragment;
 import com.nasserapps.apitester.Controllers.InProgress.EditStockListActivity;
 import com.nasserapps.apitester.Controllers.InProgress.MainActivity;
 import com.nasserapps.apitester.Controllers.InProgress.RulesActivity;
-import com.nasserapps.apitester.Model.DataSource;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
-import com.nasserapps.apitester.Model.UserData;
-import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
 import com.nasserapps.apitester.Tools;
 import com.nasserapps.apitester.util.SimpleDividerItemDecoration;
@@ -46,13 +43,11 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class StocksListFragment extends Fragment {
 
-    private DataSource mDataSource;
     private ArrayList<Ticker> mStockWatchList;
-    private Wallet mWallet;
-    private UserData mUserData;
     private User mUser;
 
     private RecyclerView mStockWatchListView;
@@ -75,74 +70,24 @@ public class StocksListFragment extends Fragment {
         mStockWatchListView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mStockWatchListView.setItemAnimator(new DefaultItemAnimator());
         mStockWatchListView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
-        //2.0 Initialize variables for display
-        //2.1 The DataSource (Object responsible to work with the application memory)
-        mDataSource = new DataSource(getActivity());
-        mUserData = new UserData(getActivity());
-        //2.2 The Wallet
-        mWallet = new Wallet();
-        //2.2a Checking if data is available in memory: if yes, then get wallet data from memory
-        if(mUserData.isUserDataAvailable()) {
-            mWallet = mDataSource.getWallet();
-            mStockWatchList =mWallet.getWatchList();
-            mUser = new User(getActivity());
-            mStockWatchList = mUser.getWatchList();
-        }
-        //2.2b Else,this is first time opening of app, set the wallet to initial data
-        else{
-            // mWallet.setInitialWatchList();
-            mStockWatchList = new ArrayList<>();
-            String[] companies = getActivity().getResources().getStringArray(R.array.Companies_API_Codes);
-            for (String code:companies){
-                mStockWatchList.add(new Ticker(code));
-            }
-            mWallet.setInitialWatchList(mStockWatchList);
-            mUser = new User(getActivity());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            mStockWatchList = mUser.getAllStocks();
-        }
-
-
-        //3.0 Set the Display with Initial Data
-        setDisplay();
-
-
-        //4.0 Get the updated data and set the display with the updated data
-        getUpdatedData();
-
+        // TODO remove wallet object from this fragment
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        //Get the user
+        mUser = User.getUser(getActivity());
+        mStockWatchList = mUser.getWatchList();
+
+        //3.0 Set the Display with Data
         updateDisplay();
 
-    }
+        //4.0 Get the updated data and set the display with the updated data
+        //getUpdatedData();
 
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -152,12 +97,7 @@ public class StocksListFragment extends Fragment {
     }
 
     public void updateDisplay() {
-        if(mUserData.isUserDataAvailable()) {
-            setDisplay();
-        }
-        else {
             mStockWatchListView.swapAdapter(new StockAdapter(getActivity().getApplicationContext(),mStockWatchList), false);
-        }
     }
 
     private boolean isNetworkAvailable() {
@@ -171,17 +111,13 @@ public class StocksListFragment extends Fragment {
         return isAvailable;
     }
 
-    public void setDisplay(){
-        mStockWatchListView.setAdapter(new StockAdapter(getActivity().getApplicationContext(), mStockWatchList));
-    }
-
     private void getUpdatedData() {
 
         if(isNetworkAvailable()) {
 
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(mDataSource.getAPIURL(mWallet.getAPIKey()))
+                    .url(mUser.getAPIURL())
                     .build();
 
             Call call = client.newCall(request);
@@ -206,13 +142,11 @@ public class StocksListFragment extends Fragment {
                     try {
                         final String jsonData = response.body().string();
                         if (response.isSuccessful()) {
-                            mWallet.updateWatchList(jsonData);
-                            mStockWatchList = mWallet.getWatchList();
+                            mUser.updateStocksData(jsonData);
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     updateDisplay();
-                                    mDataSource.saveWallet(mWallet);
                                     //Log.e("zxc", "mWallet. String is: " + mDataSource.getWallet().getAPIKey() + "");
                                 }
                             });
@@ -275,31 +209,38 @@ public class StocksListFragment extends Fragment {
                 rules.add(new ExpressionParser().getRule("PE Ratio", "<", "15.0"));
                 rules.add(new ExpressionParser().getRule("PE Ratio", ">","10.0"));
                 Checklist checklist = new Checklist(rules);
-                mStockWatchList=checklist.getPassingStocks(mWallet);
+                mStockWatchList=checklist.getPassingStocks(mUser);
                 updateDisplay();
                 return true;
             }
 
             if (id == R.id.sorting_options) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-                dialog.setSingleChoiceItems(new String[]{"A-Z","Book Value", "Gain","PE Ratio","Price" }, -1, new DialogInterface.OnClickListener() {
+                String[] sortingOptions = new String[]{"A-Z","Book Value", "Gain","PE Ratio","Price" };
+                int index = Arrays.asList(sortingOptions).indexOf(mUser.getUserData().getSortPreference());
+                dialog.setSingleChoiceItems(sortingOptions,index , new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                mStockWatchList= Tools.sort(mStockWatchList, "A-Z");
+                                mStockWatchList= Tools.sort(mUser.getWatchList(), "A-Z");
+                                mUser.getUserData().setSortPreference("A-Z");
                                 break;
                             case 1:
-                                mStockWatchList=Tools.sort(mStockWatchList,"Book Value");
+                                mStockWatchList=Tools.sort(mUser.getWatchList(),"Book Value");
+                                mUser.getUserData().setSortPreference("Book Value");
                                 break;
                             case 2:
-                                mStockWatchList=Tools.sort(mStockWatchList,"Gain");
+                                mStockWatchList=Tools.sort(mUser.getWatchList(),"Gain");
+                                mUser.getUserData().setSortPreference("Gain");
                                 break;
                             case 3:
-                                mStockWatchList=Tools.sort(mStockWatchList,"PE Ratio");
+                                mStockWatchList=Tools.sort(mUser.getWatchList(),"PE Ratio");
+                                mUser.getUserData().setSortPreference("PE Ratio");
                                 break;
                             case 4:
-                                mStockWatchList= Tools.sort(mStockWatchList,"Price");
+                                mStockWatchList= Tools.sort(mUser.getWatchList(),"Price");
+                                mUser.getUserData().setSortPreference("Price");
                                 break;}
                         dialog.dismiss();
                         updateDisplay();

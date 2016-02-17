@@ -1,4 +1,6 @@
-package com.nasserapps.apitester.Model;
+package com.nasserapps.apitester.Model.Database;
+
+import com.nasserapps.apitester.Model.Ticker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -105,33 +107,5 @@ public class JSONParser {
         return mIndexes;
     }
 
-    private Ticker updateStock(Ticker stock,JSONObject mQuote) throws JSONException{
-        //Todo uncomment the two parameters
-        if (stock.getAPICode().equals(mQuote.get("Symbol"))){
-            stock.setSymbol(mQuote.getString("Symbol").substring(0, 4));
-            if(!mQuote.isNull("PERatio")) {
-                stock.setPERatio(mQuote.getDouble("PERatio"));}
-            stock.setVolume(mQuote.getLong("Volume"));
-            stock.setPBV(mQuote.getDouble("PriceBook"));
-            stock.setPrice(mQuote.getDouble("LastTradePriceOnly"));
-            if(!mQuote.isNull("Bid")){
-                stock.setBid(mQuote.getDouble("Bid"));}
-            if(!mQuote.isNull("Ask")){
-                stock.setAsk(mQuote.getDouble("Ask"));}
-            stock.setName(mQuote.getString("Name"));
-            stock.setPercentage(mQuote.getString("PercentChange"));
-            stock.setChange(mQuote.getDouble("Change"));
-        }
-        return stock;
-    }
 
-    public ArrayList<Ticker> updateStocks(ArrayList<Ticker> stockArrayList) throws JSONException{
-
-        for(int i=0;i<stockArrayList.size();i++){
-            for(int j=0;j<stockArrayList.size();j++){
-                updateStock(stockArrayList.get(i),mQuotes.getJSONObject(j));
-            }
-        }
-        return stockArrayList;
-    }
 }

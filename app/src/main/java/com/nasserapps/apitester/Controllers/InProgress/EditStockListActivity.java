@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.nasserapps.apitester.Model.Database.DataSource;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;
+import com.nasserapps.apitester.Tools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +38,11 @@ public class EditStockListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Todo fix right now
-        mUser= new User(getApplicationContext());
+        mUser=User.getUser(this);
 
         mAllStocksList = new ArrayList<>();
         mAllStocksList = mUser.getAllStocks();
-        mUser.sort(mAllStocksList,"A-Z");
+        Tools.sort(mAllStocksList, "A-Z");
 
         mEditStocksRecyclerView = (RecyclerView) findViewById(R.id.edit_stock_list_recyclerview);
         mEditStocksRecyclerView.setHasFixedSize(true);
@@ -103,6 +105,8 @@ public class EditStockListActivity extends AppCompatActivity {
                     else {
                         stock.setInWatchList(false);
                     }
+                    DataSource mDatasource = new DataSource(getBaseContext());
+                    mDatasource.updateStock(stock);
                 }
 
             });
