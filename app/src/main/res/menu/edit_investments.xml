@@ -13,4 +13,11 @@
         android:orderInCategory="200"
         android:title="Reset Investments"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/checklist"
+        android:orderInCategory="50"
+        android:title="Add Checklist"
+        app:showAsAction="never"/>
+
 </menu>

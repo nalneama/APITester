@@ -7,7 +7,28 @@ import java.util.ArrayList;
 
 public class Checklist {
 
+    private String checklistName;
     private ArrayList<Rule> rules;
+
+    public Checklist(String name) {
+        checklistName=name;
+    }
+
+    public String getChecklistName() {
+        return checklistName;
+    }
+
+    public void setChecklistName(String checklistName) {
+        this.checklistName = checklistName;
+    }
+
+    public ArrayList<Rule> getRules() {
+        return rules;
+    }
+
+    public void setRules(ArrayList<Rule> rules) {
+        this.rules = rules;
+    }
 
     public Checklist(ArrayList<Rule> rules) {
         this.rules = rules;

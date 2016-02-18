@@ -7,8 +7,10 @@ public abstract class Rule {
         public boolean evaluate(Ticker stock){
             return false;
         }
-}
 
+        public String getRuleStatement(){ return "";}
+}
+//TODO add all rules
 /*Resources
 Background Tasks
 http://technology.jana.com/2014/10/28/periodic-background-tasks-in-android/comment-page-1/

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:cardElevation="12dp"
+        app:cardBackgroundColor="@color/colorPrimary">
+    <TextView
+        android:id="@+id/ListHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp"
+        android:padding="16dp"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:textColor="@android:color/white"
+        tools:text="Checklist 1"/>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class ExpressionParser {
 
     //Variable Chooser
-    ArrayList<String> mVariable_options =new ArrayList(Arrays.asList(new String[]{"PE Ratio", "Volume"}));
+    ArrayList<String> mVariable_options =new ArrayList(Arrays.asList(new String[]{"PE Ratio", "Volume","PBV Ratio"}));
 
     //Expression Chooser
     ArrayList<String> mExpression_options =new ArrayList(Arrays.asList(new String[] {">","=","<"}));
@@ -21,6 +21,8 @@ public class ExpressionParser {
                 return new RulePERatio(Double.parseDouble(condition), expression_case);
             case 1:
                 return new RuleVolume(Long.parseLong(condition), expression_case);
+            case 2:
+                return new RulePBVRatio(Double.parseDouble(condition), expression_case);
         }
         return new Rule() {
             @Override

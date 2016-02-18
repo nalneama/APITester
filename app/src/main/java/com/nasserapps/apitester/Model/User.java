@@ -2,6 +2,7 @@ package com.nasserapps.apitester.Model;
 
 import android.content.Context;
 
+import com.nasserapps.apitester.AI.CustomNotificationStatement.Checklist;
 import com.nasserapps.apitester.Model.Database.DataSource;
 import com.nasserapps.apitester.Model.Database.JSONParser;
 import com.nasserapps.apitester.Tools;
@@ -16,6 +17,7 @@ public class User {
     private Wallet mWallet;
     private UserData mUserData;
     private DataSource mDataSource;
+    private ArrayList<Checklist> mChecklists;
 
 
     //Constructors
@@ -35,7 +37,10 @@ public class User {
 
         //DataSource includes initializing the stock and index lists
         mDataSource = new DataSource(context);
-        //Get mAllStocks from SQLDatabase
+
+        mChecklists = new ArrayList<>();
+        mChecklists = mUserData.getChecklist();
+
     }
 
 
@@ -92,4 +97,12 @@ public class User {
         return mUserData;
     }
 
+
+    public ArrayList<Checklist> getChecklists() {
+        return mChecklists;
+    }
+
+    public void setChecklists(ArrayList<Checklist> checklists) {
+        mUserData.setChecklist(checklists);
+    }
 }

@@ -54,8 +54,8 @@
         <activity
             android:name=".Controllers.Activities.SettingsActivity"
             android:label="@string/action_settings"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-            android:parentActivityName=".Controllers.Activities.HomeActivity">
+            android:parentActivityName=".Controllers.Activities.HomeActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
         </activity>
         <activity
             android:name=".Controllers.Activities.HomeActivity"
@@ -66,6 +66,15 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Controllers.Activities.ChecklistActivity"
+            android:label="@string/title_activity_checklist"
+            android:parentActivityName=".Controllers.Activities.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nasserapps.apitester.Controllers.Activities.HomeActivity"/>
         </activity>
     </application>
 

@@ -1,5 +1,6 @@
 package com.nasserapps.apitester.AI.CustomNotificationStatement;
 
+
 import com.nasserapps.apitester.Model.Ticker;
 
 public class RulePERatio extends Rule {
@@ -23,4 +24,11 @@ public class RulePERatio extends Rule {
         }
         return false;
     }
+
+
+    @Override
+    public String getRuleStatement() {
+        return "PE Ratio is less than "+mPECondition;
+    }
+
 }

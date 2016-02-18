@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.nasserapps.apitester.Controllers.Activities.ChecklistActivity;
 import com.nasserapps.apitester.Controllers.InProgress.EditInvestmentListActivity;
 import com.nasserapps.apitester.Controllers.InProgress.RulesActivity;
 import com.nasserapps.apitester.Model.Ticker;
@@ -150,6 +151,12 @@ public class WalletFragment extends Fragment {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        if (id == R.id.checklist) {
+            Intent i = new Intent(getActivity(), ChecklistActivity.class);
+            startActivity(i);
+            return true;
+        }//TODO remove this after testing
 
         if (id == R.id.add_investment) {
             Intent i = new Intent(getActivity(), EditInvestmentListActivity.class);
