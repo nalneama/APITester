@@ -1,8 +1,8 @@
 package tests;
 
-import com.nasserapps.apitester.AI.CustomNotificationStatement.Checklist;
-import com.nasserapps.apitester.AI.CustomNotificationStatement.ExpressionParser;
-import com.nasserapps.apitester.AI.CustomNotificationStatement.Rule;
+import com.nasserapps.apitester.Model.Checklists.Checklist;
+import com.nasserapps.apitester.Model.Checklists.ExpressionParser;
+import com.nasserapps.apitester.Model.Checklists.Rule;
 import com.nasserapps.apitester.Model.Ticker;
 
 import org.junit.Assert;

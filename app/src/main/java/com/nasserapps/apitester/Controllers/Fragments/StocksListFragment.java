@@ -20,9 +20,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nasserapps.apitester.AI.CustomNotificationStatement.Checklist;
-import com.nasserapps.apitester.AI.CustomNotificationStatement.ExpressionParser;
-import com.nasserapps.apitester.AI.CustomNotificationStatement.Rule;
+import com.nasserapps.apitester.Model.Checklists.Checklist;
+import com.nasserapps.apitester.Model.Checklists.ExpressionParser;
+import com.nasserapps.apitester.Model.Checklists.Rule;
 import com.nasserapps.apitester.Controllers.Adapters.StockAdapter;
 import com.nasserapps.apitester.Controllers.Dialogs.AlertDialogFragment;
 import com.nasserapps.apitester.Controllers.InProgress.EditStockListActivity;
@@ -70,7 +70,6 @@ public class StocksListFragment extends Fragment {
         mStockWatchListView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mStockWatchListView.setItemAnimator(new DefaultItemAnimator());
         mStockWatchListView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
-        // TODO remove wallet object from this fragment
         return view;
     }
 
@@ -204,7 +203,7 @@ public class StocksListFragment extends Fragment {
             }
 
             if (id == R.id.evaluate_stocks) {
-                //TODO Filter stocks by checklists
+                //TODO Filter stocks by checklists through dialogs
                 ArrayList<Rule> rules = new ArrayList<>();
                 rules.add(new ExpressionParser().getRule("PE Ratio", "<", "15.0"));
                 rules.add(new ExpressionParser().getRule("PE Ratio", ">","10.0"));

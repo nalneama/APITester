@@ -20,11 +20,11 @@
         </activity>
 
         <receiver
-            android:name=".AI.InformAI"
+            android:name=".Controllers.Services.InformAI"
             android:process=":remote">
         </receiver>
         <receiver
-            android:name=".AI.InformAIAfterBooting"
+            android:name=".Controllers.Services.InformAIAfterBooting"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
@@ -33,7 +33,7 @@
         </receiver>
 
         <service
-            android:name=".AI.ExecutedTask"
+            android:name=".Controllers.Services.ExecutedTask"
             android:exported="false"/>
 
         <activity

@@ -2,7 +2,7 @@ package com.nasserapps.apitester.Model;
 
 import android.content.Context;
 
-import com.nasserapps.apitester.AI.CustomNotificationStatement.Checklist;
+import com.nasserapps.apitester.Model.Checklists.Checklist;
 import com.nasserapps.apitester.Model.Database.DataSource;
 import com.nasserapps.apitester.Model.Database.JSONParser;
 import com.nasserapps.apitester.Tools;
@@ -39,7 +39,7 @@ public class User {
         mDataSource = new DataSource(context);
 
         mChecklists = new ArrayList<>();
-        mChecklists = mUserData.getChecklist();
+        //mChecklists = mUserData.getChecklist();
 
     }
 

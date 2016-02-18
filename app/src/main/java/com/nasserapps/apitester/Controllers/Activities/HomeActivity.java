@@ -13,7 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.nasserapps.apitester.AI.InformAI;
+import com.nasserapps.apitester.Controllers.Services.InformAI;
 import com.nasserapps.apitester.Controllers.Adapters.SectionsPagerAdapter;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;

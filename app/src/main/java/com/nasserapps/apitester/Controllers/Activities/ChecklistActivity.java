@@ -8,9 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ExpandableListView;
 
-import com.nasserapps.apitester.AI.CustomNotificationStatement.Checklist;
-import com.nasserapps.apitester.AI.CustomNotificationStatement.ExpressionParser;
-import com.nasserapps.apitester.AI.CustomNotificationStatement.Rule;
+import com.nasserapps.apitester.Model.Checklists.Checklist;
+import com.nasserapps.apitester.Model.Checklists.ExpressionParser;
+import com.nasserapps.apitester.Model.Checklists.Rule;
 import com.nasserapps.apitester.Controllers.Adapters.ChecklistAdapter;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;
@@ -55,7 +55,6 @@ public class ChecklistActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-
                 // Adding child data
                 listDataHeader.add(new Checklist("Winning Stocks"));
 
@@ -65,7 +64,7 @@ public class ChecklistActivity extends AppCompatActivity {
                 rules.add(new ExpressionParser().getRule("PBV Ratio", ">", "10.0"));
                 rules.add(new ExpressionParser().getRule("Volume", "=", "500000"));
 
-                listDataHeader.get(0).setRules(rules);
+                //listDataHeader.get(0).setRules(rules);
 
                 listDataChild.put(listDataHeader.get(0), listDataHeader.get(0).getRules());
                 listAdapter = new ChecklistAdapter(getBaseContext(), listDataHeader, listDataChild);

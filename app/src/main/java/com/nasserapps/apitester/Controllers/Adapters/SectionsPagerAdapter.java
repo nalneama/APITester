@@ -22,7 +22,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        //TODO switch statement with three cases to return the required fragment
         switch (position){
             case 0:
                 return new StocksListFragment();

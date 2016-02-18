@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.nasserapps.apitester.AI.CustomNotificationStatement.Checklist;
-import com.nasserapps.apitester.AI.CustomNotificationStatement.Rule;
+import com.nasserapps.apitester.Model.Checklists.Checklist;
+import com.nasserapps.apitester.Model.Checklists.Rule;
 import com.nasserapps.apitester.R;
 
 import java.util.HashMap;

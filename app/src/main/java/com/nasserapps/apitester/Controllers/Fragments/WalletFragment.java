@@ -72,7 +72,6 @@ public class WalletFragment extends Fragment {
         mUser = User.getUser(getActivity());
         mWallet = mUser.getWallet();
         if(mWallet.getInvestments().size()>0) {
-            //TODO get wallet from user
             mInvestmentsList =  mWallet.getInvestments();
 
             mWalletCard.setVisibility(View.VISIBLE);

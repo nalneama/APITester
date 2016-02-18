@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-import com.nasserapps.apitester.AI.CustomNotificationStatement.Checklist;
+import com.google.gson.reflect.TypeToken;
+import com.nasserapps.apitester.Model.Checklists.Checklist;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserData {
 
@@ -78,16 +80,16 @@ public class UserData {
 
 
     public ArrayList<Checklist> getChecklist() {
-//        Gson gson = new Gson();
-//        String checklist = memory.getString(STORAGE_CHECKLIST, "empty");
-//        if (checklist.equals("empty")){
-//            return new ArrayList<>();
-//        }
-//        else {
-//            Type type = new TypeToken<List<Checklist>>() {}.getType();
-//            return new Gson().fromJson(checklist, type);
-//        }
-        return new ArrayList<>();
+        Gson gson = new Gson();
+        String checklist = memory.getString(STORAGE_CHECKLIST, "empty");
+        if (checklist.equals("empty")){
+            return new ArrayList<>();
+        }
+        else {
+            return (ArrayList<Checklist>) gson.fromJson(checklist, new TypeToken<List<Checklist>>() {
+            }.getType());
+        }
+//        return new ArrayList<>();
     }
 
     public void setChecklist(ArrayList<Checklist> checklists) {

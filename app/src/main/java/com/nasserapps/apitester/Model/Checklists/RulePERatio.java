@@ -1,4 +1,4 @@
-package com.nasserapps.apitester.AI.CustomNotificationStatement;
+package com.nasserapps.apitester.Model.Checklists;
 
 
 import com.nasserapps.apitester.Model.Ticker;

@@ -24,7 +24,7 @@ import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.nasserapps.apitester.AI.InformAI;
+import com.nasserapps.apitester.Controllers.Services.InformAI;
 import com.nasserapps.apitester.Model.Database.DataSource;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.UserData;
