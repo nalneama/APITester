@@ -58,10 +58,11 @@ public class DataSource {
         database.beginTransaction();
 
         ContentValues updateStockValues = new ContentValues();
-        //TODO put all values
+        //TODO put all values and all stocks in the database + add islamic, mix or non-islamic
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_IN_WATCHLIST, ticker.isInWatchList());
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_VOLUME, ticker.getVolume());
-        //updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_DAY_LOW,ticker.getDayLow());
+        updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_DAY_LOW,ticker.getDayLow());
+        updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_DAY_HIGH,ticker.getDayHigh());
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_ASK, ticker.getAsk());
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_BID, ticker.getBid());
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_PE_RATIO, ticker.getPERatio());
@@ -71,6 +72,7 @@ public class DataSource {
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_CURRENT_PRICE, ticker.getPrice());
         //updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_OPEN_PRICE, ticker.getOpenPrice());
         //updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_MARKET_CAP, ticker.getMarketCap;
+        //updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_52W_BEST_PE_RATIO, ticker.getBestPE());
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_IN_INVESTMENT, ticker.isInInvestments());
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_PURCHASED_PRICE, ticker.getPurchasedPrice());
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_PURCHASED_QUANTITY, ticker.getQuantity());

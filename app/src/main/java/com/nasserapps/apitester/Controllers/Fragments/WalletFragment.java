@@ -20,8 +20,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.nasserapps.apitester.Controllers.Activities.ChecklistActivity;
-import com.nasserapps.apitester.Controllers.InProgress.EditInvestmentListActivity;
-import com.nasserapps.apitester.Controllers.InProgress.RulesActivity;
+import com.nasserapps.apitester.Controllers.InProgress.InvestmentListActivity;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.Model.Wallet;
@@ -71,6 +70,7 @@ public class WalletFragment extends Fragment {
         super.onResume();
         mUser = User.getUser(getActivity());
         mWallet = mUser.getWallet();
+        mWallet.setInvestmentList(mUser.getAllStocks());
         if(mWallet.getInvestments().size()>0) {
             mInvestmentsList =  mWallet.getInvestments();
 
@@ -158,12 +158,7 @@ public class WalletFragment extends Fragment {
         }//TODO remove this after testing
 
         if (id == R.id.add_investment) {
-            Intent i = new Intent(getActivity(), EditInvestmentListActivity.class);
-            startActivity(i);
-            return true;
-        }
-        if (id == R.id.add_rules) {
-            Intent i = new Intent(getActivity(), RulesActivity.class);
+            Intent i = new Intent(getActivity(), InvestmentListActivity.class);
             startActivity(i);
             return true;
         }

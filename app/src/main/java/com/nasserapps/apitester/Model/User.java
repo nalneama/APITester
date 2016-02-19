@@ -3,6 +3,7 @@ package com.nasserapps.apitester.Model;
 import android.content.Context;
 
 import com.nasserapps.apitester.Model.Checklists.Checklist;
+import com.nasserapps.apitester.Model.Checklists.Rule;
 import com.nasserapps.apitester.Model.Database.DataSource;
 import com.nasserapps.apitester.Model.Database.JSONParser;
 import com.nasserapps.apitester.Tools;
@@ -99,7 +100,16 @@ public class User {
 
 
     public ArrayList<Checklist> getChecklists() {
+        //TODO get checklists from database
+        mChecklists.add(new Checklist("Buffet Checklist"));
+
+        // Adding rules
+        ArrayList<Rule> rules = new ArrayList<>();
+        rules.add(Rule.getRule("PE Ratio", "<", "15.0"));
+        rules.add(Rule.getRule("PBV Ratio", "<", "1.5"));
+        mChecklists.get(0).setRules(rules);
         return mChecklists;
+        //return mChecklists;
     }
 
     public void setChecklists(ArrayList<Checklist> checklists) {

@@ -3,7 +3,6 @@ package com.nasserapps.apitester.Controllers.InProgress;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,23 +23,21 @@ import android.widget.TextView;
 import com.nasserapps.apitester.Model.Database.DataSource;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
-import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
+import com.nasserapps.apitester.Tools;
 
 import java.util.ArrayList;
 
-public class EditInvestmentListActivity extends AppCompatActivity {
+public class InvestmentListActivity extends AppCompatActivity {
 
     private RecyclerView mEditStocksRecyclerView ;
     private ArrayList<Ticker> mInvestmentsList;
-    private ArrayList<Ticker> mStockWatchList;
     EditText dInvestmentQuantity;
     EditText dPurchasedPrice;
     AutoCompleteTextView dAutoCompleteTextView;
     private int mQuantity;
     private User mUser;
-    DataSource mDataSource;
-    Wallet mWallet;
+    private DataSource mDataSource;
     private double mPrice;
 
     @Override
@@ -73,13 +70,14 @@ public class EditInvestmentListActivity extends AppCompatActivity {
                                 mQuantity = Integer.parseInt(dInvestmentQuantity.getText().toString());
                                 String stock = dAutoCompleteTextView.getText().toString();
 
-                                Ticker ticker = mDataSource.getStock(stock);
+                                Ticker ticker = Tools.getStockFromList(stock.substring(0, 4), mUser.getAllStocks());
                                 ticker.setPurchasedPrice(mPrice);
                                 ticker.setQuantity(mQuantity);
+                                ticker.setInInvestments(true);
+                                mDataSource.updateStock(ticker);
                                 mInvestmentsList.add(ticker);
 
                                 //if not correct show snakbar
-                                Snackbar.make(mEditStocksRecyclerView, "hahaha", Snackbar.LENGTH_LONG).show();
                                 mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mInvestmentsList), false);
                             }
                         });
@@ -191,10 +189,14 @@ public class EditInvestmentListActivity extends AppCompatActivity {
                     .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-//                            mInvestmentsList.remove(mPosition);
-//                            mWallet.setInvestmentList(mInvestmentsList);
-//                            mDataSource.saveWallet(mWallet);
-//                            mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mInvestmentsList), false);
+                            Ticker ticker = mInvestmentsList.get(mPosition);
+                            ticker = Tools.getStockFromList(ticker.getSymbol(), mUser.getAllStocks());
+                            ticker.setInInvestments(false);
+                            ticker.setQuantity(0);
+                            ticker.setPurchasedPrice(0);
+                            mDataSource.updateStock(ticker);
+                            mInvestmentsList = mUser.getWallet().getInvestments();
+                            mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mInvestmentsList), false);
                         }
                     });
                     builder.create();

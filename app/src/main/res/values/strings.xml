@@ -5,10 +5,8 @@
     <string name="stop_ai">Stop AI</string>
     <string name="title_activity_home_page">Saham</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="title_activity_edit_stock_list">Edit Stocks Watch List</string>
-    <string name="title_activity_edit_investment_list">Edit Investments</string>
+    <string name="title_activity_edit_stock_list">Stocks Watch List</string>
+    <string name="title_activity_edit_investment_list">Investments</string>
     <string name="dialog_add_investments_title">New Investment</string>
     <string name="dialog_add_investments_add_button">Add</string>
     <string name="Profit">Profit</string>
@@ -123,14 +121,11 @@
     <string name="title_activity_rules">RulesActivity</string>
     <string name="title_activity_wallet_analysis">WalletAnalysisActivity</string>
     <string name="title_activity_home">Saham</string>
-    <string name="section_format">Hello World from section: %1$d</string>
     <string name="Section_1_Title">Stocks</string>
     <string name="Section_2_Title">Wallet</string>
     <string name="Section_3_Title">Market</string>
     <string name="action_notification">Notifications</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_checklist">ChecklistActivity</string>
+    <string name="title_activity_checklist">Checklists</string>
+    <string name="title_activity_stock_details">Analysis</string>
 
 </resources>

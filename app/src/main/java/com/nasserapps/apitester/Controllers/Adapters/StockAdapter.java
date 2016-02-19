@@ -1,12 +1,14 @@
 package com.nasserapps.apitester.Controllers.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.nasserapps.apitester.Controllers.Activities.StockDetailsActivity;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.R;
 
@@ -23,9 +25,10 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockHolder>
     }
 
     @Override
-    public StockHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public StockHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.list_item_stocks,parent,false);
+
         return new StockHolder(view);
     }
 
@@ -71,6 +74,16 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockHolder>
             mStockBid = (TextView)itemView.findViewById(R.id.bid);
             mStockHigh = (TextView) itemView.findViewById(R.id.high);
             mStockLow = (TextView) itemView.findViewById(R.id.low);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(mContext, StockDetailsActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("Symbol",mStock.getSymbol());
+                    mContext.startActivity(i);
+
+                }
+            });
         }
 
         public void bindStock(Ticker stock){

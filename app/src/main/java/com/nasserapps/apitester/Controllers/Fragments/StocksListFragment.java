@@ -20,14 +20,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nasserapps.apitester.Model.Checklists.Checklist;
-import com.nasserapps.apitester.Model.Checklists.ExpressionParser;
-import com.nasserapps.apitester.Model.Checklists.Rule;
 import com.nasserapps.apitester.Controllers.Adapters.StockAdapter;
 import com.nasserapps.apitester.Controllers.Dialogs.AlertDialogFragment;
 import com.nasserapps.apitester.Controllers.InProgress.EditStockListActivity;
-import com.nasserapps.apitester.Controllers.InProgress.MainActivity;
-import com.nasserapps.apitester.Controllers.InProgress.RulesActivity;
+import com.nasserapps.apitester.Model.Checklists.Checklist;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;
@@ -179,11 +175,7 @@ public class StocksListFragment extends Fragment {
             // as you specify a parent activity in AndroidManifest.xml.
             int id = item.getItemId();
 
-            if (id == R.id.detailed_view) {
-                Intent i = new Intent(getActivity(), MainActivity.class);
-                startActivity(i);
-                return true;
-            }
+
             if (id == R.id.refresh_data) {
                 Snackbar.make(this.mStockWatchListView, "Refreshing Data", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -196,20 +188,22 @@ public class StocksListFragment extends Fragment {
                 startActivity(i);
                 return true;
             }
-            if (id == R.id.add_rules) {
-                Intent i = new Intent(getActivity(), RulesActivity.class);
-                startActivity(i);
-                return true;
-            }
 
             if (id == R.id.evaluate_stocks) {
                 //TODO Filter stocks by checklists through dialogs
-                ArrayList<Rule> rules = new ArrayList<>();
-                rules.add(new ExpressionParser().getRule("PE Ratio", "<", "15.0"));
-                rules.add(new ExpressionParser().getRule("PE Ratio", ">","10.0"));
-                Checklist checklist = new Checklist(rules);
-                mStockWatchList=checklist.getPassingStocks(mUser);
-                updateDisplay();
+                final Checklist checklist = mUser.getChecklists().get(0);
+                String[] sortingOptions= new String[1];
+                sortingOptions[0]=checklist.getChecklistName();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                dialog.setSingleChoiceItems(sortingOptions, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mStockWatchList=checklist.getPassingStocks(mUser);
+                        dialog.dismiss();
+                        updateDisplay();
+                    }
+                });
+                dialog.create().show();
                 return true;
             }
 

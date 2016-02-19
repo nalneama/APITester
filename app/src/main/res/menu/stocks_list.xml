@@ -9,7 +9,7 @@
         app:showAsAction="never"/>
     <item
         android:id="@+id/evaluate_stocks"
-        android:orderInCategory="250"
+        android:orderInCategory="150"
         android:title="Evaluate Stocks"
         app:showAsAction="never"/>
 
@@ -18,25 +18,6 @@
         android:orderInCategory="200"
         android:title="Add Stocks"
         app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/detailed_view"
-        android:orderInCategory="300"
-        android:title="Detailed view"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/calculator"
-        android:orderInCategory="400"
-        android:title="Calculator"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/add_rules"
-        android:orderInCategory="450"
-        android:title="Add Rules"
-        app:showAsAction="never"/>
-
 
     <item
         android:id="@+id/refresh_data"

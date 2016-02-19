@@ -1,7 +1,6 @@
 package tests;
 
 import com.nasserapps.apitester.Model.Checklists.Checklist;
-import com.nasserapps.apitester.Model.Checklists.ExpressionParser;
 import com.nasserapps.apitester.Model.Checklists.Rule;
 import com.nasserapps.apitester.Model.Ticker;
 
@@ -10,14 +9,14 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-public class ExpressionParserTest {
+public class RulesTest {
 
     @Test
     public void testGetRule() throws Exception {
         ArrayList<Rule> rules = new ArrayList<>();
-        rules.add(new ExpressionParser().getRule("PE Ratio", "<", "15.0"));
-        rules.add(new ExpressionParser().getRule("PE Ratio", ">","10.0"));
-        rules.add(new ExpressionParser().getRule( "Volume", "=", "500000"));
+        rules.add(Rule.getRule("PE Ratio", ">", "15.0"));
+        rules.add(Rule.getRule("PE Ratio", "<", "10.0"));
+        rules.add(Rule.getRule("Volume", "=", "500000"));
         Ticker stock= new Ticker();
         stock.setPERatio(22);
         stock.setVolume(500000);

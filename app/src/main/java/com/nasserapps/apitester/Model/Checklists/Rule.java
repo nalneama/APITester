@@ -2,14 +2,47 @@ package com.nasserapps.apitester.Model.Checklists;
 
 import com.nasserapps.apitester.Model.Ticker;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public abstract class Rule {
+
+    //Criteria Chooser
+    private static final ArrayList<String> mVariable_options =new ArrayList(Arrays.asList(new String[]{"PE Ratio", "Volume", "PBV Ratio"}));
+
+    //Condition Chooser
+    private static final ArrayList<String> mExpression_options =new ArrayList(Arrays.asList(new String[] {">","=","<"}));
 
         public boolean evaluate(Ticker stock){
             return false;
         }
 
         public String getRuleStatement(){ return "";}
+
+    public static Rule getRule(String criteria, String condition, String value ){
+
+        int criteria_case = mVariable_options.indexOf(criteria);
+        int condition_case = mExpression_options.indexOf(condition);
+
+
+            switch (criteria_case) {
+                case 0:
+                    return new RulePERatio(Double.parseDouble(value), condition_case);
+                case 1:
+                    return new RuleVolume(Long.parseLong(value), condition_case);
+                case 2:
+                    return new RulePBVRatio(Double.parseDouble(value), condition_case);
+            }
+
+
+            return new Rule() {
+                @Override
+                public boolean evaluate(Ticker stock) {
+                    return false;
+                }
+            };
+    }
 }
 //TODO add all rules
 /*Resources

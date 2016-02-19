@@ -42,7 +42,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".Controllers.InProgress.EditInvestmentListActivity"
+            android:name=".Controllers.InProgress.InvestmentListActivity"
             android:label="@string/title_activity_edit_investment_list"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
@@ -70,6 +70,15 @@
         <activity
             android:name=".Controllers.Activities.ChecklistActivity"
             android:label="@string/title_activity_checklist"
+            android:parentActivityName=".Controllers.Activities.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nasserapps.apitester.Controllers.Activities.HomeActivity"/>
+        </activity>
+        <activity
+            android:name=".Controllers.Activities.StockDetailsActivity"
+            android:label="@string/title_activity_stock_details"
             android:parentActivityName=".Controllers.Activities.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

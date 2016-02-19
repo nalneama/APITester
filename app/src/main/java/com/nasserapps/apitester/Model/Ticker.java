@@ -23,6 +23,15 @@ public class Ticker {
     private double mPurchasedPrice;
     private int mQuantity;
     private boolean inInvestments;
+    private double mDayHigh;
+    private double mDayLow;
+    private double m52WHigh;
+    private double m52WLow;
+    private double mBestPBV;
+    private double mBestPE;
+    private double mWorstPE;
+    private double mWorstPBV;
+    private double openPrice;
 
     public Ticker(String symbol, String name, double price, double PERatio, long volume, double bid, double ask, double PBV, String percentage, double change, String APICode, boolean inWatchList) {
         mSymbol = symbol;
@@ -193,5 +202,77 @@ public class Ticker {
 
     public void setInInvestments(boolean inInvestments) {
         this.inInvestments = inInvestments;
+    }
+
+    public double getDayHigh() {
+        return mDayHigh;
+    }
+
+    public void setDayHigh(double dayHigh) {
+        mDayHigh = dayHigh;
+    }
+
+    public double getDayLow() {
+        return mDayLow;
+    }
+
+    public void setDayLow(double dayLow) {
+        mDayLow = dayLow;
+    }
+
+    public double getM52WHigh() {
+        return m52WHigh;
+    }
+
+    public void setM52WHigh(double m52WHigh) {
+        this.m52WHigh = m52WHigh;
+    }
+
+    public double getM52WLow() {
+        return m52WLow;
+    }
+
+    public void setM52WLow(double m52WLow) {
+        this.m52WLow = m52WLow;
+    }
+
+    public double getBestPBV() {
+        return mBestPBV;
+    }
+
+    public void setBestPBV(double bestPBV) {
+        mBestPBV = bestPBV;
+    }
+
+    public double getBestPE() {
+        return mBestPE;
+    }
+
+    public void setBestPE(double bestPE) {
+        mBestPE = bestPE;
+    }
+
+    public double getWorstPE() {
+        return mWorstPE;
+    }
+
+    public void setWorstPE(double worstPE) {
+        mWorstPE = worstPE;
+    }
+
+    public double getWorstPBV() {
+        return mWorstPBV;
+    }
+
+    public void setWorstPBV(double worstPBV) {
+        mWorstPBV = worstPBV;
+    }
+
+    public double getOpenPrice() {
+        return openPrice;
+    }
+
+    public void setOpenPrice(double openPrice) {
+        this.openPrice = openPrice;
     }
 }

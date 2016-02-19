@@ -9,10 +9,9 @@ import android.net.NetworkInfo;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.nasserapps.apitester.Model.Checklists.Checklist;
-import com.nasserapps.apitester.Model.Checklists.ExpressionParser;
-import com.nasserapps.apitester.Model.Checklists.Rule;
 import com.nasserapps.apitester.Controllers.InProgress.MainActivity;
+import com.nasserapps.apitester.Model.Checklists.Checklist;
+import com.nasserapps.apitester.Model.Checklists.Rule;
 import com.nasserapps.apitester.Model.Database.JSONParser;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
@@ -81,7 +80,7 @@ public class ExecutedTask extends IntentService {
                             mUser.updateStocksData(jsonData);
                             Checklist checklist = new Checklist("");
                             ArrayList<Rule> rules = new ArrayList<>();
-                            rules.add(new ExpressionParser().getRule("PE Ratio", ">", "15.0"));
+                            rules.add(Rule.getRule("PE Ratio", ">", "15.0"));
                             checklist.setRules(rules);
                             //TODO if conditions are met construct notification for each stock
                             for(Ticker ticker:mUser.getWatchList()) {

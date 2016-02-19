@@ -21,11 +21,13 @@ public class ChecklistAdapter extends BaseExpandableListAdapter {
         // child data in format of header title, child title
         private HashMap<Checklist, List<Rule>> mListDataChild;
 
-        public ChecklistAdapter(Context context, List<Checklist> listDataHeader,
-                                     HashMap<Checklist, List<Rule>> listChildData) {
+        public ChecklistAdapter(Context context, List<Checklist> listDataHeader) {
             mContext = context;
             mListDataHeader = listDataHeader;
-            mListDataChild = listChildData;
+            mListDataChild = new HashMap<>();
+            for(Checklist checklist:listDataHeader) {
+                mListDataChild.put(checklist,checklist.getRules());
+            };
         }
 
         @Override
