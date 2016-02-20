@@ -4,8 +4,8 @@
 
     <size
         android:width="1dp"
-        android:height="1dp" />
+        android:height="1dp"/>
 
-    <solid android:color="@color/cardview_shadow_start_color" />
+    <solid android:color="@color/cardview_shadow_start_color"/>
 
 </shape>

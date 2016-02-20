@@ -20,6 +20,7 @@ public class StockDetailsActivity extends AppCompatActivity {
     private TextView mStockPercentageView;
     private TextView mStockSummaryView;
     private TextView mStockTodayView;
+    private TextView mStock52WView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,17 +48,20 @@ public class StockDetailsActivity extends AppCompatActivity {
         mStockChangeView.setTextColor(getResources().getColor(mStock.getPriceColor()));
 
         mStockPercentageView = (TextView)findViewById(R.id.percentage);
-        mStockPercentageView.setText(mStock.getPercentage() + "");
+        mStockPercentageView.setText("("+mStock.getPercentage() + ")");
         mStockPercentageView.setTextColor(getResources().getColor(mStock.getPriceColor()));
 
         //TODO fix the numbers and change the statement based on isInvestment and profit or loss
         mStockSummaryView=(TextView)findViewById(R.id.stockSummary);
-        mStockSummaryView.setText(String.format("Change from purchase%nprice is %.2f QR (%s)%nA total loss of%n%,.0f QR",mStock.getChange(),mStock.getPercentage(),mStock.getQuantity()*mStock.getPurchasedPrice()));
+        mStockSummaryView.setText(String.format("Change from purchase%nprice is %.2f QR (%s)%nA total loss of%n%,.0f QR", mStock.getChange(), mStock.getPercentage(), mStock.getQuantity() * mStock.getPurchasedPrice()));
 
         //TODO change from open to close based on time of access
         mStockTodayView = (TextView) findViewById(R.id.todayValues);
         mStockTodayView.setText(String.format("%.2f%n%.2f%n%.2f%n%,d%n%.2f%n%.2f",mStock.getOpenPrice(),mStock.getDayHigh(),mStock.getDayLow(),mStock.getVolume(),mStock.getPERatio(),mStock.getPBV()));
 
+        //TODO change from open to close based on time of access
+        mStock52WView = (TextView) findViewById(R.id.fiftytwoWeeksValues);
+        mStock52WView.setText(String.format("%.2f%n%.2f%n%.2f%n%.2f%n%.2f%n%.2f",mStock.getM52WHigh(),mStock.getM52WLow(),mStock.getBestPE(),mStock.getWorstPE(),mStock.getBestPBV(),mStock.getWorstPBV()));
 
     }
 
