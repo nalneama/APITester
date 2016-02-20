@@ -62,6 +62,7 @@ public class JSONParser {
     }
 
     private Ticker extractStock(JSONObject mQuote) throws JSONException{
+
         Ticker stock = new Ticker();
         //Todo uncomment the two parameters
         stock.setSymbol(mQuote.getString("Symbol").substring(0, 4));

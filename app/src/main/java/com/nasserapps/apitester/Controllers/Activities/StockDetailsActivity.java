@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.nasserapps.apitester.Controllers.InProgress.InvestmentListActivity;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;
@@ -21,6 +24,7 @@ public class StockDetailsActivity extends AppCompatActivity {
     private TextView mStockSummaryView;
     private TextView mStockTodayView;
     private TextView mStock52WView;
+    private Ticker mStock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,7 @@ public class StockDetailsActivity extends AppCompatActivity {
         mUser = User.getUser(this);
         Intent i = getIntent();
 
-        Ticker mStock= Tools.getStockFromList(i.getStringExtra("Symbol"),mUser.getWatchList());
+        mStock= Tools.getStockFromList(i.getStringExtra("Symbol"),mUser.getWatchList());
         //Toast.makeText(this, mStock.getSymbol()+" price is : "+mStock.getPrice(), Toast.LENGTH_SHORT).show();
 
         mStockNameView = (TextView) findViewById(R.id.stockName);
@@ -59,10 +63,26 @@ public class StockDetailsActivity extends AppCompatActivity {
         mStockTodayView = (TextView) findViewById(R.id.todayValues);
         mStockTodayView.setText(String.format("%.2f%n%.2f%n%.2f%n%,d%n%.2f%n%.2f",mStock.getOpenPrice(),mStock.getDayHigh(),mStock.getDayLow(),mStock.getVolume(),mStock.getPERatio(),mStock.getPBV()));
 
-        //TODO change from open to close based on time of access
         mStock52WView = (TextView) findViewById(R.id.fiftytwoWeeksValues);
         mStock52WView.setText(String.format("%.2f%n%.2f%n%.2f%n%.2f%n%.2f%n%.2f",mStock.getM52WHigh(),mStock.getM52WLow(),mStock.getBestPE(),mStock.getWorstPE(),mStock.getBestPBV(),mStock.getWorstPBV()));
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.stocks_details, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.compare) {
+            Intent i = new Intent(this, InvestmentListActivity.class);
+            i.putExtra("Symbol",mStock.getSymbol());
+            startActivity(i);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -127,5 +127,6 @@
     <string name="action_notification">Notifications</string>
     <string name="title_activity_checklist">Checklists</string>
     <string name="title_activity_stock_details">Analysis</string>
+    <string name="compare">Compare</string>
 
 </resources>

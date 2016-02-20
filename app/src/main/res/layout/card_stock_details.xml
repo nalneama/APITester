@@ -22,17 +22,18 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
+            android:lineSpacingExtra="2dp"
             android:text="Change from purchase \nprice: -1.2 (3.1%) \nA total loss of \n33,040 QR"
             android:id="@+id/stockSummary"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="4dp"
             android:id="@+id/stockPrice"
             android:textStyle="bold"
             android:textColor="#9E9E9E"
@@ -94,24 +95,24 @@
                 android:text="TODAY"
                 android:id="@+id/today"/>
             <TextView
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:layout_below="@id/today"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:textSize="@dimen/stock_details_values"
                 android:text="Open:\nDay High:\nDay Low:\nVolume:\nPE Ratio:\nP-Book Value:"
-                android:lineSpacingExtra="6dp"/>
+                android:lineSpacingExtra="@dimen/stock_details_values_spacing"/>
 
             <TextView
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:layout_below="@id/today"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:textAlignment="textEnd"
-                android:textSize="14sp"
+                android:textSize="@dimen/stock_details_values"
                 android:text="34.0\n80.10\n56.30\n500k\n12.34\n1.54"
-                android:lineSpacingExtra="6dp"
+                android:lineSpacingExtra="@dimen/stock_details_values_spacing"
                 android:id="@+id/todayValues"/>
 
         </RelativeLayout>
@@ -140,24 +141,24 @@
                 android:text="52W"
                 android:id="@+id/fiftytwoWeeks"/>
             <TextView
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:layout_below="@id/fiftytwoWeeks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:textSize="@dimen/stock_details_values"
                 android:text="52W High:\n52W Low:\nBest PE:\nWorst PE:\nBest PBV:\nWorst PBV:"
-                android:lineSpacingExtra="6dp"/>
+                android:lineSpacingExtra="@dimen/stock_details_values_spacing"/>
 
             <TextView
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:layout_below="@id/fiftytwoWeeks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:textAlignment="textEnd"
-                android:textSize="14sp"
+                android:textSize="@dimen/stock_details_values"
                 android:text="90.0\n20.10\n12.4\n20.1\n0.84\n1.54"
-                android:lineSpacingExtra="6dp"
+                android:lineSpacingExtra="@dimen/stock_details_values_spacing"
                 android:id="@+id/fiftytwoWeeksValues"/>
 
         </RelativeLayout>
