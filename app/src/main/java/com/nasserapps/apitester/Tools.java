@@ -20,7 +20,7 @@ public class Tools {
         comparatorHashMap.put(sortingOptions[0], new Comparator<Ticker>() {
             @Override
             public int compare(Ticker stock1, Ticker stock2) {
-                return stock1.getSymbol().compareTo(stock2.getName());}});
+                return stock1.getName().compareTo(stock2.getName());}});
 
         //Book Value
         comparatorHashMap.put(sortingOptions[1],new Comparator<Ticker>() {

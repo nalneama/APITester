@@ -37,9 +37,7 @@ public class EditStockListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Todo fix right now
         mUser=User.getUser(this);
-
         mAllStocksList = new ArrayList<>();
         mAllStocksList = mUser.getAllStocks();
         Tools.sort(mAllStocksList, "A-Z");
@@ -48,7 +46,6 @@ public class EditStockListActivity extends AppCompatActivity {
         mEditStocksRecyclerView.setHasFixedSize(true);
         mEditStocksRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mEditStocksRecyclerView.setAdapter(new StockListAdapter(mAllStocksList));
-
 
         //Filter items by three parameters: Islamic, Mixed, Non-Islamic
 
@@ -93,7 +90,7 @@ public class EditStockListActivity extends AppCompatActivity {
         }
 
         public void bindStock(final Ticker stock){
-            mStockNameView.setText(stock.getSymbol()+": "+stock.getName());
+            mStockNameView.setText(stock.getName());
             mStockCheckbox.setChecked(stock.isInWatchList());
 
             mStockCheckbox.setOnClickListener(new View.OnClickListener() {
@@ -113,17 +110,5 @@ public class EditStockListActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //Save to database
-    }
-
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        mWallet.setWatchList(mWatchList);
-//        mDataSource.saveWallet(mWallet);
-//    }
 
 }

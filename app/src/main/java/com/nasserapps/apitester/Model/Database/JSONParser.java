@@ -85,13 +85,14 @@ public class JSONParser {
         stock.setDayLow(mQuote.getDouble("DaysLow"));
         stock.setM52WHigh(mQuote.getDouble("YearHigh"));
         stock.setM52WLow(mQuote.getDouble("YearLow"));
-        stock.setOpenPrice(mQuote.getDouble("Open"));
+        if(!mQuote.isNull("Open")){
+        stock.setOpenPrice(mQuote.getDouble("Open"));}
 
         //Set Calculations
         stock.setBestPE(stock.getM52WLow()*stock.getPERatio()/stock.getPrice());
         stock.setWorstPE(stock.getM52WHigh() * stock.getPERatio() / stock.getPrice());
         stock.setBestPBV(stock.getM52WLow() * stock.getPBV() / stock.getPrice());
-        stock.setWorstPBV(stock.getM52WHigh() * stock.getPBV()/stock.getPrice());
+            stock.setWorstPBV(stock.getM52WHigh() * stock.getPBV()/stock.getPrice());
 
 
         return stock;

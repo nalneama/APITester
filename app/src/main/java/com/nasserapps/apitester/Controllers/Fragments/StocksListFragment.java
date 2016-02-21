@@ -142,6 +142,7 @@ public class StocksListFragment extends Fragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    mStockWatchList=mUser.getWatchList();
                                     updateDisplay();
                                     //Log.e("zxc", "mWallet. String is: " + mDataSource.getWallet().getAPIKey() + "");
                                 }
@@ -196,7 +197,8 @@ public class StocksListFragment extends Fragment {
                 String[] sortingOptions= new String[1];
                 sortingOptions[0]=checklist.getChecklistName();
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-                dialog.setSingleChoiceItems(sortingOptions, -1, new DialogInterface.OnClickListener() {
+                dialog.setTitle("Evaluate using")
+                        .setSingleChoiceItems(sortingOptions, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mStockWatchList=checklist.getPassingStocks(mUser);
@@ -212,9 +214,10 @@ public class StocksListFragment extends Fragment {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
                 String[] sortingOptions = new String[]{"A-Z","Book Value", "Gain","PE Ratio","Price" };
                 int index = Arrays.asList(sortingOptions).indexOf(mUser.getUserData().getSortPreference());
-                dialog.setSingleChoiceItems(sortingOptions,index , new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                dialog.setTitle("Sort by")
+                        .setSingleChoiceItems(sortingOptions,index , new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
                                 mStockWatchList= Tools.sort(mUser.getWatchList(), "A-Z");

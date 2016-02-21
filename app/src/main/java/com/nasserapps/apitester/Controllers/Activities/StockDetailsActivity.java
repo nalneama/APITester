@@ -1,5 +1,7 @@
 package com.nasserapps.apitester.Controllers.Activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -123,10 +125,25 @@ public class StockDetailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.compare) {
-            Intent i = new Intent(this, StocksCompareActivity.class);
-            i.putExtra("LSymbol",mStock.getSymbol());
-            i.putExtra("RSymbol","MERS");
-            startActivity(i);
+
+            String[] names = new String[mUser.getAllStocks().size()];
+            for(int i=0; i<mUser.getAllStocks().size();i++){
+                names[i]=mUser.getAllStocks().get(i).getName();
+            }
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Compare to:")
+                    .setItems(names , new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // The 'which' argument contains the index position
+                            // of the selected item
+                            Intent i = new Intent(getBaseContext(), StocksCompareActivity.class);
+                            i.putExtra("LSymbol",mStock.getSymbol());
+                            i.putExtra("RSymbol",mUser.getAllStocks().get(which).getSymbol());
+                            startActivity(i);
+                        }
+                    }).create().show();
+
             return true;
         }
         return super.onOptionsItemSelected(item);

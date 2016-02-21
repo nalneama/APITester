@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:paddingTop="8dp"
               android:paddingRight="16dp"
-              xmlns:tools="http://schemas.android.com/tools"
+              android:paddingLeft="16dp"
+              app:paddingEnd="16dp"
               android:orientation="horizontal">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:textSize="18sp"
-        android:padding="16dp"
-        android:textColor="@color/green"
-        tools:text="MERS - Al-Meera"
+        android:textSize="14sp"
         android:id="@+id/edit_stock_name"/>
 
     <CheckBox

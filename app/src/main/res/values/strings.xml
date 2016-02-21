@@ -5,7 +5,7 @@
     <string name="stop_ai">Stop AI</string>
     <string name="title_activity_home_page">Saham</string>
 
-    <string name="title_activity_edit_stock_list">Stocks Watch List</string>
+    <string name="title_activity_edit_stock_list">Watchlist</string>
     <string name="title_activity_edit_investment_list">Investments</string>
     <string name="dialog_add_investments_title">New Investment</string>
     <string name="dialog_add_investments_add_button">Add</string>
@@ -119,7 +119,6 @@
 
     <string name="title_activity_calculator">Calculator</string>
     <string name="title_activity_rules">RulesActivity</string>
-    <string name="title_activity_wallet_analysis">WalletAnalysisActivity</string>
     <string name="title_activity_home">Saham</string>
     <string name="Section_1_Title">Stocks</string>
     <string name="Section_2_Title">Wallet</string>
@@ -128,6 +127,6 @@
     <string name="title_activity_checklist">Checklists</string>
     <string name="title_activity_stock_details">Analysis</string>
     <string name="compare">Compare</string>
-    <string name="title_activity_stocks_compare">StocksCompareActivity</string>
+    <string name="title_activity_stocks_compare">Comparison</string>
 
 </resources>
