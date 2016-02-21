@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.nasserapps.apitester.Model.Database.DataSource;
@@ -28,6 +29,10 @@ public class EditStockListActivity extends AppCompatActivity {
     private RecyclerView mEditStocksRecyclerView ;
     private ArrayList<Ticker> mAllStocksList;
     private User mUser;
+    private CheckBox mIslamicCheckBox;
+    private CheckBox mNonIslamicCheckBox;
+    private CheckBox mMixedCheckBox;
+    CompoundButton.OnCheckedChangeListener onCheckedChangeListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +52,38 @@ public class EditStockListActivity extends AppCompatActivity {
         mEditStocksRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mEditStocksRecyclerView.setAdapter(new StockListAdapter(mAllStocksList));
 
+        mIslamicCheckBox = (CheckBox)findViewById(R.id.islamicCheckBox);
+        mMixedCheckBox = (CheckBox)findViewById(R.id.mixedCheckBox);
+        mNonIslamicCheckBox = (CheckBox)findViewById(R.id.nonIslamicCheckBox);
         //Filter items by three parameters: Islamic, Mixed, Non-Islamic
+        mIslamicCheckBox.setChecked(true);
+        mMixedCheckBox.setChecked(false);
+        mNonIslamicCheckBox.setChecked(false);
 
+        onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mAllStocksList= new ArrayList<>();
+                for(Ticker ticker:mUser.getAllStocks() ){
+                    if(mIslamicCheckBox.isChecked()){
+                        //add islamic stocks
+                    }
+                    if(mMixedCheckBox.isChecked()){
+                        //add mixed stocks
+                    }
+                    if(mNonIslamicCheckBox.isChecked()){
+                        // add non islamic stocks
+                    }
+                }
+
+                mEditStocksRecyclerView.swapAdapter(new StockListAdapter(new ArrayList<Ticker>()), true);
+
+            }
+        };
+
+        mIslamicCheckBox.setOnCheckedChangeListener(onCheckedChangeListener);
+        mNonIslamicCheckBox.setOnCheckedChangeListener(onCheckedChangeListener);
+        mMixedCheckBox.setOnCheckedChangeListener(onCheckedChangeListener);
     }
 
     private class StockListAdapter extends RecyclerView.Adapter<StockListHolder> {
