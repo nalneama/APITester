@@ -40,7 +40,8 @@ public class DataSource {
                 // Get the API code from cursor.getString(2)
                 //Ticker ticker = new Ticker(cursor.getString(1));
                 //Ticker ticker = new Ticker(cursor.getString(0),cursor.getString(1),cursor.getDouble(15),cursor.getDouble(11),cursor.getLong(6),cursor.getDouble(10),cursor.getDouble(9),cursor.getDouble(12),cursor.getString(14),cursor.getDouble(13),cursor.getString(2),cursor.getInt(5)==1);
-                Ticker ticker = new Ticker(cursor.getString(0),cursor.getString(1),cursor.getDouble(15),cursor.getDouble(11),cursor.getLong(6),cursor.getDouble(10),cursor.getDouble(9),cursor.getDouble(12),cursor.getString(14),cursor.getDouble(13),cursor.getString(2),cursor.getInt(5)==1,cursor.getDouble(25),cursor.getInt(26),cursor.getInt(24)==1);
+                //Ticker ticker = new Ticker(cursor.getString(0),cursor.getString(1),cursor.getDouble(15),cursor.getDouble(11),cursor.getLong(6),cursor.getDouble(10),cursor.getDouble(9),cursor.getDouble(12),cursor.getString(14),cursor.getDouble(13),cursor.getString(2),cursor.getInt(5)==1,cursor.getDouble(25),cursor.getInt(26),cursor.getInt(24)==1);
+                Ticker ticker = new Ticker(cursor.getString(0),cursor.getString(1),cursor.getDouble(15),cursor.getDouble(11),cursor.getLong(6),cursor.getDouble(10),cursor.getDouble(9),cursor.getDouble(12),cursor.getString(14),cursor.getDouble(13),cursor.getString(2),cursor.getInt(5)==1,cursor.getDouble(25),cursor.getInt(26),cursor.getInt(24)==1,cursor.getDouble(16),cursor.getDouble(8),cursor.getDouble(7),cursor.getDouble(18),cursor.getDouble(19),cursor.getDouble(20),cursor.getDouble(21),cursor.getDouble(22),cursor.getDouble(23));
                 AllStocks.put(ticker.getAPICode(),ticker);
                 // return stock
             }while(cursor.moveToNext());
@@ -70,9 +71,14 @@ public class DataSource {
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_PRICE_CHANGE, ticker.getChange());
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_PERCENTAGE_CHANGE, ticker.getPercentage());
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_CURRENT_PRICE, ticker.getPrice());
-        //updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_OPEN_PRICE, ticker.getOpenPrice());
+        updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_OPEN_PRICE, ticker.getOpenPrice());
         //updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_MARKET_CAP, ticker.getMarketCap;
-        //updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_52W_BEST_PE_RATIO, ticker.getBestPE());
+        updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_52W_HIGH, ticker.getM52WHigh());
+        updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_52W_LOW, ticker.getM52WLow());
+        updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_52W_BEST_PE_RATIO, ticker.getBestPE());
+        updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_52W_WORST_PE_RATIO, ticker.getWorstPE());
+        updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_52W_BEST_PBV_RATIO, ticker.getBestPBV());
+        updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_52W_WORST_PBV_RATIO, ticker.getWorstPBV());
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_IN_INVESTMENT, ticker.isInInvestments());
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_PURCHASED_PRICE, ticker.getPurchasedPrice());
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_PURCHASED_QUANTITY, ticker.getQuantity());

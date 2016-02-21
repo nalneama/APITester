@@ -74,6 +74,7 @@ public class StocksListFragment extends Fragment {
         super.onResume();
         //Get the user
         mUser = User.getUser(getActivity());
+        mStockWatchList = new ArrayList<>();
         mStockWatchList = mUser.getWatchList();
 
         //3.0 Set the Display with Data

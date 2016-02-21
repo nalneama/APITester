@@ -128,5 +128,6 @@
     <string name="title_activity_checklist">Checklists</string>
     <string name="title_activity_stock_details">Analysis</string>
     <string name="compare">Compare</string>
+    <string name="title_activity_stocks_compare">StocksCompareActivity</string>
 
 </resources>

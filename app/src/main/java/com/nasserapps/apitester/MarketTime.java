@@ -8,7 +8,7 @@ import java.util.Locale;
 /**
  * Created by Nasser on 10/26/15.
  */
-public class exchangeTime {
+public class MarketTime {
 
     public static final String inputFormat = "HH:mm";
     private static final String mOpenTimeString = "09:30";
@@ -18,7 +18,7 @@ public class exchangeTime {
     private String mCurrentTimeString;
     SimpleDateFormat TimeConverter;
 
-    public exchangeTime(){
+    public MarketTime(){
 
         Calendar now = Calendar.getInstance();
 

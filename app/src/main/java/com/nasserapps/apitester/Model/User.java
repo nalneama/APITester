@@ -65,7 +65,7 @@ public class User {
     }
 
     public void updateStocksData(String jsonData) throws JSONException{
-        JSONParser jsonParser = new JSONParser(jsonData);
+        JSONParser jsonParser = new JSONParser(jsonData,getAllStocks());
         ArrayList<Ticker> stocks = jsonParser.getStocks();
         for (Ticker stock:stocks){
             mDataSource.updateStock(stock);

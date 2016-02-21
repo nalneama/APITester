@@ -5,10 +5,8 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:gravity="center"
               android:padding="16dp">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <ImageView
             android:layout_width="28dp"
@@ -17,86 +15,66 @@
             android:src="@drawable/bank_img"
             android:baselineAlignBottom="true"
             android:scaleType="fitEnd"
-            android:paddingRight="8dp"/>
-    <TextView
-        android:layout_marginTop="0dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:text="Al Rayyan Bank"
-        android:textColor="#424242"
-        android:id="@+id/stockName"/>
-    </LinearLayout>
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="Al Rayyan Bank"
+            android:textColor="#424242"
+            android:id="@+id/stockNameL"
+            android:textAlignment="center"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_marginTop="6dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:lineSpacingExtra="2dp"
-            android:text="Change from purchase \nprice: -1.2 (3.1%) \nA total loss of \n33,040 QR"
-            android:id="@+id/stockSummary"/>
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:id="@+id/stockPrice"
+            android:id="@+id/stockPriceL"
             android:textStyle="bold"
             android:textColor="#9E9E9E"
-            android:textSize="36sp"
+            android:textSize="24sp"
             android:text="79.11"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="false"
+            android:layout_centerHorizontal="true"/>
 
         <TextView
-            android:text="-1.7"
+            android:text="1.0 (-5.34%)"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="16dp"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:id="@+id/change"
-            android:layout_below="@+id/stockPrice"
-            android:layout_toStartOf="@+id/percentage"/>
-
-        <TextView
-            android:text="(-5.34%)"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:layout_marginLeft="2dp"
-            android:id="@+id/percentage"
-            android:layout_alignTop="@+id/change"
-            android:layout_alignEnd="@+id/stockPrice"/>
+            android:id="@+id/percentageL"
+            android:layout_below="@+id/stockPriceL"
+            android:layout_centerHorizontal="true"
+            />
 
     </RelativeLayout>
 
     <!-- todo add drawable line_divider below this line-->
     <View android:layout_width="match_parent"
           android:layout_height="1dp"
-        android:background="@color/cardview_shadow_start_color"/>
+          android:background="@color/cardview_shadow_start_color"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:divider="@drawable/line_divider"
         android:paddingTop="8dp"
         android:showDividers="middle">
 
 
         <RelativeLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingRight="16dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp">
             <TextView
                 android:layout_marginTop="4dp"
                 android:layout_width="wrap_content"
@@ -125,7 +103,7 @@
                 android:textSize="@dimen/stock_details_values"
                 android:text="34.0\n80.10\n56.30\n500k\n12.34\n1.54"
                 android:lineSpacingExtra="@dimen/stock_details_values_spacing"
-                android:id="@+id/todayValues"/>
+                android:id="@+id/todayValuesL"/>
 
         </RelativeLayout>
 
@@ -139,13 +117,11 @@
             />
 -->
         <RelativeLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingLeft="16dp"
             android:orientation="vertical">
             <TextView
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
@@ -171,7 +147,7 @@
                 android:textSize="@dimen/stock_details_values"
                 android:text="90.0\n20.10\n12.4\n20.1\n0.84\n1.54"
                 android:lineSpacingExtra="@dimen/stock_details_values_spacing"
-                android:id="@+id/fiftytwoWeeksValues"/>
+                android:id="@+id/fiftytwoWeeksValuesL"/>
 
         </RelativeLayout>
 

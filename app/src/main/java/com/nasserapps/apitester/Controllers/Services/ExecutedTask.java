@@ -75,7 +75,7 @@ public class ExecutedTask extends IntentService {
                     try {
                         String jsonData = response.body().string();
                         if (response.isSuccessful()) {
-                            JSONParser jsonParser = new JSONParser(jsonData);
+                            JSONParser jsonParser = new JSONParser(jsonData, mUser.getAllStocks());
                             //mStock = jsonParser.tieData();
                             mUser.updateStocksData(jsonData);
                             Checklist checklist = new Checklist("");

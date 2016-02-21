@@ -33,21 +33,6 @@ public class Ticker {
     private double mWorstPBV;
     private double openPrice;
 
-    public Ticker(String symbol, String name, double price, double PERatio, long volume, double bid, double ask, double PBV, String percentage, double change, String APICode, boolean inWatchList) {
-        mSymbol = symbol;
-        mName = name;
-        mPrice = price;
-        mPERatio = PERatio;
-        mVolume = volume;
-        mBid = bid;
-        mAsk = ask;
-        mPBV = PBV;
-        this.percentage = percentage;
-        this.change = change;
-        this.APICode = APICode;
-        this.inWatchList = inWatchList;
-    }
-
     public void setInWatchList(boolean inWatchList) {
         this.inWatchList = inWatchList;
     }
@@ -72,6 +57,33 @@ public class Ticker {
         mPurchasedPrice = purchasedPrice;
         mQuantity = quantity;
         this.inInvestments = inInvestments;
+    }
+
+    public Ticker(String symbol, String name, double price, double PERatio, long volume, double bid, double ask, double PBV, String percentage, double change, String APICode, boolean inWatchList, double purchasedPrice, int quantity, boolean inInvestments, double openPrice, double dayHigh, double dayLow, double m52WHigh, double m52WLow, double bestPE, double worstPE, double bestPBV, double worstPBV) {
+        mSymbol = symbol;
+        mName = name;
+        mPrice = price;
+        mPERatio = PERatio;
+        mVolume = volume;
+        mBid = bid;
+        mAsk = ask;
+        mPBV = PBV;
+        this.percentage = percentage;
+        this.change = change;
+        this.APICode = APICode;
+        this.inWatchList = inWatchList;
+        mPurchasedPrice = purchasedPrice;
+        mQuantity = quantity;
+        this.inInvestments = inInvestments;
+        this.openPrice = openPrice;
+        this.mDayHigh = dayHigh;
+        this.mDayLow = dayLow;
+        this.m52WHigh = m52WHigh;
+        this.m52WLow = m52WLow;
+        mBestPE = bestPE;
+        mWorstPE = worstPE;
+        mBestPBV = bestPBV;
+        mWorstPBV = worstPBV;
     }
 
     public Ticker(String APICode) {
@@ -274,5 +286,18 @@ public class Ticker {
 
     public void setOpenPrice(double openPrice) {
         this.openPrice = openPrice;
+    }
+
+    public double getInvestmentProfit(){
+        return (mPrice-mPurchasedPrice)*mQuantity;
+    }
+
+    public double getChangeFromPurchasedPrice(){
+        return mPrice-mPurchasedPrice;
+    }
+
+    public String getPercentageChangeFromPurchasedPrice(){
+
+        return String.format("%.2f%%",getChangeFromPurchasedPrice()/mPurchasedPrice*100);
     }
 }

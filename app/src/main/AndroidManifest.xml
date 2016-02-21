@@ -85,6 +85,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nasserapps.apitester.Controllers.Activities.HomeActivity"/>
         </activity>
+        <activity
+            android:name=".Controllers.Activities.StocksCompareActivity"
+            android:label="@string/title_activity_stocks_compare"
+            android:parentActivityName=".Controllers.Activities.StockDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nasserapps.apitester.Controllers.Activities.StockDetailsActivity"/>
+        </activity>
     </application>
 
 </manifest>

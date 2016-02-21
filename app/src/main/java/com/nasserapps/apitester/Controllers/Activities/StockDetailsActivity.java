@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.nasserapps.apitester.Controllers.InProgress.InvestmentListActivity;
+import com.nasserapps.apitester.MarketTime;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;
@@ -25,6 +25,7 @@ public class StockDetailsActivity extends AppCompatActivity {
     private TextView mStockTodayView;
     private TextView mStock52WView;
     private Ticker mStock;
+    private TextView mStockTodayTitlesView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +41,12 @@ public class StockDetailsActivity extends AppCompatActivity {
         mStock= Tools.getStockFromList(i.getStringExtra("Symbol"),mUser.getWatchList());
         //Toast.makeText(this, mStock.getSymbol()+" price is : "+mStock.getPrice(), Toast.LENGTH_SHORT).show();
 
+        //Stock Name
         mStockNameView = (TextView) findViewById(R.id.stockName);
         mStockNameView.setText(mStock.getName());
 
+
+        // Stock Price, Percentage and Change
         mStockPriceView = (TextView) findViewById(R.id.stockPrice);
         mStockPriceView.setText(mStock.getPrice() + "");
         mStockPriceView.setTextColor(getResources().getColor(mStock.getPriceColor()));
@@ -52,19 +56,60 @@ public class StockDetailsActivity extends AppCompatActivity {
         mStockChangeView.setTextColor(getResources().getColor(mStock.getPriceColor()));
 
         mStockPercentageView = (TextView)findViewById(R.id.percentage);
-        mStockPercentageView.setText("("+mStock.getPercentage() + ")");
+        mStockPercentageView.setText(" (" + mStock.getPercentage() + ")");
         mStockPercentageView.setTextColor(getResources().getColor(mStock.getPriceColor()));
 
-        //TODO fix the numbers and change the statement based on isInvestment and profit or loss
-        mStockSummaryView=(TextView)findViewById(R.id.stockSummary);
-        mStockSummaryView.setText(String.format("Change from purchase%nprice is %.2f QR (%s)%nA total loss of%n%,.0f QR", mStock.getChange(), mStock.getPercentage(), mStock.getQuantity() * mStock.getPurchasedPrice()));
 
-        //TODO change from open to close based on time of access
+
+        //Stock Investment Summary
+        String lossOrProfit = "loss";
+        if(mStock.getInvestmentProfit()>=0){lossOrProfit="profit";}
+
+        mStockSummaryView=(TextView)findViewById(R.id.stockSummary);
+        if(mStock.isInInvestments()) {
+            mStockSummaryView.setText(String.format("Change from purchase%nprice is %.2f QR (%s)%nA total %s of%n%,.0f QR",
+                    mStock.getChangeFromPurchasedPrice(),
+                    mStock.getPercentageChangeFromPurchasedPrice(),
+                    lossOrProfit,
+                    mStock.getInvestmentProfit()));
+        }
+        else{
+            mStockSummaryView.setText(String.format("You don't have investments%nin %s.",mStock.getName()));
+        }
+
+
+
+        //Today's and 52W Values
+        double openOrClose = mStock.getPrice();
+        String openOrCloseString = "Close";
+        MarketTime marketTime = new MarketTime();
+
+        if(marketTime.isInTheExchangePeriod()){
+            openOrClose = mStock.getOpenPrice();
+            openOrCloseString = "Open";
+        }
+
+        mStockTodayTitlesView = (TextView)findViewById(R.id.todayTitles);
+        mStockTodayTitlesView.setText(String.format("%s:%nDay High:%nDay Low:%nVolume:%nPE Ratio:%nP-Book Value:",openOrCloseString));
+
+
         mStockTodayView = (TextView) findViewById(R.id.todayValues);
-        mStockTodayView.setText(String.format("%.2f%n%.2f%n%.2f%n%,d%n%.2f%n%.2f",mStock.getOpenPrice(),mStock.getDayHigh(),mStock.getDayLow(),mStock.getVolume(),mStock.getPERatio(),mStock.getPBV()));
+        mStockTodayView.setText(String.format("%.2f%n%.2f%n%.2f%n%,d%n%.2f%n%.2f",
+                openOrClose,
+                mStock.getDayHigh(),
+                mStock.getDayLow(),
+                mStock.getVolume(),
+                mStock.getPERatio(),
+                mStock.getPBV()));
 
         mStock52WView = (TextView) findViewById(R.id.fiftytwoWeeksValues);
-        mStock52WView.setText(String.format("%.2f%n%.2f%n%.2f%n%.2f%n%.2f%n%.2f",mStock.getM52WHigh(),mStock.getM52WLow(),mStock.getBestPE(),mStock.getWorstPE(),mStock.getBestPBV(),mStock.getWorstPBV()));
+        mStock52WView.setText(String.format("%.2f%n%.2f%n%.2f%n%.2f%n%.2f%n%.2f",
+                mStock.getM52WHigh(),
+                mStock.getM52WLow(),
+                mStock.getBestPE(),
+                mStock.getWorstPE(),
+                mStock.getBestPBV(),
+                mStock.getWorstPBV()));
 
     }
 
@@ -78,8 +123,9 @@ public class StockDetailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.compare) {
-            Intent i = new Intent(this, InvestmentListActivity.class);
-            i.putExtra("Symbol",mStock.getSymbol());
+            Intent i = new Intent(this, StocksCompareActivity.class);
+            i.putExtra("LSymbol",mStock.getSymbol());
+            i.putExtra("RSymbol","MERS");
             startActivity(i);
             return true;
         }
