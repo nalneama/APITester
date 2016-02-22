@@ -37,7 +37,7 @@
             android:exported="false"/>
 
         <activity
-            android:name=".Controllers.InProgress.EditStockListActivity"
+            android:name=".Controllers.Activities.EditStockListActivity"
             android:label="@string/title_activity_edit_stock_list"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

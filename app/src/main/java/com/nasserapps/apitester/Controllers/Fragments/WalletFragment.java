@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +22,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.nasserapps.apitester.Controllers.Activities.ChecklistActivity;
+import com.nasserapps.apitester.Controllers.Adapters.StockAdapter;
 import com.nasserapps.apitester.Controllers.InProgress.InvestmentListActivity;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
@@ -38,6 +41,7 @@ public class WalletFragment extends Fragment {
     private TextView mProfitView;
     PieChart pieChart;
     User mUser;
+    private RecyclerView mRecycleview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,11 +59,11 @@ public class WalletFragment extends Fragment {
         mWalletCard = (CardView) view.findViewById(R.id.walletCard);
         mCapitalView = (TextView) view.findViewById(R.id.capitalInvested);
         mProfitView = (TextView)view.findViewById(R.id.capitalProfit);
+        mRecycleview = (RecyclerView)view.findViewById(R.id.my_recycler_view);
 
 
 
-
-        pieChart = (PieChart)view.findViewById(R.id.pieChart);
+                pieChart = (PieChart)view.findViewById(R.id.pieChart);
         mBlueCard = (CardView) view.findViewById(R.id.blue_card);
 
         return view;
@@ -126,6 +130,10 @@ public class WalletFragment extends Fragment {
             l.setXEntrySpace(7f);
             l.setYEntrySpace(0f);
             l.setYOffset(0f);
+
+            mRecycleview.setAdapter(new StockAdapter(getActivity(), mInvestmentsList));
+            mRecycleview.setHasFixedSize(true);
+            mRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         }
         else{

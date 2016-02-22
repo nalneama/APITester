@@ -72,8 +72,8 @@ public class StocksCompareActivity extends AppCompatActivity {
         mStock52WViewR = (TextView) findViewById(R.id.fiftytwoWeeksValuesR);
 
 
-        mStockL = Tools.getStockFromList(i.getStringExtra("LSymbol"), mUser.getWatchList());
-        mStockR= Tools.getStockFromList(i.getStringExtra("RSymbol"), mUser.getWatchList());
+        mStockL = Tools.getStockFromList(i.getStringExtra("LSymbol"), mUser.getAllStocks());
+        mStockR= Tools.getStockFromList(i.getStringExtra("RSymbol"), mUser.getAllStocks());
 
         mStockNameViewL.setText(mStockL.getName());
         // Create an ArrayAdapter using the string array and a default spinner layout

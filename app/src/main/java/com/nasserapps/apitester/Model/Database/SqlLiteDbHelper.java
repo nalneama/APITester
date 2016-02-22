@@ -53,6 +53,7 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_STOCK_IN_INVESTMENT="in_investment";
     public static final String COLUMN_STOCK_PURCHASED_PRICE="purchased_price";
     public static final String COLUMN_STOCK_PURCHASED_QUANTITY="purchased_quantity";
+    public static final String COLUMN_STOCK_PURITY="is_islamic";
 
 
     //Constructor

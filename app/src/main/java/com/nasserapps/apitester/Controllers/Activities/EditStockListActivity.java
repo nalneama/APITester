@@ -1,4 +1,4 @@
-package com.nasserapps.apitester.Controllers.InProgress;
+package com.nasserapps.apitester.Controllers.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -44,9 +44,10 @@ public class EditStockListActivity extends AppCompatActivity {
 
         mUser=User.getUser(this);
         mAllStocksList = new ArrayList<>();
-        mAllStocksList = mUser.getAllStocks();
         Tools.sort(mAllStocksList, "A-Z");
-
+        for(Ticker ticker:mUser.getAllStocks() ){
+                if (ticker.isIslamic()){mAllStocksList.add(ticker);}
+        }
         mEditStocksRecyclerView = (RecyclerView) findViewById(R.id.edit_stock_list_recyclerview);
         mEditStocksRecyclerView.setHasFixedSize(true);
         mEditStocksRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -66,17 +67,17 @@ public class EditStockListActivity extends AppCompatActivity {
                 mAllStocksList= new ArrayList<>();
                 for(Ticker ticker:mUser.getAllStocks() ){
                     if(mIslamicCheckBox.isChecked()){
-                        //add islamic stocks
+                        if (ticker.isIslamic()){mAllStocksList.add(ticker);}
                     }
                     if(mMixedCheckBox.isChecked()){
-                        //add mixed stocks
+                        if (ticker.isMixed()){mAllStocksList.add(ticker);}
                     }
                     if(mNonIslamicCheckBox.isChecked()){
-                        // add non islamic stocks
+                        if (ticker.isNotIslamic()){mAllStocksList.add(ticker);}
                     }
                 }
 
-                mEditStocksRecyclerView.swapAdapter(new StockListAdapter(new ArrayList<Ticker>()), true);
+                mEditStocksRecyclerView.swapAdapter(new StockListAdapter(mAllStocksList), true);
 
             }
         };

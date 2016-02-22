@@ -32,6 +32,9 @@ public class Ticker {
     private double mWorstPE;
     private double mWorstPBV;
     private double openPrice;
+    private boolean mIsIslamic=false;
+    private boolean mIsMixed=false;
+    private boolean mNotIslamic=false;
 
     public void setInWatchList(boolean inWatchList) {
         this.inWatchList = inWatchList;
@@ -59,7 +62,7 @@ public class Ticker {
         this.inInvestments = inInvestments;
     }
 
-    public Ticker(String symbol, String name, double price, double PERatio, long volume, double bid, double ask, double PBV, String percentage, double change, String APICode, boolean inWatchList, double purchasedPrice, int quantity, boolean inInvestments, double openPrice, double dayHigh, double dayLow, double m52WHigh, double m52WLow, double bestPE, double worstPE, double bestPBV, double worstPBV) {
+    public Ticker(String symbol, String name, double price, double PERatio, long volume, double bid, double ask, double PBV, String percentage, double change, String APICode, boolean inWatchList, double purchasedPrice, int quantity, boolean inInvestments, double openPrice, double dayHigh, double dayLow, double m52WHigh, double m52WLow, double bestPE, double worstPE, double bestPBV, double worstPBV, int purity) {
         mSymbol = symbol;
         mName = name;
         mPrice = price;
@@ -84,6 +87,18 @@ public class Ticker {
         mWorstPE = worstPE;
         mBestPBV = bestPBV;
         mWorstPBV = worstPBV;
+
+        switch (purity){
+            case 0:
+                mIsIslamic=true;
+                break;
+            case 1:
+                mIsMixed=true;
+                break;
+            case 2:
+                mNotIslamic=true;
+                break;
+        }
     }
 
     public Ticker(String APICode) {
@@ -299,5 +314,17 @@ public class Ticker {
     public String getPercentageChangeFromPurchasedPrice(){
 
         return String.format("%.2f%%",getChangeFromPurchasedPrice()/mPurchasedPrice*100);
+    }
+
+    public boolean isIslamic() {
+        return mIsIslamic;
+    }
+
+    public boolean isMixed() {
+        return mIsMixed;
+    }
+
+    public boolean isNotIslamic() {
+        return mNotIslamic;
     }
 }

@@ -30,7 +30,6 @@
         android:id="@+id/walletCard"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:paddingBottom="16dp"
         android:clipToPadding="false"
         android:layout_margin="16dp">
 
@@ -59,9 +58,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="16dp"
+                android:paddingTop="4dp"
                 android:id="@+id/box"
-                android:paddingBottom="16dp"
+                android:paddingBottom="8dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -104,12 +103,19 @@
 
 
             <com.github.mikephil.charting.charts.PieChart
-                android:layout_margin="16dp"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="350dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginLeft="24dp"
                 android:id="@+id/pieChart">
 
             </com.github.mikephil.charting.charts.PieChart>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                android:id="@+id/my_recycler_view"
+                />
 
         </LinearLayout>
 

@@ -22,7 +22,7 @@ import android.view.ViewGroup;
 
 import com.nasserapps.apitester.Controllers.Adapters.StockAdapter;
 import com.nasserapps.apitester.Controllers.Dialogs.AlertDialogFragment;
-import com.nasserapps.apitester.Controllers.InProgress.EditStockListActivity;
+import com.nasserapps.apitester.Controllers.Activities.EditStockListActivity;
 import com.nasserapps.apitester.Model.Checklists.Checklist;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
