@@ -313,7 +313,7 @@ public class Ticker {
 
     public String getPercentageChangeFromPurchasedPrice(){
 
-        return String.format("%.2f%%",getChangeFromPurchasedPrice()/mPurchasedPrice*100);
+        return String.format("%.1f%%",getChangeFromPurchasedPrice()/mPurchasedPrice*100);
     }
 
     public boolean isIslamic() {

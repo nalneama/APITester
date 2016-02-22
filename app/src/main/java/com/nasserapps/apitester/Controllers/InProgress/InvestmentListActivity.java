@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -56,6 +57,7 @@ public class InvestmentListActivity extends AppCompatActivity {
         mEditStocksRecyclerView.setHasFixedSize(true);
         mEditStocksRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mEditStocksRecyclerView.setAdapter(new InvestmentListAdapter(mInvestmentsList));
+        mEditStocksRecyclerView.setItemAnimator(new DefaultItemAnimator());
         FloatingActionButton mFAB = (FloatingActionButton)findViewById(R.id.fab);
         mFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,7 +223,7 @@ public class InvestmentListActivity extends AppCompatActivity {
         public void bindStock(Ticker investment,int position){
             mInvestment=investment;
             mPosition=position;
-            mInvestmentNameView.setText(investment.getSymbol()+"");
+            mInvestmentNameView.setText(investment.getName()+"");
             mInvestmentQuantity.setText(investment.getQuantity() + "");
             mPurchasedPrice.setText(investment.getPurchasedPrice() + "");
         }

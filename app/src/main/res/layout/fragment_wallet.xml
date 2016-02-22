@@ -111,11 +111,7 @@
 
             </com.github.mikephil.charting.charts.PieChart>
 
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="600dp"
-                android:id="@+id/my_recycler_view"
-                />
+            <include layout="@layout/card_profit_table"/>
 
         </LinearLayout>
 

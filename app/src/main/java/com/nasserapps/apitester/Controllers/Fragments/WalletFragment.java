@@ -22,7 +22,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.nasserapps.apitester.Controllers.Activities.ChecklistActivity;
-import com.nasserapps.apitester.Controllers.Adapters.StockAdapter;
+import com.nasserapps.apitester.Controllers.Adapters.ProfitsTableAdapter;
 import com.nasserapps.apitester.Controllers.InProgress.InvestmentListActivity;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
@@ -59,11 +59,11 @@ public class WalletFragment extends Fragment {
         mWalletCard = (CardView) view.findViewById(R.id.walletCard);
         mCapitalView = (TextView) view.findViewById(R.id.capitalInvested);
         mProfitView = (TextView)view.findViewById(R.id.capitalProfit);
-        mRecycleview = (RecyclerView)view.findViewById(R.id.my_recycler_view);
+        mRecycleview = (RecyclerView)view.findViewById(R.id.profits_recyclerview);
 
 
 
-                pieChart = (PieChart)view.findViewById(R.id.pieChart);
+        pieChart = (PieChart)view.findViewById(R.id.pieChart);
         mBlueCard = (CardView) view.findViewById(R.id.blue_card);
 
         return view;
@@ -131,7 +131,7 @@ public class WalletFragment extends Fragment {
             l.setYEntrySpace(0f);
             l.setYOffset(0f);
 
-            mRecycleview.setAdapter(new StockAdapter(getActivity(), mInvestmentsList));
+            mRecycleview.setAdapter(new ProfitsTableAdapter(mInvestmentsList));
             mRecycleview.setHasFixedSize(true);
             mRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
 

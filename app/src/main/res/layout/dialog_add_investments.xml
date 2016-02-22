@@ -37,8 +37,7 @@
             android:textAlignment="textEnd"
             android:layout_weight="1"
             android:id="@+id/investmentPrice"
-            android:inputType="numberDecimal"
-            android:nextFocusForward="@id/investmentQuantity"/>
+            android:inputType="numberDecimal"/>
     </LinearLayout>
 
     <LinearLayout
