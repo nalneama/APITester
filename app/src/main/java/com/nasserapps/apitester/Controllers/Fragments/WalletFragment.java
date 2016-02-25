@@ -47,8 +47,8 @@ public class WalletFragment extends Fragment {
     private TextView mProfitView;
     PieChart mPieChart;
     User mUser;
-    private RecyclerView mRecycleview;
-    private TextView mPercntageView;
+    private RecyclerView mRecyclerView;
+    private TextView mPercentageView;
     private ImageView mArrowView;
 
     @Override
@@ -67,8 +67,8 @@ public class WalletFragment extends Fragment {
         mWalletCard = (CardView) view.findViewById(R.id.walletCard);
         mCapitalView = (TextView) view.findViewById(R.id.capitalInvested);
         mProfitView = (TextView)view.findViewById(R.id.capitalProfit);
-        mRecycleview = (RecyclerView)view.findViewById(R.id.profits_recyclerview);
-        mPercntageView = (TextView)view.findViewById(R.id.percentageCIChange);
+        mRecyclerView = (RecyclerView)view.findViewById(R.id.profits_recyclerview);
+        mPercentageView = (TextView)view.findViewById(R.id.percentageCIChange);
         mArrowView = (ImageView)view.findViewById(R.id.InvestmentArrow);
 
         mPieChart = (PieChart)view.findViewById(R.id.pieChart);
@@ -96,8 +96,8 @@ public class WalletFragment extends Fragment {
             mCapitalView.setTextColor(Tools.getTextColor(getActivity(), mWallet.getProfit()));
             mProfitView.setText(Tools.getProfitOrLossSting(mWallet.getProfit()) + ": " + String.format(getString(R.string.Format_Capital), mWallet.getProfit()));
             mArrowView.setImageDrawable(Tools.getArrowDirection(getActivity(), mWallet.getProfit()));
-            mPercntageView.setText(String.format("%.2f%%", mWallet.getPercentageChange()));
-            mPercntageView.setTextColor(Tools.getTextColor(getActivity(), mWallet.getProfit()));
+            mPercentageView.setText(String.format("%.2f%%", mWallet.getPercentageChange()));
+            mPercentageView.setTextColor(Tools.getTextColor(getActivity(), mWallet.getProfit()));
 
             // Set the text inside the piechart
             //Image inside the pie chart
@@ -107,7 +107,7 @@ public class WalletFragment extends Fragment {
 
             //Text inside the pie chart
             SpannableString spannableString = new SpannableString(" "+String.format("%.2f%%", mWallet.getPercentageChange()));
-            spannableString.setSpan(imageSpan,0,1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            spannableString.setSpan(imageSpan, 0, 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             mPieChart.setCenterText(spannableString);
             mPieChart.setCenterTextSize(18f);
             mPieChart.setCenterTextColor(Tools.getTextColor(getActivity(), mWallet.getProfit()));
@@ -156,9 +156,9 @@ public class WalletFragment extends Fragment {
             //TODO tablelayout to replace the recyclerview
 
             //Profits Table
-            mRecycleview.setAdapter(new ProfitsTableAdapter(mInvestmentsList));
-            mRecycleview.setHasFixedSize(true);
-            mRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
+            mRecyclerView.setAdapter(new ProfitsTableAdapter(mInvestmentsList));
+            mRecyclerView.setHasFixedSize(true);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
         }
