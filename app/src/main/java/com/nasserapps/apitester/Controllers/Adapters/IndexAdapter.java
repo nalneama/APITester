@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.R;
+import com.nasserapps.apitester.Tools;
 
 import java.util.List;
 
@@ -64,14 +65,14 @@ public class IndexAdapter extends RecyclerView.Adapter<IndexAdapter.IndexHolder>
             mIndexSymbol.setText(mIndex.getSymbol());
             mIndexPrice.setText(mIndex.getPrice()+"");
 
-            mIndexPrice.setTextColor(mContext.getResources().getColor(mIndex.getPriceColor()));
+            mIndexPrice.setTextColor(Tools.getTextColor(mContext, mIndex.getChange()));
 
 
             mIndexChange.setText("" + mIndex.getChange());
             mIndexPercentage.setText("(" + mIndex.getPercentage() + ")");
 
-            mIndexChange.setTextColor(mContext.getResources().getColor(mIndex.getPriceColor()));
-            mIndexPercentage.setTextColor(mContext.getResources().getColor(mIndex.getPriceColor()));
+            mIndexChange.setTextColor(Tools.getTextColor(mContext, mIndex.getChange()));
+            mIndexPercentage.setTextColor(Tools.getTextColor(mContext, mIndex.getChange()));
         }
     }
 }

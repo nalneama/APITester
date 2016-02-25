@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,7 +22,6 @@ import java.util.ArrayList;
 public class StocksCompareActivity extends AppCompatActivity {
 
     private User mUser;
-    private TextView mStockNameViewL;
     private TextView mStockPriceViewL;
     private TextView mStockPercentageViewL;
     private TextView mStockTodayViewL;
@@ -51,7 +51,7 @@ public class StocksCompareActivity extends AppCompatActivity {
         mUser = User.getUser(this);
         Intent i = getIntent();
 
-        mStockNameViewL = (TextView) findViewById(R.id.stockNameL);
+        mStockNameChooserL = (Spinner) findViewById(R.id.stockNameL);
         mStockNameChooserR = (Spinner) findViewById(R.id.stockNameR);
 
         // Stock Price, Percentage and Change
@@ -75,21 +75,23 @@ public class StocksCompareActivity extends AppCompatActivity {
         mStockL = Tools.getStockFromList(i.getStringExtra("LSymbol"), mUser.getAllStocks());
         mStockR= Tools.getStockFromList(i.getStringExtra("RSymbol"), mUser.getAllStocks());
 
-        mStockNameViewL.setText(mStockL.getName());
         // Create an ArrayAdapter using the string array and a default spinner layout
         //TODO and put all stocks
         ArrayList<String> names = new ArrayList<>();
         for(Ticker ticker:mUser.getAllStocks()){
             names.add(ticker.getName());
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.my_spinner,names);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.spinner_comparison,names);
         //ArrayAdapter.createFromResource(this,R.array.planets_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         mStockNameChooserR.setAdapter(adapter);
+        mStockNameChooserL.setAdapter(adapter);
         //mStockNameChooserR.setText(mStockR.getName());
         int stockPositionR = names.indexOf(mStockR.getName());
+        int stockPositionL = names.indexOf(mStockL.getName());
+
         mStockNameChooserR.setSelection(stockPositionR,false);
         mStockNameChooserR.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -103,7 +105,19 @@ public class StocksCompareActivity extends AppCompatActivity {
 
             }
         });
+        mStockNameChooserL.setSelection(stockPositionL,false);
+        mStockNameChooserL.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mStockL=mUser.getAllStocks().get(position);
+                setDisplay();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         setDisplay();
 
 
@@ -114,14 +128,14 @@ public class StocksCompareActivity extends AppCompatActivity {
 
         // Stock Price, Percentage and Change
         mStockPriceViewL.setText(mStockL.getPrice() + "");
-        mStockPriceViewL.setTextColor(getResources().getColor(mStockL.getPriceColor()));
+        mStockPriceViewL.setTextColor(Tools.getTextColor(this, mStockL.getChange()));
         mStockPriceViewR.setText(mStockR.getPrice() + "");
-        mStockPriceViewR.setTextColor(getResources().getColor(mStockR.getPriceColor()));
+        mStockPriceViewR.setTextColor(Tools.getTextColor(this, mStockR.getChange()));
 
         mStockPercentageViewL.setText(mStockL.getChange() + " (" + mStockL.getPercentage() + ")");
-        mStockPercentageViewL.setTextColor(getResources().getColor(mStockL.getPriceColor()));
+        mStockPercentageViewL.setTextColor(Tools.getTextColor(this, mStockL.getChange()));
         mStockPercentageViewR.setText(mStockR.getChange()+" (" + mStockR.getPercentage() + ")");
-        mStockPercentageViewR.setTextColor(getResources().getColor(mStockR.getPriceColor()));
+        mStockPercentageViewR.setTextColor(Tools.getTextColor(this, mStockR.getChange()));
 
 
         //Today's and 52W Values
@@ -171,5 +185,14 @@ public class StocksCompareActivity extends AppCompatActivity {
                 mStockR.getWorstPBV()));
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

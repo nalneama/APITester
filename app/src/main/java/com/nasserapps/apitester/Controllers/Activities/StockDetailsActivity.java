@@ -51,15 +51,15 @@ public class StockDetailsActivity extends AppCompatActivity {
         // Stock Price, Percentage and Change
         mStockPriceView = (TextView) findViewById(R.id.stockPrice);
         mStockPriceView.setText(mStock.getPrice() + "");
-        mStockPriceView.setTextColor(getResources().getColor(mStock.getPriceColor()));
+        mStockPriceView.setTextColor(Tools.getTextColor(this,mStock.getChange()));
 
         mStockChangeView = (TextView) findViewById(R.id.change);
         mStockChangeView.setText(mStock.getChange() + "");
-        mStockChangeView.setTextColor(getResources().getColor(mStock.getPriceColor()));
+        mStockChangeView.setTextColor(Tools.getTextColor(this, mStock.getChange()));
 
         mStockPercentageView = (TextView)findViewById(R.id.percentage);
         mStockPercentageView.setText(" (" + mStock.getPercentage() + ")");
-        mStockPercentageView.setTextColor(getResources().getColor(mStock.getPriceColor()));
+        mStockPercentageView.setTextColor(Tools.getTextColor(this, mStock.getChange()));
 
 
 

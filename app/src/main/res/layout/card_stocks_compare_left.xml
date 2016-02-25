@@ -16,15 +16,13 @@
             android:baselineAlignBottom="true"
             android:scaleType="fitEnd"
             />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:text="Al Rayyan Bank"
-            android:textColor="#424242"
-            android:id="@+id/stockNameL"
-            android:textAlignment="center"/>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#424242"
+        android:id="@+id/stockNameL"
+        style="@style/MySpinnerLook"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

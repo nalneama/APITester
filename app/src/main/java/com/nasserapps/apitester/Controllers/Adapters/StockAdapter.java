@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.nasserapps.apitester.Controllers.Activities.StockDetailsActivity;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.R;
+import com.nasserapps.apitester.Tools;
 
 import java.util.List;
 
@@ -91,21 +92,21 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockHolder>
             mStockNameView.setText(mStock.getName());
             mStockSymbol.setText(mStock.getSymbol());
             mStockPrice.setText(mStock.getPrice()+"");
-            mStockHigh.setText("High: " + mStock.getPrice());//TODO to be fixed
-            mStockLow.setText("Low: " + mStock.getPrice());//TODO to be fixed
+            mStockHigh.setText("High: " + mStock.getDayHigh());
+            mStockLow.setText("Low: " + mStock.getDayLow());
             mStockPERatio.setText("PE: " + mStock.getPERatio());
             mStockAsk.setText("Ask: " + mStock.getAsk());
             mStockBid.setText("Bid: " + mStock.getBid());
             mStockPBValue.setText("PBV: " + mStock.getPBV());
-            mStockPrice.setTextColor(mContext.getResources().getColor(mStock.getPriceColor()));
+            mStockPrice.setTextColor(Tools.getTextColor(mContext, mStock.getChange()));
 
 
 
             mStockChange.setText("" + mStock.getChange());
             mStockPercentage.setText("(" + mStock.getPercentage() + ")");
 
-            mStockChange.setTextColor(mContext.getResources().getColor(mStock.getPriceColor()));
-            mStockPercentage.setTextColor(mContext.getResources().getColor(mStock.getPriceColor()));
+            mStockChange.setTextColor(Tools.getTextColor(mContext, mStock.getChange()));
+            mStockPercentage.setTextColor(Tools.getTextColor(mContext, mStock.getChange()));
         }
     }
 }

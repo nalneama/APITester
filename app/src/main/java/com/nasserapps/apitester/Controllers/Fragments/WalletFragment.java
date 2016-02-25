@@ -2,17 +2,22 @@ package com.nasserapps.apitester.Controllers.Fragments;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -28,6 +33,7 @@ import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
+import com.nasserapps.apitester.Tools;
 
 import java.util.ArrayList;
 
@@ -39,9 +45,11 @@ public class WalletFragment extends Fragment {
     private CardView mBlueCard;
     private TextView mCapitalView;
     private TextView mProfitView;
-    PieChart pieChart;
+    PieChart mPieChart;
     User mUser;
     private RecyclerView mRecycleview;
+    private TextView mPercntageView;
+    private ImageView mArrowView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,10 +68,10 @@ public class WalletFragment extends Fragment {
         mCapitalView = (TextView) view.findViewById(R.id.capitalInvested);
         mProfitView = (TextView)view.findViewById(R.id.capitalProfit);
         mRecycleview = (RecyclerView)view.findViewById(R.id.profits_recyclerview);
+        mPercntageView = (TextView)view.findViewById(R.id.percentageCIChange);
+        mArrowView = (ImageView)view.findViewById(R.id.InvestmentArrow);
 
-
-
-        pieChart = (PieChart)view.findViewById(R.id.pieChart);
+        mPieChart = (PieChart)view.findViewById(R.id.pieChart);
         mBlueCard = (CardView) view.findViewById(R.id.blue_card);
 
         return view;
@@ -75,65 +83,82 @@ public class WalletFragment extends Fragment {
         mUser = User.getUser(getActivity());
         mWallet = mUser.getWallet();
         mWallet.setInvestmentList(mUser.getAllStocks());
+
+        //If there is a wallet, then make things visible, else make the blue card visible
         if(mWallet.getInvestments().size()>0) {
             mInvestmentsList =  mWallet.getInvestments();
 
             mWalletCard.setVisibility(View.VISIBLE);
             mBlueCard.setVisibility(View.GONE);
-            //Hide the other card
-            mCapitalView.setText(String.format(getString(R.string.Format_Capital),mWallet.getCurrentWorth()));
-            mCapitalView.setTextColor(getResources().getColor(mWallet.getPriceColor()));
 
-            //TODO change profit and loss statement
-            mProfitView.setText("Profit: "+String.format(getString(R.string.Format_Capital),mWallet.getProfit()));
+            // Set the text for the wallet
+            mCapitalView.setText(String.format(getString(R.string.Format_Capital), mWallet.getCurrentWorth()));
+            mCapitalView.setTextColor(Tools.getTextColor(getActivity(), mWallet.getProfit()));
+            mProfitView.setText(Tools.getProfitOrLossSting(mWallet.getProfit()) + ": " + String.format(getString(R.string.Format_Capital), mWallet.getProfit()));
+            mArrowView.setImageDrawable(Tools.getArrowDirection(getActivity(), mWallet.getProfit()));
+            mPercntageView.setText(String.format("%.2f%%", mWallet.getPercentageChange()));
+            mPercntageView.setTextColor(Tools.getTextColor(getActivity(), mWallet.getProfit()));
 
-            //TODO add arrow direction
-            //TODO add percentage change with color
+            // Set the text inside the piechart
+            //Image inside the pie chart
+            Drawable image = Tools.getArrowDirection(getActivity(), mWallet.getProfit());
+            image.setBounds(0, 0, image.getIntrinsicWidth()/2, image.getIntrinsicHeight()/2);
+            ImageSpan imageSpan = new ImageSpan(image,ImageSpan.ALIGN_BOTTOM);
 
+            //Text inside the pie chart
+            SpannableString spannableString = new SpannableString(" "+String.format("%.2f%%", mWallet.getPercentageChange()));
+            spannableString.setSpan(imageSpan,0,1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            mPieChart.setCenterText(spannableString);
+            mPieChart.setCenterTextColor(Tools.getTextColor(getActivity(), mWallet.getProfit()));
 
+            //Set the pie chart area
+            mPieChart.setUsePercentValues(true);
+            mPieChart.setDescription("");
+            mPieChart.highlightValues(null);
+            mPieChart.setRotationEnabled(false);
+            mPieChart.invalidate();
+            mPieChart.setSelected(false);
+            Legend l = mPieChart.getLegend();
+            l.setEnabled(false);
 
-
-            pieChart.setUsePercentValues(true);
-            pieChart.setDescription("");
-
-
+            //Dataset (The pie chart values)
             ArrayList<Entry> yVals = new ArrayList<>();
-
-            // IMPORTANT: In a PieChart, no values (Entry) should have the same
-            // xIndex (even if from different DataSets), since no values can be
-            // drawn above each other.
             for (int i = 0; i < mInvestmentsList.size(); i++) {
                 yVals.add(new Entry((float) mInvestmentsList.get(i).getQuantity(), i));
             }
-
             ArrayList<String> xVals = new ArrayList<>();
-
             for (int i = 0; i < mInvestmentsList.size(); i++)
-                xVals.add(mInvestmentsList.get(i).getName());
+                xVals.add(mInvestmentsList.get(i).getSymbol());
 
             PieDataSet dataSet = new PieDataSet(yVals, "");
+
+            ArrayList<Integer> colors = new ArrayList<Integer>();
+            colors.add(getResources().getColor(R.color.amber));
+            colors.add(getResources().getColor(R.color.green));
+            colors.add(getResources().getColor(R.color.red));
+            colors.add(getResources().getColor(R.color.blue));
+            colors.add(getResources().getColor(R.color.purple));
+            colors.add(getResources().getColor(R.color.teal));
+            colors.add(getResources().getColor(R.color.deep_orange));
             dataSet.setSliceSpace(2f);
-            dataSet.setSelectionShift(5f);
+            dataSet.setSelectionShift(0f);
+            dataSet.setColors(colors);
+
+            //Data (The pie chart appearance)
             PieData data = new PieData(xVals, dataSet);
             data.setValueFormatter(new PercentFormatter());
-            data.setValueTextSize(14f);
+            data.setValueTextSize(11f);
             data.setValueTextColor(Color.BLACK);
-            pieChart.setData(data);
+            mPieChart.setData(data);
 
-            // undo all highlights
-            pieChart.highlightValues(null);
 
-            pieChart.invalidate();
+            //TODO tablelayout to replace the recyclerview
 
-            Legend l = pieChart.getLegend();
-            l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
-            l.setXEntrySpace(7f);
-            l.setYEntrySpace(0f);
-            l.setYOffset(0f);
-
+            //Profits Table
             mRecycleview.setAdapter(new ProfitsTableAdapter(mInvestmentsList));
             mRecycleview.setHasFixedSize(true);
             mRecycleview.setLayoutManager(new LinearLayoutManager(getActivity()));
+
 
         }
         else{
@@ -170,7 +195,10 @@ public class WalletFragment extends Fragment {
             startActivity(i);
             return true;
         }
+        if (id == R.id.reset_investment_list) {
 
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

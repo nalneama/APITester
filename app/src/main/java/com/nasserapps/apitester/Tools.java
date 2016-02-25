@@ -1,5 +1,8 @@
 package com.nasserapps.apitester;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+
 import com.nasserapps.apitester.Model.Ticker;
 
 import java.util.ArrayList;
@@ -78,5 +81,42 @@ public class Tools {
         ArrayList<Ticker> list = new ArrayList<>();
         list.addAll(map.values());
         return list;
+    }
+
+    public static int getTextColor(Context context, double change){
+        int color;
+        if(change < 0){
+            color=  R.color.red600;
+        }
+        else if(change>0){
+            color = R.color.green600;
+        }
+        else{
+            color =  R.color.yellow600;
+        }
+        return context.getResources().getColor(color);
+    }
+
+    public static Drawable getArrowDirection(Context context, double change){
+        int drawable;
+        if(change < 0){
+            drawable=  R.drawable.red_arrow;
+        }
+        else if(change>0){
+            drawable = R.drawable.green_arrow;
+        }
+        else{
+            drawable = R.drawable.green_arrow;
+        }
+        return context.getDrawable(drawable);
+    }
+
+    public static String getProfitOrLossSting(double profit){
+        if (profit>0){
+            return "Profit";
+        }
+        else {
+            return "Loss";
+        }
     }
 }

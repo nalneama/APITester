@@ -1,7 +1,5 @@
 package com.nasserapps.apitester.Model;
 
-import com.nasserapps.apitester.R;
-
 /**
  * Created by Nasser on 10/1/15.
  * Stock Object
@@ -189,18 +187,6 @@ public class Ticker {
 
     public void setPercentage(String percentage) {
         this.percentage = percentage;
-    }
-
-    public int getPriceColor(){
-        if(change < 0){
-            return R.color.red;
-        }
-        else if(change>0){
-            return R.color.green;
-        }
-        else{
-            return R.color.yellow;
-        }
     }
 
     public String getAPICode() {

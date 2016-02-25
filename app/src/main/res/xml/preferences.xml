@@ -2,7 +2,7 @@
     <!-- opens a subscreen of settings -->
     <PreferenceCategory
         android:title="@string/action_notification"
-        android:key="pref_key_notifications_settings">
+        android:key="isNotificationEnabled">
         <CheckBoxPreference
             android:key="pref_key_enable_notifications"
             android:title="Enable"
