@@ -6,7 +6,7 @@
         android:id="@+id/action_notification"
         android:orderInCategory="100"
         android:title="@string/action_notification"
-        android:icon="@drawable/ic_notifications_none_white_24dp"
+        android:icon="@drawable/bell_outline"
         app:showAsAction="always"/>
 
     <item

@@ -102,13 +102,14 @@ public class WalletFragment extends Fragment {
             // Set the text inside the piechart
             //Image inside the pie chart
             Drawable image = Tools.getArrowDirection(getActivity(), mWallet.getProfit());
-            image.setBounds(0, 0, image.getIntrinsicWidth()/2, image.getIntrinsicHeight()/2);
+            image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
             ImageSpan imageSpan = new ImageSpan(image,ImageSpan.ALIGN_BOTTOM);
 
             //Text inside the pie chart
             SpannableString spannableString = new SpannableString(" "+String.format("%.2f%%", mWallet.getPercentageChange()));
             spannableString.setSpan(imageSpan,0,1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             mPieChart.setCenterText(spannableString);
+            mPieChart.setCenterTextSize(18f);
             mPieChart.setCenterTextColor(Tools.getTextColor(getActivity(), mWallet.getProfit()));
 
             //Set the pie chart area

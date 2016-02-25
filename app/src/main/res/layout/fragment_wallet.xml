@@ -2,6 +2,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 tools:context=".Controllers.Activities.HomeActivity$PlaceholderFragment">
@@ -67,12 +68,13 @@
                     android:id="@+id/capitalInvested"/>
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="35dp"
+                    android:layout_width="20dp"
+                    android:layout_height="34dp"
+                    android:baselineAlignBottom="true"
                     android:scaleType="fitStart"
                     android:layout_gravity="bottom"
                     android:id="@+id/InvestmentArrow"
-                    android:src="@drawable/red_arrow"
+                    app:srcCompat="@drawable/arrow_down_bold"
                     android:cropToPadding="false"/>
 
                 <TextView
@@ -80,7 +82,8 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="textEnd"
                     android:paddingTop="24dp"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:text="1.30%"
                     android:textColor="@color/green"
                     android:id="@+id/percentageCIChange"/>

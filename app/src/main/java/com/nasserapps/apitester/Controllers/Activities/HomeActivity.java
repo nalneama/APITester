@@ -64,10 +64,10 @@ public class HomeActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_home, menu);
         MenuItem menuItem = toolbar.getMenu().getItem(0);
         if(!mUser.getUserData().isNotificationEnabled()) {
-            menuItem.setIcon(R.drawable.ic_notifications_none_white_24dp);
+            menuItem.setIcon(R.drawable.bell_outline);
         }
         else{
-            menuItem.setIcon(R.drawable.ic_notifications_active_white_24dp);
+            menuItem.setIcon(R.drawable.bell_ring);
         }
 
         return true;
@@ -80,12 +80,12 @@ public class HomeActivity extends AppCompatActivity {
         switch (id) {
             case R.id.action_notification:
                 if(mUser.getUserData().isNotificationEnabled()) {
-                    item.setIcon(R.drawable.ic_notifications_none_white_24dp);
+                    item.setIcon(R.drawable.bell_outline);
                     mUser.getUserData().setNotificationStatus(false);
                     stopAI();
                 }
                 else{
-                    item.setIcon(R.drawable.ic_notifications_active_white_24dp);
+                    item.setIcon(R.drawable.bell_ring);
                     mUser.getUserData().setNotificationStatus(true);
                     startAI();
                 }

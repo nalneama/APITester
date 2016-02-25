@@ -100,13 +100,14 @@ public class Tools {
     public static Drawable getArrowDirection(Context context, double change){
         int drawable;
         if(change < 0){
-            drawable=  R.drawable.red_arrow;
+            drawable=  R.drawable.arrow_down_bold;
         }
         else if(change>0){
-            drawable = R.drawable.green_arrow;
+            drawable = R.drawable.arrow_up_bold;
         }
         else{
-            drawable = R.drawable.green_arrow;
+            //TODO put yellow line
+            drawable = R.drawable.arrow_up_bold;
         }
         return context.getDrawable(drawable);
     }

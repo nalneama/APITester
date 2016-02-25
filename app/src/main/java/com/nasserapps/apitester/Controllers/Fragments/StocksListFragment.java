@@ -20,15 +20,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nasserapps.apitester.Controllers.Activities.EditStockListActivity;
 import com.nasserapps.apitester.Controllers.Adapters.StockAdapter;
 import com.nasserapps.apitester.Controllers.Dialogs.AlertDialogFragment;
-import com.nasserapps.apitester.Controllers.Activities.EditStockListActivity;
 import com.nasserapps.apitester.Model.Checklists.Checklist;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;
 import com.nasserapps.apitester.Tools;
-import com.nasserapps.apitester.util.SimpleDividerItemDecoration;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -65,7 +64,6 @@ public class StocksListFragment extends Fragment {
         mStockWatchListView.setHasFixedSize(true);
         mStockWatchListView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mStockWatchListView.setItemAnimator(new DefaultItemAnimator());
-        mStockWatchListView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
         return view;
     }
 

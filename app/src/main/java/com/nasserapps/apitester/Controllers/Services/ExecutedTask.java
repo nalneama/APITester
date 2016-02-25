@@ -85,7 +85,7 @@ public class ExecutedTask extends IntentService {
                             //TODO if conditions are met construct notification for each stock
                             for(Ticker ticker:mUser.getWatchList()) {
                                 if(checklist.isPassing(ticker)) {
-                                    createNotification(1, android.support.design.R.drawable.abc_ic_ab_back_mtrl_am_alpha, ticker.getSymbol() + " price is " + ticker.getPrice() + "", "Great Opportunity for investing PE is " + ticker.getPERatio());
+                                    createNotification(1, android.support.design.R.drawable.notification_template_icon_bg, ticker.getSymbol() + " price is " + ticker.getPrice() + "", "Great Opportunity for investing PE is " + ticker.getPERatio());
                                 }
                             }
                         } else {
