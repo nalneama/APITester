@@ -8,6 +8,7 @@
         android:id="@+id/my_recycler_view"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
+        android:background="@color/grey200"
         android:scrollbars="vertical"
         android:clipToPadding="false"
         android:layout_width="match_parent"
