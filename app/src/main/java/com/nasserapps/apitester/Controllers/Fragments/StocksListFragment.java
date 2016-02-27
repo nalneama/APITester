@@ -190,7 +190,6 @@ public class StocksListFragment extends Fragment {
             }
 
             if (id == R.id.evaluate_stocks) {
-                //TODO Filter stocks by checklists through dialogs
                 final Checklist checklist = mUser.getChecklists().get(0);
                 String[] sortingOptions= new String[1];
                 sortingOptions[0]=checklist.getChecklistName();

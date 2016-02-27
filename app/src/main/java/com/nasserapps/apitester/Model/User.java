@@ -93,6 +93,11 @@ public class User {
         return stockURL;
     }
 
+    public ArrayList<Ticker> getIndexes(){
+        return new ArrayList<>();
+    }
+
+
     //Get User Data
     public UserData getUserData() {
         return mUserData;

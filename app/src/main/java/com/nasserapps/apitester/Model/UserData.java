@@ -2,9 +2,11 @@ package com.nasserapps.apitester.Model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.nasserapps.apitester.Controllers.Activities.SettingsActivity;
 import com.nasserapps.apitester.Model.Checklists.Checklist;
 
 import java.util.ArrayList;
@@ -37,13 +39,6 @@ public class UserData {
 
 
 
-    public boolean isUserDataAvailable (){
-        String userData =  memory.getString("UserData", "No Data");
-        return !userData.contains("No Data");
-    }
-
-
-
     public String getSortPreference() {
         return memory.getString(SETTINGS_SORTING_PREFERENCE, "Gain");
     }
@@ -57,12 +52,14 @@ public class UserData {
 
 
     public boolean isNotificationEnabled(){
-        return memory.getBoolean(SETTINGS_NOTIFICATION_STATUS, false);
+        //return memory.getBoolean(SETTINGS_NOTIFICATION_STATUS, false);
+        return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(SettingsActivity.NOTIFICATION, false);
     }
 
     public void setNotificationStatus(boolean b){
-        memoryWriter = memory.edit();
-        memoryWriter.putBoolean(SETTINGS_NOTIFICATION_STATUS, b).apply();
+//        memoryWriter = memory.edit();
+//        memoryWriter.putBoolean(SETTINGS_NOTIFICATION_STATUS, b).apply();
+        PreferenceManager.getDefaultSharedPreferences(mContext).edit().putBoolean(SettingsActivity.NOTIFICATION, b).apply();
     }
 
 

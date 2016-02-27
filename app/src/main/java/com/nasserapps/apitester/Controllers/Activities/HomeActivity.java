@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -13,8 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.nasserapps.apitester.Controllers.Services.InformAI;
 import com.nasserapps.apitester.Controllers.Adapters.SectionsPagerAdapter;
+import com.nasserapps.apitester.Controllers.Services.InformAI;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;
 
@@ -55,6 +56,8 @@ public class HomeActivity extends AppCompatActivity {
 
         // 2.1b Else, create a new User.
 
+        //TODO Trying out default preferences
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
     }
 
 
@@ -144,4 +147,5 @@ public class HomeActivity extends AppCompatActivity {
             Snackbar.make(toolbar, "AI Assistance Stopped", Snackbar.LENGTH_LONG).show();
         }
     }
+
 }

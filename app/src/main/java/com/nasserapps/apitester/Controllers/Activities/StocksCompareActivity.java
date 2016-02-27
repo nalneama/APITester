@@ -76,7 +76,6 @@ public class StocksCompareActivity extends AppCompatActivity {
         mStockR= Tools.getStockFromList(i.getStringExtra("RSymbol"), mUser.getAllStocks());
 
         // Create an ArrayAdapter using the string array and a default spinner layout
-        //TODO and put all stocks
         ArrayList<String> names = new ArrayList<>();
         for(Ticker ticker:mUser.getAllStocks()){
             names.add(ticker.getName());

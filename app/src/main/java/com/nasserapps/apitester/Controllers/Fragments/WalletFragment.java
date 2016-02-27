@@ -153,7 +153,7 @@ public class WalletFragment extends Fragment {
             mPieChart.setData(data);
 
 
-            //TODO tablelayout to replace the recyclerview
+            //TODO tablelayout to replace the recyclerview from http://www.journaldev.com/9531/android-scrollview-tablelayout-example-tutorial
 
             //Profits Table
             mRecyclerView.setAdapter(new ProfitsTableAdapter(mInvestmentsList));

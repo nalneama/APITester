@@ -11,7 +11,7 @@ public class SettingsFragment extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //TODO fix by going to http://developer.android.com/guide/topics/ui/settings.html
+        //TODO Update the settings by going to http://developer.android.com/guide/topics/ui/settings.html
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.preferences);

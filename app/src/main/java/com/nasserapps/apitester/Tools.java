@@ -85,10 +85,10 @@ public class Tools {
 
     public static int getTextColor(Context context, double change){
         int color;
-        if(change < 0){
+        if(change < -0.01){
             color=  R.color.red600;
         }
-        else if(change>0){
+        else if(change>0.01){
             color = R.color.green600;
         }
         else{
@@ -99,15 +99,14 @@ public class Tools {
 
     public static Drawable getArrowDirection(Context context, double change){
         int drawable;
-        if(change < 0){
+        if(change < -0.01){
             drawable=  R.drawable.arrow_down_bold;
         }
-        else if(change>0){
+        else if(change>0.01){
             drawable = R.drawable.arrow_up_bold;
         }
         else{
-            //TODO put yellow line
-            drawable = R.drawable.arrow_up_bold;
+            drawable = R.drawable.minus;
         }
         return context.getDrawable(drawable);
     }

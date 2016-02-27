@@ -1,22 +1,23 @@
 <PreferenceScreen  xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- opens a subscreen of settings -->
+    <!-- opens a subscreen of settings
+
+http://developer.android.com/guide/topics/ui/settings.html#Listening
+
+    -->
     <PreferenceCategory
-        android:title="@string/action_notification"
-        android:key="isNotificationEnabled">
+        android:title="@string/action_notification">
         <CheckBoxPreference
             android:key="pref_key_enable_notifications"
             android:title="Enable"
             android:defaultValue="false" />
-        <Preference
-            android:key="pref_key_sms_delete_limit"
+        <ListPreference
             android:dependency="pref_key_enable_notifications"
-            android:summary="pref_summary_delete_limit"
-            android:title="pref_title_sms_delete"/>
-        <Preference
-            android:key="pref_key_mms_delete_limit"
-            android:dependency="pref_key_enable_notifications"
-            android:summary="pref_summary_delete_limit"
-            android:title="pref_title_mms_delete"/>
+            android:key="pref_syncConnectionType"
+            android:title="Sync frequency"
+            android:dialogTitle="Sync frequency"
+            android:entries="@array/sync_options"
+            android:entryValues="@array/sync_options_values"
+            android:defaultValue="15" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="About">

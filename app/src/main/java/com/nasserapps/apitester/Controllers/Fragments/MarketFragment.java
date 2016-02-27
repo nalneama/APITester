@@ -14,25 +14,27 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nasserapps.apitester.Controllers.Adapters.MarketAdapter;
 import com.nasserapps.apitester.Controllers.Dialogs.AlertDialogFragment;
-import com.nasserapps.apitester.Model.Database.DataSource;
 import com.nasserapps.apitester.Model.Ticker;
-import com.nasserapps.apitester.Model.UserData;
-import com.nasserapps.apitester.Model.Wallet;
+import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;
+import com.nasserapps.apitester.Tools;
 
-import java.util.ArrayList;
-import java.util.List;
+public class MarketFragment extends Fragment {
 
-public class IndexesListFragment extends Fragment {
+    public static final int INDEX = 0;
+    public static final int SUMMARY = 1;
+    public static final int NEWS = 2;
 
-    DataSource mDataSource;
-    List<Ticker> mStockWatchList;
-    List<Ticker> mIndexWatchList;
-    private UserData mUserData;
-    Wallet mWallet;
+    private Object[] mDataset = {new Ticker(), "Top Gainers","Top Losers","News"};
+    private int[] mDatasetTypes = {INDEX,INDEX,SUMMARY,NEWS};
 
     private RecyclerView mIndexWatchListView;
+    private User mUser;
+
+    //"BZJ16.NYM"
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,28 +47,10 @@ public class IndexesListFragment extends Fragment {
         mIndexWatchListView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mIndexWatchListView.setHasFixedSize(true);
         mIndexWatchListView.setItemAnimator(new DefaultItemAnimator());
-        //2.0 Initialize variables for display
-        //2.1 The DataSource (Object responsible to work with the application memory)
-        mDataSource = new DataSource(getActivity());
-        mUserData = new UserData(getActivity());
-        //2.2 The Wallet
-        mWallet = new Wallet();
-        //2.2a Checking if data is available in memory: if yes, then get wallet data from memory
-        if(mUserData.isUserDataAvailable()) {
-            //mWallet = mDataSource.getWallet();
-            //mStockWatchList =mWallet.getWatchList();
-        }
-        //2.2b Else,this is first time opening of app, set the wallet to initial data
-        else{
-            // mWallet.setInitialWatchList();
-            mStockWatchList = new ArrayList<>();
-            String[] companies = getActivity().getResources().getStringArray(R.array.Companies_API_Codes);
-            for (String code:companies){
-                mStockWatchList.add(new Ticker(code));
-            }
-            //mWallet.setInitialWatchList(mStockWatchList);
-        }
 
+        //2.0 Initialize variables for display
+        mUser = User.getUser(getContext());
+        mDataset[0]= Tools.getStockFromList("BRES",mUser.getAllStocks());
 
         //3.0 Set the Display with Initial Data
         setDisplay();
@@ -95,17 +79,6 @@ public class IndexesListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        updateDisplay();
-
-    }
-
-    public void updateDisplay() {
-        if(mUserData.isUserDataAvailable()) {
-            setDisplay();
-        }
-        else {
-            //mStockWatchListView.swapAdapter(new StockAdapter(getActivity().getApplicationContext(),mStockWatchList), false);
-        }
     }
 
     private boolean isNetworkAvailable() {
@@ -120,7 +93,7 @@ public class IndexesListFragment extends Fragment {
     }
 
     public void setDisplay(){
-        //mStockWatchListView.setAdapter(new StockAdapter(getActivity().getApplicationContext(), mStockWatchList));
+        mIndexWatchListView.setAdapter(new MarketAdapter(getActivity().getApplicationContext(), mDataset,mDatasetTypes));
     }
 
 //    private void getUpdatedData() {

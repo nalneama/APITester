@@ -9,7 +9,7 @@ import android.net.NetworkInfo;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.nasserapps.apitester.Controllers.InProgress.MainActivity;
+import com.nasserapps.apitester.Controllers.Activities.HomeActivity;
 import com.nasserapps.apitester.Model.Checklists.Checklist;
 import com.nasserapps.apitester.Model.Checklists.Rule;
 import com.nasserapps.apitester.Model.Database.JSONParser;
@@ -38,7 +38,7 @@ public class ExecutedTask extends IntentService {
 
     private User mUser;
 
-    public static final String TAG = MainActivity.class.getSimpleName();
+    public static final String TAG = HomeActivity.class.getSimpleName();
 
     public ExecutedTask() {
         super("ExecutedTask");
