@@ -21,14 +21,17 @@ import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;
 import com.nasserapps.apitester.Tools;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class MarketFragment extends Fragment {
 
     public static final int INDEX = 0;
     public static final int SUMMARY = 1;
     public static final int NEWS = 2;
 
-    private Object[] mDataset = {new Ticker(), "Top Gainers","Top Losers","News"};
-    private int[] mDatasetTypes = {INDEX,INDEX,SUMMARY,NEWS};
+    private Object[] mDataset = {new Ticker(), new ArrayList<Ticker>(),new ArrayList<Ticker>()};
+    private int[] mDatasetTypes = {INDEX,SUMMARY,SUMMARY};
 
     private RecyclerView mIndexWatchListView;
     private User mUser;
@@ -50,10 +53,8 @@ public class MarketFragment extends Fragment {
 
         //2.0 Initialize variables for display
         mUser = User.getUser(getContext());
-        mDataset[0]= Tools.getStockFromList("BRES",mUser.getAllStocks());
 
-        //3.0 Set the Display with Initial Data
-        setDisplay();
+        //setDisplay();
 
 
         //4.0 Get the updated data and set the display with the updated data
@@ -79,6 +80,14 @@ public class MarketFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        mDataset[0]= Tools.getStockFromList("BRES", mUser.getAllStocks());
+        ArrayList<Ticker> topGainers = mUser.getAllStocks();
+        Tools.sort(topGainers, "Gain");
+        mDataset[1]= new ArrayList<>(topGainers.subList(0,5));
+        Collections.reverse(topGainers);
+        mDataset[2]= new ArrayList<>(topGainers.subList(0,5));
+        //3.0 Set the Display with Initial Data
+        setDisplay();
     }
 
     private boolean isNetworkAvailable() {
