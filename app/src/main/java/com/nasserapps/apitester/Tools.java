@@ -100,7 +100,7 @@ public class Tools {
     public static Drawable getArrowDirection(Context context, double change){
         int drawable;
         if(change < -0.01){
-            drawable=  R.drawable.arrow_down_bold;
+            drawable=  R.drawable.arrow_down;
         }
         else if(change>0.01){
             drawable = R.drawable.arrow_up_bold;

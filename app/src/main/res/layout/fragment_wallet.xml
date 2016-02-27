@@ -73,7 +73,7 @@
                     android:scaleType="fitStart"
                     android:layout_gravity="bottom"
                     android:id="@+id/InvestmentArrow"
-                    app:srcCompat="@drawable/arrow_down_bold"
+                    app:srcCompat="@drawable/arrow_down"
                     android:cropToPadding="false"/>
 
                 <TextView
