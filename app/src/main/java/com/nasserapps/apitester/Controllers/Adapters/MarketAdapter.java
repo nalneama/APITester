@@ -44,7 +44,7 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.MarketHold
         View view;
         if (viewType == INDEX) {
 
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_indexs, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_market_index, parent, false);
 
             return new MarketHolder.IndexViewHolder(view);
 
