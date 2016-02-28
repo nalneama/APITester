@@ -91,7 +91,7 @@ public class StocksListFragment extends Fragment {
     }
 
     public void updateDisplay() {
-            mStockWatchListView.swapAdapter(new StockAdapter(getActivity().getApplicationContext(),mStockWatchList), false);
+            mStockWatchListView.swapAdapter(new StockAdapter(getActivity().getApplicationContext(), mStockWatchList), false);
     }
 
     private boolean isNetworkAvailable() {
@@ -209,7 +209,7 @@ public class StocksListFragment extends Fragment {
 
             if (id == R.id.sorting_options) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-                String[] sortingOptions = new String[]{"A-Z","Book Value", "Gain","PE Ratio","Price" };
+                String[] sortingOptions = Tools.sortingOptions;
                 int index = Arrays.asList(sortingOptions).indexOf(mUser.getUserData().getSortPreference());
                 dialog.setTitle("Sort by")
                         .setSingleChoiceItems(sortingOptions,index , new DialogInterface.OnClickListener() {
@@ -235,6 +235,10 @@ public class StocksListFragment extends Fragment {
                             case 4:
                                 mStockWatchList= Tools.sort(mUser.getWatchList(),"Price");
                                 mUser.getUserData().setSortPreference("Price");
+                                break;
+                            case 5:
+                                mStockWatchList= Tools.sort(mUser.getWatchList(),"Volume");
+                                mUser.getUserData().setSortPreference("Volume");
                                 break;}
                         dialog.dismiss();
                         updateDisplay();

@@ -77,7 +77,6 @@
 
     </RelativeLayout>
 
-    <!-- todo add drawable line_divider below this line-->
     <View android:layout_width="match_parent"
           android:layout_height="1dp"
         android:background="@color/cardview_shadow_start_color"/>
@@ -129,15 +128,6 @@
 
         </RelativeLayout>
 
-        <!-- todo add drawable line_divider below this line
-
-
-        <View android:layout_width="1dp"
-              android:layout_height="160dp"
-              android:layout_margin="8dp"
-              android:background="@color/cardview_shadow_start_color"
-            />
--->
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"

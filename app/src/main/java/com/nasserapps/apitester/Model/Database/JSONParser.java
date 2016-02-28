@@ -67,8 +67,6 @@ public class JSONParser {
     private Ticker extractStock(JSONObject mQuote) throws JSONException{
         String symbol = mQuote.getString("Symbol").substring(0, 4);
         Ticker stock = Tools.getStockFromList(symbol, mAllStocksInDB);
-        //Todo uncomment the two parameters
-        //stock.setSymbol(mQuote.getString("Symbol").substring(0, 4));
         if(!mQuote.isNull("PERatio")){
         stock.setPERatio(mQuote.getDouble("PERatio"));}
         stock.setVolume(mQuote.getLong("Volume"));
@@ -78,7 +76,6 @@ public class JSONParser {
         stock.setBid(mQuote.getDouble("Bid"));}
         if(!mQuote.isNull("Ask")){
         stock.setAsk(mQuote.getDouble("Ask"));}
-        //stock.setName(mQuote.getString("Name"));
         stock.setPercentage(mQuote.getString("PercentChange"));
         stock.setChange(mQuote.getDouble("Change"));
         stock.setDayHigh(mQuote.getDouble("DaysHigh"));
@@ -99,12 +96,9 @@ public class JSONParser {
     }
     private Ticker extractIndex(JSONObject mQuote) throws JSONException{
         Ticker stock = new Ticker();
-        //Todo uncomment the two parameters
         stock.setSymbol(mQuote.getString("Symbol").substring(0, 3));
-        //stock.setPERatio(mQuote.getDouble("PERatio"));
         if(!mQuote.isNull("Volume")){
         stock.setVolume(mQuote.getLong("Volume"));}
-        //stock.setPBV(mQuote.getDouble("PriceBook"));
         if(!mQuote.isNull("LastTradePriceOnly")){
         stock.setPrice(mQuote.getDouble("LastTradePriceOnly"));}
         if(!mQuote.isNull("Bid")){

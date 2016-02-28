@@ -76,7 +76,7 @@ public class CalculatorFragment extends Fragment {
             }
 
 
-            //TODO add reverse calculations for averages by putting action go
+            // add reverse calculations for averages by putting action go
 
             return false;
         }

@@ -12,20 +12,28 @@ http://developer.android.com/guide/topics/ui/settings.html#Listening
             android:defaultValue="false" />
         <ListPreference
             android:dependency="pref_key_enable_notifications"
-            android:key="pref_syncConnectionType"
+            android:key="pref_syncFrequency"
             android:title="Sync frequency"
             android:dialogTitle="Sync frequency"
             android:entries="@array/sync_options"
             android:entryValues="@array/sync_options_values"
             android:defaultValue="15" />
+        <Preference
+            android:title="Notification Rules"
+            android:selectable="true"
+            android:summary="Set up the notification rules"/>
+        <Preference
+            android:title="Build version"
+            android:summary="Version 0.5.0"/>
     </PreferenceCategory>
+
     <PreferenceCategory
         android:title="About">
         <Preference
-            android:summary="Nasser Al-Neama"
-            android:title="Developer"/>
+            android:title="Developer"
+            android:summary="Nasser Al-Neama"/>
         <Preference
-            android:summary="Version 0.8.0"
-            android:title="Build version"/>
+            android:title="Build version"
+            android:summary="Version 0.5.0"/>
     </PreferenceCategory>
 </PreferenceScreen>

@@ -56,7 +56,6 @@ public class HomeActivity extends AppCompatActivity {
 
         // 2.1b Else, create a new User.
 
-        //TODO Trying out default preferences
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
     }
 
@@ -120,7 +119,8 @@ public class HomeActivity extends AppCompatActivity {
             AlarmManager alarm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
             // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
             // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
-            int interval = 500;
+            //int interval = 500;
+            int interval = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("pref_syncFrequency","15"))*60000;
             alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
                     interval, pIntent);
             Snackbar.make(toolbar, "AI Assistance Started", Snackbar.LENGTH_LONG).show();

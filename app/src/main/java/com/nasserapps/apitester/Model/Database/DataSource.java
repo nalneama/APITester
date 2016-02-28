@@ -56,7 +56,7 @@ public class DataSource {
         database.beginTransaction();
 
         ContentValues updateStockValues = new ContentValues();
-        //TODO put all values and all stocks in the database + add islamic, mix or non-islamic
+        //TODO Update the database in order to include financial ratios and type of industry
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_IN_WATCHLIST, ticker.isInWatchList());
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_VOLUME, ticker.getVolume());
         updateStockValues.put(SqlLiteDbHelper.COLUMN_STOCK_DAY_LOW,ticker.getDayLow());

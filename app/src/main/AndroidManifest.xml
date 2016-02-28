@@ -36,7 +36,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".Controllers.InProgress.InvestmentListActivity"
+            android:name=".Controllers.Activities.InvestmentListActivity"
             android:label="@string/title_activity_edit_investment_list"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

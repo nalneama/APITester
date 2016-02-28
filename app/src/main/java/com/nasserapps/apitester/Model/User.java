@@ -105,7 +105,7 @@ public class User {
 
 
     public ArrayList<Checklist> getChecklists() {
-        //TODO get checklists from database
+        //TODO construct a mechanism to save checklists and rules in the Database or shared preferences
         mChecklists.add(new Checklist("Buffet Checklist"));
 
         // Adding rules

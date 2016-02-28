@@ -1,9 +1,10 @@
-package com.nasserapps.apitester.Controllers.InProgress;
+package com.nasserapps.apitester.Controllers.Activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -18,9 +19,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.nasserapps.apitester.Controllers.InProgress.Calculator;
 import com.nasserapps.apitester.Model.Database.DataSource;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
@@ -39,13 +42,18 @@ public class InvestmentListActivity extends AppCompatActivity {
     private User mUser;
     private DataSource mDataSource;
     private double mPrice;
+    private int mOldQuantity;
+    private double mOldPrice;
+    private boolean mOldStatus;
     Ticker ticker;
     private Context mContext;
+    private LinearLayout mTableTitles;
+    private String undoMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_investment_list);
+        setContentView(R.layout.activity_investment_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mDataSource = new DataSource(this);
@@ -54,6 +62,7 @@ public class InvestmentListActivity extends AppCompatActivity {
 
 
         mEditStocksRecyclerView = (RecyclerView) findViewById(R.id.edit_investment_list_recyclerview);
+        mTableTitles =  (LinearLayout)findViewById(R.id.investments_titles);
         mEditStocksRecyclerView.setHasFixedSize(true);
         mEditStocksRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mEditStocksRecyclerView.setAdapter(new InvestmentListAdapter(mInvestmentsList));
@@ -71,11 +80,21 @@ public class InvestmentListActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateDisplay();
+    }
 
+    private void updateDisplay() {
 
-
-
-
+        if (mUser.getWallet().getInvestments().size()>0){
+            mTableTitles.setVisibility(View.VISIBLE);
+        }
+        else{
+            mTableTitles.setVisibility(View.INVISIBLE);
+        }
+    }
 
     private void showAdditionDialog(String operation, final int positionClicked) {
         mInvestmentsList = mUser.getWallet().getInvestments();
@@ -92,16 +111,25 @@ public class InvestmentListActivity extends AppCompatActivity {
                 .setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        mOldPrice= ticker.getPurchasedPrice();
+                        mOldQuantity = ticker.getQuantity();
+                        mOldStatus = ticker.isInInvestments();
                         mPrice = Double.parseDouble(dPurchasedPrice.getText().toString());
                         mQuantity = Integer.parseInt(dInvestmentQuantity.getText().toString());
-                        ticker.setPurchasedPrice(mPrice);
-                        ticker.setQuantity(mQuantity);
-                        ticker.setInInvestments(true);
-                        mDataSource.updateStock(ticker);
-                        mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mUser.getWallet().getInvestments()), false);
+                        if (ticker.isInInvestments()){
+                            updateOrAddDialog(mQuantity+ticker.getQuantity(), Calculator.getAveragePrice(ticker.getPurchasedPrice(),mPrice,ticker.getQuantity(),mQuantity),mQuantity,mPrice);
+                        }
+                        else {
+                            ticker.setPurchasedPrice(mPrice);
+                            ticker.setQuantity(mQuantity);
+                            ticker.setInInvestments(true);
+                            mDataSource.updateStock(ticker);
+                            mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mUser.getWallet().getInvestments()), false);
+                            updateDisplay();
+                            undoMessage = ticker.getName()+" investment added.";
+                            showUndoMessage(undoMessage);
+                        }
                         //TODO show snackbar to undo the last addition
-
-                        //set action to show another dialog to update or add ticker if it is already existing
                     }
                 });
         if(!operation.equalsIgnoreCase("add")){
@@ -109,12 +137,18 @@ public class InvestmentListActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Ticker ticker = mUser.getWallet().getInvestments().get(positionClicked);
+                    mOldPrice= ticker.getPurchasedPrice();
+                    mOldQuantity = ticker.getQuantity();
+                    mOldStatus = ticker.isInInvestments();
                     ticker.setInInvestments(false);
                     ticker.setQuantity(0);
                     ticker.setPurchasedPrice(0);
                     mDataSource.updateStock(ticker);
                     mInvestmentsList = mUser.getWallet().getInvestments();
                     mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mInvestmentsList), false);
+                    updateDisplay();
+                    undoMessage = ticker.getName()+" investment deleted.";
+                    showUndoMessage(undoMessage);
                 }
             });
         }
@@ -150,22 +184,53 @@ public class InvestmentListActivity extends AppCompatActivity {
             dPurchasedPrice.setText(mInvestmentsList.get(positionClicked).getPurchasedPrice()+"");
             String tickerName =mInvestmentsList.get(positionClicked).getName();
             mStockNameChooser.setSelection(adapter.getPosition(tickerName));
-            //TODO fix update button
         }
     }
 
+    private void showUndoMessage(String message) {
+        Snackbar.make(mEditStocksRecyclerView, message, Snackbar.LENGTH_LONG)
+                .setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ticker.setPurchasedPrice(mOldPrice);
+                        ticker.setQuantity(mOldQuantity);
+                        ticker.setInInvestments(mOldStatus);
+                        mDataSource.updateStock(ticker);
+                        mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mUser.getWallet().getInvestments()), false);
+                        updateDisplay();
+                    }
+                }).show();
+    }
 
+    private void updateOrAddDialog(final int combinedQuantity, final double combinedPrice, final int replacedQuantity, final double replacedPrice) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle("Do you want to")
+                .setMessage(String.format("1) Replace the existing investment with the provided data.%n%n2) Combine the stocks to have %,d stocks with an average price of %.2f.",combinedQuantity,combinedPrice))
+                .setPositiveButton("Combine", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ticker.setPurchasedPrice(combinedPrice);
+                        ticker.setQuantity(combinedQuantity);
+                        mDataSource.updateStock(ticker);
+                        mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mUser.getWallet().getInvestments()), false);
+                        undoMessage = ticker.getName()+" investment updated.";
+                        showUndoMessage(undoMessage);
+                    }
+                })
+                .setNegativeButton("Update", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ticker.setPurchasedPrice(replacedPrice);
+                        ticker.setQuantity(replacedQuantity);
+                        mDataSource.updateStock(ticker);
+                        mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mUser.getWallet().getInvestments()), false);
+                        undoMessage = ticker.getName()+" investment updated.";
+                        showUndoMessage(undoMessage);
+                    }
+                });
+        builder.create().show();
 
-
-
-
-
-
-
-
-
-
-
+    }
 
 
     private class InvestmentListAdapter extends RecyclerView.Adapter<InvestmentListHolder> {
@@ -220,25 +285,20 @@ public class InvestmentListActivity extends AppCompatActivity {
             mInvestment=investment;
             mInvestmentNameView.setText(mInvestment.getName()+"");
             mInvestmentQuantity.setText(mInvestment.getQuantity() + "");
-            mPurchasedPrice.setText(mInvestment.getPurchasedPrice() + "");
+            mPurchasedPrice.setText(String.format("%.2f",mInvestment.getPurchasedPrice()));
         }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.edit_investments, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         if (id == R.id.reset_investment_list) {
-            //TODO  add confirmation dialog for the delete
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
             builder.setTitle("Confirmation")
                     .setMessage("Are you sure you want to delete all investments?")
@@ -252,6 +312,7 @@ public class InvestmentListActivity extends AppCompatActivity {
                                 mDataSource.updateStock(ticker);
                             }
                             mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mUser.getWallet().getInvestments()), false);
+                            updateDisplay();
                         }
                     })
                     .setNegativeButton("Cancel",null);

@@ -12,7 +12,6 @@ import android.util.Log;
 import com.nasserapps.apitester.Controllers.Activities.HomeActivity;
 import com.nasserapps.apitester.Model.Checklists.Checklist;
 import com.nasserapps.apitester.Model.Checklists.Rule;
-import com.nasserapps.apitester.Model.Database.JSONParser;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
 import com.squareup.okhttp.Call;
@@ -75,14 +74,12 @@ public class ExecutedTask extends IntentService {
                     try {
                         String jsonData = response.body().string();
                         if (response.isSuccessful()) {
-                            JSONParser jsonParser = new JSONParser(jsonData, mUser.getAllStocks());
-                            //mStock = jsonParser.tieData();
                             mUser.updateStocksData(jsonData);
                             Checklist checklist = new Checklist("");
                             ArrayList<Rule> rules = new ArrayList<>();
-                            rules.add(Rule.getRule("PE Ratio", ">", "15.0"));
+                            rules.add(Rule.getRule("PE Ratio", "<", "15.0"));
                             checklist.setRules(rules);
-                            //TODO if conditions are met construct notification for each stock
+                            //TODO create notifications that show when conditions in the checklist or rules are met
                             for(Ticker ticker:mUser.getWatchList()) {
                                 if(checklist.isPassing(ticker)) {
                                     createNotification(1, android.support.design.R.drawable.notification_template_icon_bg, ticker.getSymbol() + " price is " + ticker.getPrice() + "", "Great Opportunity for investing PE is " + ticker.getPERatio());

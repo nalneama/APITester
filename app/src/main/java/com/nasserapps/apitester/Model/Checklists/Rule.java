@@ -44,7 +44,7 @@ public abstract class Rule {
             };
     }
 }
-//TODO add all rules
+//TODO add price rule
 /*Resources
 Background Tasks
 http://technology.jana.com/2014/10/28/periodic-background-tasks-in-android/comment-page-1/

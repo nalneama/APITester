@@ -11,6 +11,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     public static final String NOTIFICATION = "pref_key_enable_notifications";
+    public static final String SYNC_GREQUENCY ="pref_syncFrequency";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

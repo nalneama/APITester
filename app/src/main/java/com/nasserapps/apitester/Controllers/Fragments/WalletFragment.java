@@ -28,7 +28,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.nasserapps.apitester.Controllers.Activities.ChecklistActivity;
 import com.nasserapps.apitester.Controllers.Adapters.ProfitsTableAdapter;
-import com.nasserapps.apitester.Controllers.InProgress.InvestmentListActivity;
+import com.nasserapps.apitester.Controllers.Activities.InvestmentListActivity;
 import com.nasserapps.apitester.Model.Ticker;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.Model.Wallet;
@@ -189,7 +189,7 @@ public class WalletFragment extends Fragment {
             Intent i = new Intent(getActivity(), ChecklistActivity.class);
             startActivity(i);
             return true;
-        }//TODO remove this after testing
+        }//TODO update all menus
 
         if (id == R.id.add_investment) {
             Intent i = new Intent(getActivity(), InvestmentListActivity.class);

@@ -12,12 +12,13 @@ import java.util.HashMap;
 
 public class Tools {
 
+    public static String[] sortingOptions = new String[]{"A-Z","Book Value", "Gain","PE Ratio","Price", "Volume"};
 
     // Sort lists as per the following criteria
     public static ArrayList<Ticker> sort(ArrayList<Ticker> list, String string){
         HashMap<String, Comparator<Ticker>> comparatorHashMap =  new HashMap<>();
 
-        String[] sortingOptions = new String[]{"A-Z","Book Value", "Gain","PE Ratio","Price"};
+
 
         // A-Z Comparator
         comparatorHashMap.put(sortingOptions[0], new Comparator<Ticker>() {
@@ -49,6 +50,11 @@ public class Tools {
             public int compare(Ticker stock1, Ticker stock2) {
                 return Double.compare(stock2.getPrice(), stock1.getPrice());}});
 
+        // Price
+        comparatorHashMap.put(sortingOptions[5], new Comparator<Ticker>() {
+            @Override
+            public int compare(Ticker stock1, Ticker stock2) {
+                return Double.compare(stock2.getVolume(), stock1.getVolume());}});
 
         //Sort by the Option and return the sorted list
         Collections.sort(list, comparatorHashMap.get(string));
