@@ -1,32 +1,22 @@
 <PreferenceScreen  xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- opens a subscreen of settings
-
 http://developer.android.com/guide/topics/ui/settings.html#Listening
-
     -->
     <PreferenceCategory
         android:title="@string/action_notification">
-        <CheckBoxPreference
-            android:key="pref_key_enable_notifications"
-            android:title="Enable"
-            android:defaultValue="false" />
-        <ListPreference
-            android:dependency="pref_key_enable_notifications"
-            android:key="pref_syncFrequency"
-            android:title="Sync frequency"
-            android:dialogTitle="Sync frequency"
-            android:entries="@array/sync_options"
-            android:entryValues="@array/sync_options_values"
-            android:defaultValue="15" />
         <Preference
             android:title="Notification Rules"
-            android:selectable="true"
             android:summary="Set up the notification rules"/>
-        <Preference
-            android:title="Build version"
-            android:summary="Version 0.5.0"/>
     </PreferenceCategory>
-
+    <PreferenceCategory
+        android:title="About">
+        <ListPreference
+            android:title="@string/language"
+            android:key="pref_language"
+            android:entries="@array/language_options"
+            android:entryValues="@array/language_options"
+            android:summary="is chosen."/>
+    </PreferenceCategory>
     <PreferenceCategory
         android:title="About">
         <Preference
@@ -37,3 +27,15 @@ http://developer.android.com/guide/topics/ui/settings.html#Listening
             android:summary="Version 0.5.0"/>
     </PreferenceCategory>
 </PreferenceScreen>
+<!--  <CheckBoxPreference
+            android:key="pref_key_enable_notifications"
+            android:title="Enable"
+            android:defaultValue="false" />
+        <ListPreference
+            android:dependency="pref_key_enable_notifications"
+            android:key="pref_syncFrequency"
+            android:title="Sync frequency"
+            android:dialogTitle="Sync frequency"
+            android:entries="@array/sync_options"
+            android:entryValues="@array/sync_options_values"
+            android:defaultValue="15" /> -->

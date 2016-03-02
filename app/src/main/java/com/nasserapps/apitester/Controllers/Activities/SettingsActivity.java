@@ -9,9 +9,8 @@ import com.nasserapps.apitester.R;
 
 public class SettingsActivity extends AppCompatActivity {
 
-
-    public static final String NOTIFICATION = "pref_key_enable_notifications";
-    public static final String SYNC_GREQUENCY ="pref_syncFrequency";
+    //TODO Update the settings and add checklists and notification rules by going to http://developer.android.com/guide/topics/ui/settings.html
+    public static final String NOTIFICATION = "pref_key_enable_notifications";// The application has auto refresh, when notification is enabled it notify the user when the rules are met.
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

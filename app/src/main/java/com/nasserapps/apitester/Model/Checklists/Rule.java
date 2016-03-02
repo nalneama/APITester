@@ -1,6 +1,6 @@
 package com.nasserapps.apitester.Model.Checklists;
 
-import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.Stock;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +14,7 @@ public abstract class Rule {
     //Condition Chooser
     private static final ArrayList<String> mExpression_options =new ArrayList(Arrays.asList(new String[] {">","=","<"}));
 
-        public boolean evaluate(Ticker stock){
+        public boolean evaluate(Stock stock){
             return false;
         }
 
@@ -38,7 +38,7 @@ public abstract class Rule {
 
             return new Rule() {
                 @Override
-                public boolean evaluate(Ticker stock) {
+                public boolean evaluate(Stock stock) {
                     return false;
                 }
             };

@@ -29,7 +29,7 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.nasserapps.apitester.Controllers.Activities.ChecklistActivity;
 import com.nasserapps.apitester.Controllers.Adapters.ProfitsTableAdapter;
 import com.nasserapps.apitester.Controllers.Activities.InvestmentListActivity;
-import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.Stock;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
@@ -39,7 +39,7 @@ import java.util.ArrayList;
 
 public class WalletFragment extends Fragment {
 
-    private ArrayList<Ticker> mInvestmentsList;
+    private ArrayList<Stock> mInvestmentsList;
     Wallet mWallet;
     private CardView mWalletCard;
     private CardView mBlueCard;

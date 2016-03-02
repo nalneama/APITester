@@ -12,8 +12,9 @@ import android.util.Log;
 import com.nasserapps.apitester.Controllers.Activities.HomeActivity;
 import com.nasserapps.apitester.Model.Checklists.Checklist;
 import com.nasserapps.apitester.Model.Checklists.Rule;
-import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.Stock;
 import com.nasserapps.apitester.Model.User;
+import com.nasserapps.apitester.R;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -38,6 +39,7 @@ public class ExecutedTask extends IntentService {
     private User mUser;
 
     public static final String TAG = HomeActivity.class.getSimpleName();
+    public static final int REFRESHING_INTERVAL = 1*60000; //1 minutes * 60000  millie seconds in a minute
 
     public ExecutedTask() {
         super("ExecutedTask");
@@ -52,7 +54,7 @@ public class ExecutedTask extends IntentService {
         getStock();
 
         //Notification for testing only, if not commented will result in error because it display Price before it has value
-        //createNotification(1,android.support.design.R.drawable.abc_ic_go_search_api_mtrl_alpha,"Updated Price", "The price is "+mStock.getPrice() );
+        //createNotification(1,android.support.design.R.drawable.abc_ic_go_search_api_mtrl_alpha,"Updated Price", "The price is "+mStock.getValue() );
     }
 
     private void getStock() {
@@ -60,7 +62,7 @@ public class ExecutedTask extends IntentService {
 
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(mUser.getAPIURL())
+                    .url(getResources().getString(R.string.API_url))
                     .build();
 
             Call call = client.newCall(request);
@@ -80,9 +82,9 @@ public class ExecutedTask extends IntentService {
                             rules.add(Rule.getRule("PE Ratio", "<", "15.0"));
                             checklist.setRules(rules);
                             //TODO create notifications that show when conditions in the checklist or rules are met
-                            for(Ticker ticker:mUser.getWatchList()) {
-                                if(checklist.isPassing(ticker)) {
-                                    createNotification(1, android.support.design.R.drawable.notification_template_icon_bg, ticker.getSymbol() + " price is " + ticker.getPrice() + "", "Great Opportunity for investing PE is " + ticker.getPERatio());
+                            for(Stock stock :mUser.getWatchList()) {
+                                if(checklist.isPassing(stock)) {
+                                    createNotification(1, android.support.design.R.drawable.notification_template_icon_bg, stock.getSymbol() + " price is " + stock.getPrice() + "", "Great Opportunity for investing PE is " + stock.getPERatio());
                                 }
                             }
                         } else {

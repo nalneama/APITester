@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 /**
@@ -33,10 +32,7 @@ public class InformAIAfterBooting extends BroadcastReceiver {
 
                 AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-                // How many millisecond in 1 minute? The answer is 60000.
-//                int interval = PreferenceManager.getDefaultSharedPreferences(context).getInt("pref_syncFrequency",15)*60000;
-//                int interval = 500;
-                int interval = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString("pref_syncFrequency","15"))*60000;
+                int interval = ExecutedTask.REFRESHING_INTERVAL;
                 manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pIntent);
 
                 Toast.makeText(context, "Alarm Set", Toast.LENGTH_SHORT).show();

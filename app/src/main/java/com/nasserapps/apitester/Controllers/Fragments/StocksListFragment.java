@@ -24,7 +24,7 @@ import com.nasserapps.apitester.Controllers.Activities.EditStockListActivity;
 import com.nasserapps.apitester.Controllers.Adapters.StockAdapter;
 import com.nasserapps.apitester.Controllers.Dialogs.AlertDialogFragment;
 import com.nasserapps.apitester.Model.Checklists.Checklist;
-import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.Stock;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;
 import com.nasserapps.apitester.Tools;
@@ -42,7 +42,7 @@ import java.util.Arrays;
 
 public class StocksListFragment extends Fragment {
 
-    private ArrayList<Ticker> mStockWatchList;
+    private ArrayList<Stock> mStockWatchList;
     private User mUser;
 
     private RecyclerView mStockWatchListView;
@@ -111,7 +111,7 @@ public class StocksListFragment extends Fragment {
 
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(mUser.getAPIURL())
+                    .url(getResources().getString(R.string.API_url))
                     .build();
 
             Call call = client.newCall(request);
@@ -121,7 +121,7 @@ public class StocksListFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            alertUserAboutError();
+                            //alertUserAboutError();
                         }
                     });
                 }
@@ -146,7 +146,8 @@ public class StocksListFragment extends Fragment {
                                 }
                             });
                         } else {
-                            alertUserAboutError();
+                            //alertUserAboutError();
+                            Log.e("zxc", "onResponse else");
                         }
                     } catch (IOException e) {
                         Log.e("error", "IO Exception caught", e);
@@ -237,8 +238,8 @@ public class StocksListFragment extends Fragment {
                                 mUser.getUserData().setSortPreference("Price");
                                 break;
                             case 5:
-                                mStockWatchList= Tools.sort(mUser.getWatchList(),"Volume");
-                                mUser.getUserData().setSortPreference("Volume");
+                                mStockWatchList= Tools.sort(mUser.getWatchList(),"Price");
+                                mUser.getUserData().setSortPreference("Price");
                                 break;}
                         dialog.dismiss();
                         updateDisplay();

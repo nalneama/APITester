@@ -1,6 +1,6 @@
 package com.nasserapps.apitester.Model.Database;
 
-import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.Stock;
 import com.nasserapps.apitester.Tools;
 
 import org.json.JSONArray;
@@ -18,11 +18,11 @@ public class JSONParser {
 
     private JSONArray mQuotes;
     private int mCount;
-    private ArrayList<Ticker> mAllStocksInDB;
-    private ArrayList<Ticker> mIndexes;
-    private ArrayList<Ticker> mStocks;
+    private ArrayList<Stock> mAllStocksInDB;
+    private ArrayList<Stock> mIndexes;
+    private ArrayList<Stock> mStocks;
 
-    public JSONParser(String jsonData, ArrayList<Ticker> allStocksInDB) throws JSONException {
+    public JSONParser(String jsonData, ArrayList<Stock> allStocksInDB) throws JSONException {
 
         mIndexes = new ArrayList<>();
         mStocks = new ArrayList<>();
@@ -64,9 +64,9 @@ public class JSONParser {
 
     }
 
-    private Ticker extractStock(JSONObject mQuote) throws JSONException{
+    private Stock extractStock(JSONObject mQuote) throws JSONException{
         String symbol = mQuote.getString("Symbol").substring(0, 4);
-        Ticker stock = Tools.getStockFromList(symbol, mAllStocksInDB);
+        Stock stock = Tools.getStockFromList(symbol, mAllStocksInDB);
         if(!mQuote.isNull("PERatio")){
         stock.setPERatio(mQuote.getDouble("PERatio"));}
         stock.setVolume(mQuote.getLong("Volume"));
@@ -94,8 +94,8 @@ public class JSONParser {
 
         return stock;
     }
-    private Ticker extractIndex(JSONObject mQuote) throws JSONException{
-        Ticker stock = new Ticker();
+    private Stock extractIndex(JSONObject mQuote) throws JSONException{
+        Stock stock = new Stock();
         stock.setSymbol(mQuote.getString("Symbol").substring(0, 3));
         if(!mQuote.isNull("Volume")){
         stock.setVolume(mQuote.getLong("Volume"));}
@@ -113,13 +113,30 @@ public class JSONParser {
         return stock;
     }
 
-    public ArrayList<Ticker> getStocks() throws JSONException{
+    public ArrayList<Stock> getStocks() throws JSONException{
         return mStocks;
     }
 
-    public ArrayList<Ticker> getIndexes() {
+    public ArrayList<Stock> getIndexes() {
         return mIndexes;
     }
 
 
+    public static Stock getBrent(String json) throws JSONException{
+        JSONObject APIResults = new JSONObject(json);
+        JSONObject query = APIResults.getJSONObject("query");
+        JSONObject results;
+        JSONArray mQuotes;
+        results = query.getJSONObject("results");
+        JSONObject mJSONObject = results.getJSONObject("quote");
+        mQuotes = new JSONArray("["+mJSONObject+"]");
+        JSONObject mQuote= mQuotes.getJSONObject(0);
+        Stock brent = new Stock();
+        if(!mQuote.isNull("LastTradePriceOnly")){
+            brent.setPrice(mQuote.getDouble("LastTradePriceOnly"));}
+        brent.setPercentage(mQuote.getString("PercentChange"));
+        if(!mQuote.isNull("Change")){
+            brent.setChange(mQuote.getDouble("Change"));}
+        return brent;
+    }
 }

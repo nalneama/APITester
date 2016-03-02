@@ -47,18 +47,18 @@ public class User {
 
 
     //Get User Variables
-    public ArrayList<Ticker> getAllStocks(){
-        ArrayList<Ticker> allStocks = new ArrayList<>();
+    public ArrayList<Stock> getAllStocks(){
+        ArrayList<Stock> allStocks = new ArrayList<>();
         allStocks.addAll(mDataSource.getStocks().values());
         //return sort(allStocks, mUserData.getSortPreference());
         return Tools.sort(allStocks,"A-Z");
     }
 
-    public ArrayList<Ticker> getWatchList(){
-        ArrayList<Ticker> watchlist = new ArrayList<>();
-        for(Ticker ticker:mDataSource.getStocks().values()){
-            if (ticker.isInWatchList()){
-                watchlist.add(ticker);
+    public ArrayList<Stock> getWatchList(){
+        ArrayList<Stock> watchlist = new ArrayList<>();
+        for(Stock stock :mDataSource.getStocks().values()){
+            if (stock.isInWatchList()){
+                watchlist.add(stock);
             }
         }
         return Tools.sort(watchlist,mUserData.getSortPreference());
@@ -66,8 +66,8 @@ public class User {
 
     public void updateStocksData(String jsonData) throws JSONException{
         JSONParser jsonParser = new JSONParser(jsonData,getAllStocks());
-        ArrayList<Ticker> stocks = jsonParser.getStocks();
-        for (Ticker stock:stocks){
+        ArrayList<Stock> stocks = jsonParser.getStocks();
+        for (Stock stock:stocks){
             mDataSource.updateStock(stock);
         }
     }
@@ -77,26 +77,9 @@ public class User {
         return mWallet;
     }
 
-    public String getAPIURL() {
-        //Initiate SharedPreferences
-        // https://www.xignite.com/Register?ReturnURL=%2fproduct%2fforex%2fapi%2fListCurrencies%2f
-
-        String APICode="";
-        for(Ticker stock:getAllStocks()){
-            APICode=APICode+stock.getAPICode()+"+";
-        }
-
-        String stockURL = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%3D%22"
-                + APICode
-                + "%22&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
-
-        return stockURL;
+    public Market getMarket(){
+        return new Market(mDataSource.getIndex(),mDataSource.getBrent());
     }
-
-    public ArrayList<Ticker> getIndexes(){
-        return new ArrayList<>();
-    }
-
 
     //Get User Data
     public UserData getUserData() {

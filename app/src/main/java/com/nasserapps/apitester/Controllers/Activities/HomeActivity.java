@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.nasserapps.apitester.Controllers.Adapters.SectionsPagerAdapter;
+import com.nasserapps.apitester.Controllers.Services.ExecutedTask;
 import com.nasserapps.apitester.Controllers.Services.InformAI;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;
@@ -117,10 +118,7 @@ public class HomeActivity extends AppCompatActivity {
                     intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             AlarmManager alarm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-            // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
-            // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
-            //int interval = 500;
-            int interval = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this).getString("pref_syncFrequency","15"))*60000;
+            int interval = ExecutedTask.REFRESHING_INTERVAL;
             alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
                     interval, pIntent);
             Snackbar.make(toolbar, "AI Assistance Started", Snackbar.LENGTH_LONG).show();
