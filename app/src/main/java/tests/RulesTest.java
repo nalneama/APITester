@@ -2,7 +2,7 @@ package tests;
 
 import com.nasserapps.apitester.Model.Checklists.Checklist;
 import com.nasserapps.apitester.Model.Checklists.Rule;
-import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.Stock;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,7 +17,7 @@ public class RulesTest {
         rules.add(Rule.getRule("PE Ratio", ">", "15.0"));
         rules.add(Rule.getRule("PE Ratio", "<", "10.0"));
         rules.add(Rule.getRule("Volume", "=", "500000"));
-        Ticker stock= new Ticker();
+        Stock stock= new Stock();
         stock.setPERatio(22);
         stock.setVolume(500000);
         Assert.assertEquals(true, rules.get(0).evaluate(stock));

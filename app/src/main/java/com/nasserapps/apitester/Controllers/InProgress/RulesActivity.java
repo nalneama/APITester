@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.nasserapps.apitester.Model.Database.DataSource;
-import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.Stock;
 import com.nasserapps.apitester.R;
 
 public class RulesActivity extends AppCompatActivity {
@@ -39,9 +39,9 @@ public class RulesActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                Ticker ticker = mDataSource.getStocks().get("MERS.QA");
+                Stock stock = mDataSource.getStocks().get("MERS.QA");
 
-                tv1.setText("Name: "+ticker.getAPICode());
+                tv1.setText("Name: "+ stock.getAPICode());
 
             }
         });

@@ -1,7 +1,7 @@
 package com.nasserapps.apitester.Model.Checklists;
 
 
-import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.Stock;
 
 public class RulePERatio extends Rule {
     double mPECondition;
@@ -12,7 +12,7 @@ public class RulePERatio extends Rule {
     }
 
     @Override
-    public boolean evaluate(Ticker stock) {
+    public boolean evaluate(Stock stock) {
         double peRatio = stock.getPERatio();
         switch (mPEExpressionCase){
             case 0:

@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="sync_options">
-        <item>Every 1 minute</item>
-        <item>Every 15 minutes</item>
-        <item>Every 1 hour</item>
-        <item>Every 3 hours</item>
-    </string-array>
-
-    <string-array name="sync_options_values">
-        <item>1</item>
-        <item>15</item>
-        <item>60</item>
-        <item>180</item>
+    <string name="API_url" translatable="false">https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%3D%22AHCS.QA+ABQK.QA+MERS.QA+MARK.QA+BRES.QA+QCFS.QA+CBQK.QA+DBIS.QA+DHBK.QA+DOHI.QA+QEWS.QA+ERES.QA+QGRI.QA+GISS.QA+GWCS.QA+QIMD.QA+IQCD.QA+QIIK.QA+QIGD.QA+IHGS.QA+QISI.QA+AKHI.QA+KCBK.QA+MCCS.QA+MRDS.QA+MCGS.QA+MPHC.QA+QGTS.QA+NLCS.QA+QNNS.QA+ORDS.QA+QIBK.QA+QNBK.QA+QNCD.QA+QGMD.QA+QATI.QA+QOIS.QA+SIIS.QA+UDCD.QA+VFQS.QA+WDAM.QA+QFLS.QA+ZHCD.QA+%22&amp;format=json&amp;env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys</string>
+    <!-- The character & was changed to &amp; for formatting reasons-->
+    <string-array name="language_options" translatable="false">
+        <item>العربية</item>
+        <item>English</item>
     </string-array>
 </resources>

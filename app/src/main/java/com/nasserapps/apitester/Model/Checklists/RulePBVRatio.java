@@ -1,7 +1,7 @@
 package com.nasserapps.apitester.Model.Checklists;
 
 
-import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.Stock;
 
 public class RulePBVRatio extends Rule {
     double mPBVCondition;
@@ -12,7 +12,7 @@ public class RulePBVRatio extends Rule {
     }
 
     @Override
-    public boolean evaluate(Ticker stock) {
+    public boolean evaluate(Stock stock) {
         double pbvRatio = stock.getPBV();
         switch (mPBVExpressionCase){
             case 0:

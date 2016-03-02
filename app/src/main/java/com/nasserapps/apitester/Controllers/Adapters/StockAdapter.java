@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.nasserapps.apitester.Controllers.Activities.StockDetailsActivity;
-import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.Stock;
 import com.nasserapps.apitester.R;
 import com.nasserapps.apitester.Tools;
 
@@ -17,10 +17,10 @@ import java.util.List;
 
 public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockHolder>{
 
-    private List<Ticker> mStockList;
+    private List<Stock> mStockList;
     private Context mContext;
 
-    public StockAdapter(Context context, List<Ticker> stockList) {
+    public StockAdapter(Context context, List<Stock> stockList) {
         mContext=context;
         mStockList = stockList;
     }
@@ -35,7 +35,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockHolder>
 
     @Override
     public void onBindViewHolder(StockHolder holder, int position) {
-        Ticker stock = mStockList.get(position);
+        Stock stock = mStockList.get(position);
         holder.bindStock(stock);
     }
 
@@ -59,7 +59,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockHolder>
         private TextView mStockChange;
         private TextView mStockPercentage;
 
-        private Ticker mStock;
+        private Stock mStock;
 
         public StockHolder(View itemView) {
             super(itemView);
@@ -87,7 +87,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.StockHolder>
             });
         }
 
-        public void bindStock(Ticker stock){
+        public void bindStock(Stock stock){
             mStock=stock;
             mStockNameView.setText(mStock.getName());
             mStockSymbol.setText(mStock.getSymbol());

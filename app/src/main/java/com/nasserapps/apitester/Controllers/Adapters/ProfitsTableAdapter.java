@@ -6,16 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.Stock;
 import com.nasserapps.apitester.R;
 
 import java.util.ArrayList;
 
+
+
 public class ProfitsTableAdapter extends RecyclerView.Adapter<ProfitsTableAdapter.ProfitsTableHolder> {
 
-    private ArrayList<Ticker> mInvestments;
 
-    public ProfitsTableAdapter(ArrayList<Ticker> investmentsList) {
+    private ArrayList<Stock> mInvestments;
+
+    public ProfitsTableAdapter(ArrayList<Stock> investmentsList) {
         mInvestments =investmentsList;
     }
 
@@ -28,7 +31,8 @@ public class ProfitsTableAdapter extends RecyclerView.Adapter<ProfitsTableAdapte
 
     @Override
     public void onBindViewHolder(ProfitsTableHolder holder, int position) {
-        Ticker investment = mInvestments.get(position);
+
+        Stock investment = mInvestments.get(position);
         holder.bindStock(investment,position);
     }
 
@@ -43,7 +47,7 @@ public class ProfitsTableAdapter extends RecyclerView.Adapter<ProfitsTableAdapte
         private TextView mInvestmentAmount;
         private TextView mInvestmentROI;
         private TextView mInvestmentProfit;
-        private Ticker mInvestment;
+        private Stock mInvestment;
 
         public ProfitsTableHolder(View itemView) {
             super(itemView);
@@ -53,7 +57,7 @@ public class ProfitsTableAdapter extends RecyclerView.Adapter<ProfitsTableAdapte
             mInvestmentProfit = (TextView) itemView.findViewById(R.id.investmentProfit);
         }
 
-        public void bindStock(Ticker investment,int position){
+        public void bindStock(Stock investment,int position){
             mInvestment=investment;
             mInvestmentNameView.setText(investment.getName()+"");
             mInvestmentAmount.setText(String.format("%,.0f",investment.getQuantity()*mInvestment.getPrice()));

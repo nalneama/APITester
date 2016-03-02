@@ -10,7 +10,7 @@
     <string name="dialog_add_investments_title">New Investment</string>
     <string name="dialog_add_investments_add_button">Add</string>
     <string name="Profit">Profit</string>
-    <string name="Format_Capital">%,6.0f</string>
+    <string name="Format_Capital" translatable="false">%,6.0f</string>
     <string name="Loss">Loss</string>
 
 
@@ -128,5 +128,6 @@
     <string name="title_activity_stock_details">Analysis</string>
     <string name="compare">Compare</string>
     <string name="title_activity_stocks_compare">Comparison</string>
+    <string name="language">Language</string>
 
 </resources>

@@ -1,6 +1,6 @@
 package com.nasserapps.apitester.Model.Checklists;
 
-import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.Stock;
 import com.nasserapps.apitester.Model.User;
 
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class Checklist {
         this.rules = rules;
     }
 
-    public boolean isPassing(Ticker stock){
+    public boolean isPassing(Stock stock){
         boolean response = true;
 
         for(Rule rule:rules){
@@ -46,11 +46,11 @@ public class Checklist {
         return response;
     }
 
-    public ArrayList<Ticker> getPassingStocks(User mUser){
-        ArrayList<Ticker> stocksMeetingCriterias = new ArrayList<>();
-        ArrayList<Ticker> watchList = mUser.getWatchList();
+    public ArrayList<Stock> getPassingStocks(User mUser){
+        ArrayList<Stock> stocksMeetingCriterias = new ArrayList<>();
+        ArrayList<Stock> watchList = mUser.getWatchList();
 
-        for (Ticker stock: watchList){
+        for (Stock stock: watchList){
             if (isPassing(stock)){
                 stocksMeetingCriterias.add(stock);
             }

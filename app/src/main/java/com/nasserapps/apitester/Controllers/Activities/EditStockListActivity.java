@@ -13,7 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.nasserapps.apitester.Model.Database.DataSource;
-import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.Stock;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;
 import com.nasserapps.apitester.Tools;
@@ -27,7 +27,7 @@ public class EditStockListActivity extends AppCompatActivity {
     //https://www.youtube.com/watch?v=c9yC8XGaSv4
 
     private RecyclerView mEditStocksRecyclerView ;
-    private ArrayList<Ticker> mAllStocksList;
+    private ArrayList<Stock> mAllStocksList;
     private User mUser;
     private CheckBox mIslamicCheckBox;
     private CheckBox mNonIslamicCheckBox;
@@ -45,7 +45,7 @@ public class EditStockListActivity extends AppCompatActivity {
         mUser=User.getUser(this);
         mAllStocksList = new ArrayList<>();
         Tools.sort(mAllStocksList, "A-Z");
-        for(Ticker ticker:mUser.getAllStocks() ){
+        for(Stock ticker:mUser.getAllStocks() ){
                 if (ticker.isIslamic()){mAllStocksList.add(ticker);}
         }
         mEditStocksRecyclerView = (RecyclerView) findViewById(R.id.edit_stock_list_recyclerview);
@@ -65,15 +65,15 @@ public class EditStockListActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mAllStocksList= new ArrayList<>();
-                for(Ticker ticker:mUser.getAllStocks() ){
+                for(Stock stock :mUser.getAllStocks() ){
                     if(mIslamicCheckBox.isChecked()){
-                        if (ticker.isIslamic()){mAllStocksList.add(ticker);}
+                        if (stock.isIslamic()){mAllStocksList.add(stock);}
                     }
                     if(mMixedCheckBox.isChecked()){
-                        if (ticker.isMixed()){mAllStocksList.add(ticker);}
+                        if (stock.isMixed()){mAllStocksList.add(stock);}
                     }
                     if(mNonIslamicCheckBox.isChecked()){
-                        if (ticker.isNotIslamic()){mAllStocksList.add(ticker);}
+                        if (stock.isNotIslamic()){mAllStocksList.add(stock);}
                     }
                 }
 
@@ -89,9 +89,9 @@ public class EditStockListActivity extends AppCompatActivity {
 
     private class StockListAdapter extends RecyclerView.Adapter<StockListHolder> {
 
-        private List<Ticker> stocks;
+        private List<Stock> stocks;
 
-        public StockListAdapter(ArrayList<Ticker> stocksList) {
+        public StockListAdapter(ArrayList<Stock> stocksList) {
             stocks=stocksList;
         }
 
@@ -104,8 +104,8 @@ public class EditStockListActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(StockListHolder holder, int position) {
-            Ticker ticker = stocks.get(position);
-            holder.bindStock(ticker);
+            Stock stock = stocks.get(position);
+            holder.bindStock(stock);
         }
 
         @Override
@@ -125,7 +125,7 @@ public class EditStockListActivity extends AppCompatActivity {
             mStockCheckbox = (CheckBox) itemView.findViewById(R.id.edit_stock_checkbox);
         }
 
-        public void bindStock(final Ticker stock){
+        public void bindStock(final Stock stock){
             mStockNameView.setText(stock.getName());
             mStockCheckbox.setChecked(stock.isInWatchList());
 

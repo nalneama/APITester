@@ -12,7 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.nasserapps.apitester.MarketTime;
-import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.Stock;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;
 import com.nasserapps.apitester.Tools;
@@ -31,8 +31,8 @@ public class StocksCompareActivity extends AppCompatActivity {
     private TextView mStockPercentageViewR;
     private TextView mStockTodayViewR;
     private TextView mStock52WViewR;
-    private Ticker mStockL;
-    private Ticker mStockR;
+    private Stock mStockL;
+    private Stock mStockR;
     private TextView mStockTodayTitlesViewL;
     private Spinner mStockNameChooserL;
 
@@ -77,8 +77,8 @@ public class StocksCompareActivity extends AppCompatActivity {
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayList<String> names = new ArrayList<>();
-        for(Ticker ticker:mUser.getAllStocks()){
-            names.add(ticker.getName());
+        for(Stock stock :mUser.getAllStocks()){
+            names.add(stock.getName());
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,R.layout.spinner_comparison,names);
         //ArrayAdapter.createFromResource(this,R.array.planets_array, android.R.layout.simple_spinner_item);

@@ -1,7 +1,7 @@
 package com.nasserapps.apitester.Model.Checklists;
 
 
-import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.Stock;
 
 public class RuleVolume extends Rule {
     long mVCondition;
@@ -12,7 +12,7 @@ public class RuleVolume extends Rule {
     }
 
     @Override
-    public boolean evaluate(Ticker stock) {
+    public boolean evaluate(Stock stock) {
         long volume = stock.getVolume();
         switch (mVExpressionCase){
             case 0:

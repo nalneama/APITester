@@ -5,7 +5,7 @@ package com.nasserapps.apitester.Model;
  * Stock Object
  * Has the following attributes: Price, volume, symbol, name, supply(ask), demand(bid), PE Ratio, Price-to-Book Value.
  */
-public class Ticker {
+public class Stock {
     String mSymbol;
     String mName;
     double mPrice;
@@ -42,7 +42,7 @@ public class Ticker {
         return inWatchList;
     }
 
-    public Ticker(String symbol, String name, double price, double PERatio, long volume, double bid, double ask, double PBV, String percentage, double change, String APICode, boolean inWatchList, double purchasedPrice, int quantity, boolean inInvestments) {
+    public Stock(String symbol, String name, double price, double PERatio, long volume, double bid, double ask, double PBV, String percentage, double change, String APICode, boolean inWatchList, double purchasedPrice, int quantity, boolean inInvestments) {
         mSymbol = symbol;
         mName = name;
         mPrice = price;
@@ -60,7 +60,7 @@ public class Ticker {
         this.inInvestments = inInvestments;
     }
 
-    public Ticker(String symbol, String name, double price, double PERatio, long volume, double bid, double ask, double PBV, String percentage, double change, String APICode, boolean inWatchList, double purchasedPrice, int quantity, boolean inInvestments, double openPrice, double dayHigh, double dayLow, double m52WHigh, double m52WLow, double bestPE, double worstPE, double bestPBV, double worstPBV, int purity) {
+    public Stock(String symbol, String name, double price, double PERatio, long volume, double bid, double ask, double PBV, String percentage, double change, String APICode, boolean inWatchList, double purchasedPrice, int quantity, boolean inInvestments, double openPrice, double dayHigh, double dayLow, double m52WHigh, double m52WLow, double bestPE, double worstPE, double bestPBV, double worstPBV, int purity) {
         mSymbol = symbol;
         mName = name;
         mPrice = price;
@@ -99,12 +99,12 @@ public class Ticker {
         }
     }
 
-    public Ticker(String APICode) {
+    public Stock(String APICode) {
         this.APICode = APICode;
         inWatchList=true;
     }
 
-    public Ticker() {
+    public Stock() {
         APICode="";
         inWatchList=true;
     }

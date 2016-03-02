@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.nasserapps.apitester.MarketTime;
-import com.nasserapps.apitester.Model.Ticker;
+import com.nasserapps.apitester.Model.Stock;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;
 import com.nasserapps.apitester.Tools;
@@ -26,7 +26,7 @@ public class StockDetailsActivity extends AppCompatActivity {
     private TextView mStockSummaryView;
     private TextView mStockTodayView;
     private TextView mStock52WView;
-    private Ticker mStock;
+    private Stock mStock;
     private TextView mStockTodayTitlesView;
 
     @Override
@@ -41,7 +41,7 @@ public class StockDetailsActivity extends AppCompatActivity {
         Intent i = getIntent();
 
         mStock= Tools.getStockFromList(i.getStringExtra("Symbol"),mUser.getWatchList());
-        //Toast.makeText(this, mStock.getSymbol()+" price is : "+mStock.getPrice(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, mStock.getSymbol()+" price is : "+mStock.getValue(), Toast.LENGTH_SHORT).show();
 
         //Stock Name
         mStockNameView = (TextView) findViewById(R.id.stockName);

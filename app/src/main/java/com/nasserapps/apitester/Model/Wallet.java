@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Wallet {
 
     //Wallet
-    ArrayList<Ticker> mInvestmentList;
+    ArrayList<Stock> mInvestmentList;
 
     public double getProfit() {
         double profit = 0;
@@ -42,17 +42,17 @@ public class Wallet {
         return (getCurrentWorth() - getCapital()) / getCapital();
     }
 
-    public ArrayList<Ticker> getInvestments() {
-        ArrayList<Ticker> stocklist = new ArrayList<>();
-        for (Ticker ticker : mInvestmentList) {
-            if (ticker.isInInvestments()) {
-                stocklist.add(ticker);
+    public ArrayList<Stock> getInvestments() {
+        ArrayList<Stock> stocklist = new ArrayList<>();
+        for (Stock stock : mInvestmentList) {
+            if (stock.isInInvestments()) {
+                stocklist.add(stock);
             }
         }
         return stocklist;
     }
 
-    public void setInvestmentList(ArrayList<Ticker> investmentList) {
+    public void setInvestmentList(ArrayList<Stock> investmentList) {
         mInvestmentList = investmentList;
     }
 }
