@@ -12,6 +12,7 @@ import com.nasserapps.apitester.Model.Stock;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//Also known as data layer
 public class DataSource {
 
     private Context mContext;
@@ -32,6 +33,7 @@ public class DataSource {
     //Stocks
     public HashMap<String,Stock> getStocks(){
         SQLiteDatabase database = mSqlLiteDbHelper.openDataBase();
+        database.beginTransaction();
 
         HashMap<String,Stock> AllStocks= new HashMap<>();
 
@@ -39,11 +41,13 @@ public class DataSource {
         if (cursor != null && cursor.moveToFirst()){
             do {
                 // Get the API code from cursor.getString(2)
-                Stock stock = new Stock(cursor.getString(0),cursor.getString(1),cursor.getDouble(15),cursor.getDouble(11),cursor.getLong(6),cursor.getDouble(10),cursor.getDouble(9),cursor.getDouble(12),cursor.getString(14),cursor.getDouble(13),cursor.getString(2),cursor.getInt(5)==1,cursor.getDouble(25),cursor.getInt(26),cursor.getInt(24)==1,cursor.getDouble(16),cursor.getDouble(8),cursor.getDouble(7),cursor.getDouble(18),cursor.getDouble(19),cursor.getDouble(20),cursor.getDouble(21),cursor.getDouble(22),cursor.getDouble(23),cursor.getInt(27));
+                Stock stock = new Stock(cursor.getString(0),cursor.getString(1),cursor.getDouble(15),cursor.getDouble(11),cursor.getLong(6),cursor.getDouble(10),cursor.getDouble(9),cursor.getDouble(12),cursor.getString(14),cursor.getDouble(13),cursor.getString(2),cursor.getInt(5)==1,cursor.getDouble(25),cursor.getInt(26),cursor.getInt(24)==1,cursor.getDouble(16),cursor.getDouble(8),cursor.getDouble(7),cursor.getDouble(18),cursor.getDouble(19),cursor.getDouble(20),cursor.getDouble(21),cursor.getDouble(22),cursor.getDouble(23),cursor.getInt(27),cursor.getInt(28)==1);
                 AllStocks.put(stock.getAPICode(), stock);
                 // return stock
             }while(cursor.moveToNext());
             cursor.close();
+            database.setTransactionSuccessful();
+            database.endTransaction();
             database.close();
 
             return AllStocks;
@@ -80,6 +84,7 @@ public class DataSource {
         updateStockValues.put(DataContract.StocksEntry.COLUMN_STOCK_IN_INVESTMENT, stock.isInInvestments());
         updateStockValues.put(DataContract.StocksEntry.COLUMN_STOCK_PURCHASED_PRICE, stock.getPurchasedPrice());
         updateStockValues.put(DataContract.StocksEntry.COLUMN_STOCK_PURCHASED_QUANTITY, stock.getQuantity());
+        updateStockValues.put(DataContract.StocksEntry.COLUMN_STOCK_NOTIFICATION,stock.isNotificationEnabled());
 
                 database.update(DataContract.StocksEntry.TABLE_NAME,
                         updateStockValues,
@@ -117,31 +122,5 @@ public class DataSource {
 
 
     //Helper methods
-
-
-
-    //For testing only
-    public Stock getStock(){
-        SQLiteDatabase database = mSqlLiteDbHelper.openDataBase();
-
-        Cursor cursor = database.rawQuery("SELECT * FROM stocks_db", null);
-        if (cursor != null && cursor.moveToFirst()){
-            // Get the API code from cursor.getString(2)
-            Stock stock = new Stock(cursor.getString(2));
-
-            // return stock
-            cursor.close();
-            database.close();
-
-            return stock;
-
-        }
-        return new Stock("else");
-    }
-
-
-    public Stock getStock(String symbol){
-        return getStocks().get(symbol);
-    }
 
 }

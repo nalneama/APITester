@@ -26,14 +26,13 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.nasserapps.apitester.Controllers.Activities.ChecklistActivity;
-import com.nasserapps.apitester.Controllers.Adapters.ProfitsTableAdapter;
 import com.nasserapps.apitester.Controllers.Activities.InvestmentListActivity;
+import com.nasserapps.apitester.Controllers.Adapters.ProfitsTableAdapter;
 import com.nasserapps.apitester.Model.Stock;
+import com.nasserapps.apitester.Model.Tools;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.Model.Wallet;
 import com.nasserapps.apitester.R;
-import com.nasserapps.apitester.Tools;
 
 import java.util.ArrayList;
 
@@ -172,7 +171,7 @@ public class WalletFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.edit_investments, menu);
+        inflater.inflate(R.menu.wallet_protfolio, menu);
         super.onCreateOptionsMenu(menu, inflater);
 
     }
@@ -185,22 +184,11 @@ public class WalletFragment extends Fragment {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.checklist) {
-            Intent i = new Intent(getActivity(), ChecklistActivity.class);
-            startActivity(i);
-            return true;
-        }//TODO update all menus
-
         if (id == R.id.add_investment) {
             Intent i = new Intent(getActivity(), InvestmentListActivity.class);
             startActivity(i);
             return true;
         }
-        if (id == R.id.reset_investment_list) {
-
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 

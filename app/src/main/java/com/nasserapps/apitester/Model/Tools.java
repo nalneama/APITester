@@ -1,9 +1,9 @@
-package com.nasserapps.apitester;
+package com.nasserapps.apitester.Model;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
-import com.nasserapps.apitester.Model.Stock;
+import com.nasserapps.apitester.R;
 
 import java.util.ArrayList;
 import java.util.Collections;

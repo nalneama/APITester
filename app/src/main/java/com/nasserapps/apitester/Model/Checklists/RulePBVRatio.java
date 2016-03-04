@@ -18,8 +18,12 @@ public class RulePBVRatio extends Rule {
             case 0:
                 return pbvRatio >mPBVCondition;
             case 1:
-                return pbvRatio -mPBVCondition<0.001;
+                return pbvRatio >mPBVCondition || (pbvRatio -mPBVCondition<0.001);
             case 2:
+                return pbvRatio -mPBVCondition<0.001;
+            case 3:
+                return pbvRatio <mPBVCondition || (pbvRatio -mPBVCondition<0.001);
+            case 4:
                 return pbvRatio <mPBVCondition;
         }
         return false;
@@ -27,6 +31,6 @@ public class RulePBVRatio extends Rule {
 
     @Override
     public String getRuleStatement() {
-        return "Price to Book Value is more than "+mPBVCondition;
+        return "Price to Book Value "+Rule.mExpression_options.indexOf(mPBVExpressionCase)+" "+mPBVCondition;
     }
 }

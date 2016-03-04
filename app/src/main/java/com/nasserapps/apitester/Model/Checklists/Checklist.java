@@ -9,9 +9,18 @@ public class Checklist {
 
     private String checklistName;
     private ArrayList<Rule> rules;
+    private boolean mNotificationMuted;
 
     public Checklist(String name) {
         checklistName=name;
+        rules = new ArrayList<>();
+        mNotificationMuted=false;
+    }
+
+    public Checklist() {
+        checklistName="Untitled Checklist";
+        rules = new ArrayList<>();
+        mNotificationMuted=false;
     }
 
     public String getChecklistName() {
@@ -56,5 +65,22 @@ public class Checklist {
             }
         }
         return stocksMeetingCriterias;
+    }
+
+    public void addRule(Rule rule){
+        rules.add(rule);
+    }
+
+    public void removeRule(Rule rule){
+        rules.remove(rule);
+    }
+
+
+    public String getNotificationStatement(){
+        String statement="";
+        for (Rule rule: rules){
+            statement = statement + rule.getRuleStatement() +"%n";
+        }
+        return statement.substring(0,statement.length()-2);
     }
 }

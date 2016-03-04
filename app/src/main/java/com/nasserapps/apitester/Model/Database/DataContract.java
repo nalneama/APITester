@@ -1,8 +1,20 @@
 package com.nasserapps.apitester.Model.Database;
 
+import android.content.ContentResolver;
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 public class DataContract {
+
+    //TODO content provider authority path to be updated after changing the app package name
+    public static final String CONTENT_AUTHORITY = "com.nasserapps.apitester.app";
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+
+
+    public static final String PATH_STOCK = "stock";
+    public static final String PATH_INDEX = "index";
+    public static final String PATH_COMMODITY = "commodity";
+
 
     public static final class StocksEntry implements BaseColumns{
         // Tables Names
@@ -36,6 +48,16 @@ public class DataContract {
         public static final String COLUMN_STOCK_PURCHASED_PRICE="purchased_price";
         public static final String COLUMN_STOCK_PURCHASED_QUANTITY="purchased_quantity";
         public static final String COLUMN_STOCK_PURITY="is_islamic";
+        public static final String COLUMN_STOCK_NOTIFICATION="notification_enabled";
+
+        //Uri
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_STOCK).build();
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_STOCK;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_STOCK;
 
     }
 
@@ -51,6 +73,15 @@ public class DataContract {
         public static final String COLUMN_STOCK_PRICE_CHANGE="change";
         public static final String COLUMN_STOCK_PERCENTAGE_CHANGE="percentage_change";
         public static final String COLUMN_STOCK_CURRENT_PRICE="current_price";
+
+        //Uri
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_INDEX).build();
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_INDEX;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_INDEX;
 
     }
 
@@ -68,6 +99,15 @@ public class DataContract {
         public static final String COLUMN_STOCK_PERCENTAGE_CHANGE="percentage_change";
         public static final String COLUMN_STOCK_CURRENT_PRICE="current_price";
 
+
+        //Uri
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_COMMODITY).build();
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_COMMODITY;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_COMMODITY;
     }
 
 }

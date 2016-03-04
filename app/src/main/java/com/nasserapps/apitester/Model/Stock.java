@@ -33,6 +33,7 @@ public class Stock {
     private boolean mIsIslamic=false;
     private boolean mIsMixed=false;
     private boolean mNotIslamic=false;
+    private boolean mIsNotificationEnabled;
 
     public void setInWatchList(boolean inWatchList) {
         this.inWatchList = inWatchList;
@@ -42,25 +43,7 @@ public class Stock {
         return inWatchList;
     }
 
-    public Stock(String symbol, String name, double price, double PERatio, long volume, double bid, double ask, double PBV, String percentage, double change, String APICode, boolean inWatchList, double purchasedPrice, int quantity, boolean inInvestments) {
-        mSymbol = symbol;
-        mName = name;
-        mPrice = price;
-        mPERatio = PERatio;
-        mVolume = volume;
-        mBid = bid;
-        mAsk = ask;
-        mPBV = PBV;
-        this.percentage = percentage;
-        this.change = change;
-        this.APICode = APICode;
-        this.inWatchList = inWatchList;
-        mPurchasedPrice = purchasedPrice;
-        mQuantity = quantity;
-        this.inInvestments = inInvestments;
-    }
-
-    public Stock(String symbol, String name, double price, double PERatio, long volume, double bid, double ask, double PBV, String percentage, double change, String APICode, boolean inWatchList, double purchasedPrice, int quantity, boolean inInvestments, double openPrice, double dayHigh, double dayLow, double m52WHigh, double m52WLow, double bestPE, double worstPE, double bestPBV, double worstPBV, int purity) {
+    public Stock(String symbol, String name, double price, double PERatio, long volume, double bid, double ask, double PBV, String percentage, double change, String APICode, boolean inWatchList, double purchasedPrice, int quantity, boolean inInvestments, double openPrice, double dayHigh, double dayLow, double m52WHigh, double m52WLow, double bestPE, double worstPE, double bestPBV, double worstPBV, int purity, boolean isNotificationEnabled) {
         mSymbol = symbol;
         mName = name;
         mPrice = price;
@@ -85,6 +68,7 @@ public class Stock {
         mWorstPE = worstPE;
         mBestPBV = bestPBV;
         mWorstPBV = worstPBV;
+        mIsNotificationEnabled = isNotificationEnabled;
 
         switch (purity){
             case 0:
@@ -312,5 +296,13 @@ public class Stock {
 
     public boolean isNotIslamic() {
         return mNotIslamic;
+    }
+
+    public boolean isNotificationEnabled() {
+        return mIsNotificationEnabled;
+    }
+
+    public void setIsNotificationEnabled(boolean isNotificationEnabled) {
+        mIsNotificationEnabled = isNotificationEnabled;
     }
 }

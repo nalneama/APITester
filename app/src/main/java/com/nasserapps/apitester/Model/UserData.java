@@ -25,6 +25,7 @@ public class UserData {
     private static final String SETTINGS_NOTIFICATION_STATUS="isNotificationEnabled";
     private static final String SETTINGS_SORTING_PREFERENCE="sortingPreference";
     private static final String STORAGE_CHECKLIST="storedChecklists";
+    private static final String FIRST_TIME="isFirstTime";
 
 
 
@@ -62,6 +63,16 @@ public class UserData {
         PreferenceManager.getDefaultSharedPreferences(mContext).edit().putBoolean(SettingsActivity.NOTIFICATION, b).apply();
     }
 
+
+
+
+    public boolean isFirstTime(){
+        return PreferenceManager.getDefaultSharedPreferences(mContext).getBoolean(FIRST_TIME, true);
+    }
+
+    public void setIsFirstTime(boolean b){
+        PreferenceManager.getDefaultSharedPreferences(mContext).edit().putBoolean(FIRST_TIME, b).apply();
+    }
 
 
 

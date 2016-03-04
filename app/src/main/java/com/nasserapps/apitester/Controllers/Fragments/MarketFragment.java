@@ -18,10 +18,11 @@ import android.view.ViewGroup;
 import com.nasserapps.apitester.Controllers.Adapters.MarketAdapter;
 import com.nasserapps.apitester.Controllers.Dialogs.AlertDialogFragment;
 import com.nasserapps.apitester.Model.Database.JSONParser;
+import com.nasserapps.apitester.Model.Market;
 import com.nasserapps.apitester.Model.Stock;
+import com.nasserapps.apitester.Model.Tools;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;
-import com.nasserapps.apitester.Tools;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -40,7 +41,7 @@ public class MarketFragment extends Fragment {
     public static final int SUMMARY = 1;
     public static final int NEWS = 2;
 
-    private Object[] mDataset = {new Stock(), new ArrayList<Stock>(),new ArrayList<Stock>()};
+    private Object[] mDataset = {new Market(null, null), new ArrayList<Stock>(),new ArrayList<Stock>()};
     private int[] mDatasetTypes = {MarketAdapter.MARKET,MarketAdapter.SUMMARY,MarketAdapter.SUMMARY};
     private RecyclerView mIndexWatchListView;
     private User mUser;
@@ -62,9 +63,6 @@ public class MarketFragment extends Fragment {
 
         //2.0 Initialize variables for display
         mUser = User.getUser(getContext());
-
-        setDisplay();
-
 
         //4.0 Get the updated data and set the display with the updated data
         //getUpdatedData();

@@ -14,9 +14,9 @@ import android.widget.TextView;
 
 import com.nasserapps.apitester.Model.Database.DataSource;
 import com.nasserapps.apitester.Model.Stock;
+import com.nasserapps.apitester.Model.Tools;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;
-import com.nasserapps.apitester.Tools;
 
 import java.util.ArrayList;
 import java.util.List;

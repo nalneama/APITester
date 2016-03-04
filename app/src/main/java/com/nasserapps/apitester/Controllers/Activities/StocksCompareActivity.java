@@ -11,11 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.nasserapps.apitester.MarketTime;
+import com.nasserapps.apitester.Model.MarketTime;
 import com.nasserapps.apitester.Model.Stock;
+import com.nasserapps.apitester.Model.Tools;
 import com.nasserapps.apitester.Model.User;
 import com.nasserapps.apitester.R;
-import com.nasserapps.apitester.Tools;
 
 import java.util.ArrayList;
 

@@ -18,10 +18,20 @@ public class RuleVolume extends Rule {
             case 0:
                 return volume > mVCondition;
             case 1:
-                return volume == mVCondition;
+                return volume > mVCondition || volume == mVCondition;
             case 2:
-                return volume < mVCondition;
+                return volume == mVCondition;
+            case 4:
+                return volume < mVCondition || volume == mVCondition;
+            case 5:
+                return volume < mVCondition ;
         }
         return false;
     }
+
+    @Override
+    public String getRuleStatement() {
+        return "Volume "+Rule.mExpression_options.get(mVExpressionCase)+" "+mVCondition;
+    }
+
 }

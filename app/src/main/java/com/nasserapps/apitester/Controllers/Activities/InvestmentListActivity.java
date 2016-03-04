@@ -113,25 +113,31 @@ public class InvestmentListActivity extends AppCompatActivity {
                 .setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mOldPrice= mStock.getPurchasedPrice();
-                        mOldQuantity = mStock.getQuantity();
-                        mOldStatus = mStock.isInInvestments();
-                        mPrice = Double.parseDouble(dPurchasedPrice.getText().toString());
-                        mQuantity = Integer.parseInt(dInvestmentQuantity.getText().toString());
-                        if (mStock.isInInvestments()){
-                            updateOrAddDialog(mQuantity+ mStock.getQuantity(), Calculator.getAveragePrice(mStock.getPurchasedPrice(),mPrice, mStock.getQuantity(),mQuantity),mQuantity,mPrice);
+                        if (!dPurchasedPrice.getText().toString().isEmpty() || !dInvestmentQuantity.getText().toString().isEmpty()) {
+                            mOldPrice = mStock.getPurchasedPrice();
+                            mOldQuantity = mStock.getQuantity();
+                            mOldStatus = mStock.isInInvestments();
+                            mPrice = Double.parseDouble(dPurchasedPrice.getText().toString());
+                            mQuantity = Integer.parseInt(dInvestmentQuantity.getText().toString());
+                            if (mStock.isInInvestments()) {
+                                updateOrAddDialog(mQuantity + mStock.getQuantity(), Calculator.getAveragePrice(mStock.getPurchasedPrice(), mPrice, mStock.getQuantity(), mQuantity), mQuantity, mPrice);
+                            } else {
+                                mStock.setPurchasedPrice(mPrice);
+                                mStock.setQuantity(mQuantity);
+                                mStock.setInInvestments(true);
+                                mDataSource.updateStock(mStock);
+                                mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mUser.getWallet().getInvestments()), false);
+                                updateDisplay();
+                                undoMessage = mStock.getName() + " investment added.";
+                                showUndoMessage(undoMessage);
+                            }
                         }
                         else {
-                            mStock.setPurchasedPrice(mPrice);
-                            mStock.setQuantity(mQuantity);
-                            mStock.setInInvestments(true);
-                            mDataSource.updateStock(mStock);
-                            mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mUser.getWallet().getInvestments()), false);
-                            updateDisplay();
-                            undoMessage = mStock.getName()+" investment added.";
-                            showUndoMessage(undoMessage);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                            builder.setTitle("Error")
+                                    .setMessage("Enter valid numbers")
+                                    .setPositiveButton("OK",null).create().show();
                         }
-                        //TODO show snackbar to undo the last addition
                     }
                 });
         if(!operation.equalsIgnoreCase("add")){
@@ -227,7 +233,7 @@ public class InvestmentListActivity extends AppCompatActivity {
                         mStock.setQuantity(replacedQuantity);
                         mDataSource.updateStock(mStock);
                         mEditStocksRecyclerView.swapAdapter(new InvestmentListAdapter(mUser.getWallet().getInvestments()), false);
-                        undoMessage = mStock.getName()+" investment updated.";
+                        undoMessage = mStock.getName() + " investment updated.";
                         showUndoMessage(undoMessage);
                     }
                 });

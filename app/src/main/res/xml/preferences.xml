@@ -6,17 +6,23 @@ http://developer.android.com/guide/topics/ui/settings.html#Listening
         android:title="@string/action_notification">
         <Preference
             android:title="Notification Rules"
+            android:key="pref_notifications"
             android:summary="Set up the notification rules"/>
     </PreferenceCategory>
+
+
     <PreferenceCategory
-        android:title="About">
+        android:title="Language">
         <ListPreference
+            android:summary="%s"
+            android:defaultValue="English"
             android:title="@string/language"
             android:key="pref_language"
             android:entries="@array/language_options"
-            android:entryValues="@array/language_options"
-            android:summary="is chosen."/>
+            android:entryValues="@array/language_options"/>
     </PreferenceCategory>
+
+
     <PreferenceCategory
         android:title="About">
         <Preference

@@ -1,4 +1,4 @@
-package com.nasserapps.apitester;
+package com.nasserapps.apitester.Model;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

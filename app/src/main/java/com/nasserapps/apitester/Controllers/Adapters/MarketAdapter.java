@@ -19,8 +19,8 @@ import com.nasserapps.apitester.Model.Commodity;
 import com.nasserapps.apitester.Model.Index;
 import com.nasserapps.apitester.Model.Market;
 import com.nasserapps.apitester.Model.Stock;
+import com.nasserapps.apitester.Model.Tools;
 import com.nasserapps.apitester.R;
-import com.nasserapps.apitester.Tools;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -16,11 +16,15 @@ public class RulePERatio extends Rule {
         double peRatio = stock.getPERatio();
         switch (mPEExpressionCase){
             case 0:
-                return peRatio >mPECondition;
+                return peRatio > mPECondition;
             case 1:
-                return peRatio -mPECondition<0.001;
+                return peRatio > mPECondition || (peRatio -mPECondition)<0.001;
             case 2:
-                return peRatio <mPECondition;
+                return (peRatio - mPECondition)<0.001;
+            case 3:
+                return (peRatio - mPECondition)<0.001 || peRatio <mPECondition;
+            case 4:
+                return peRatio < mPECondition;
         }
         return false;
     }
@@ -28,7 +32,6 @@ public class RulePERatio extends Rule {
 
     @Override
     public String getRuleStatement() {
-        return "PE Ratio is less than "+mPECondition;
+        return "PE Ratio "+Rule.mExpression_options.indexOf(mPEExpressionCase)+" "+mPECondition;
     }
-
 }

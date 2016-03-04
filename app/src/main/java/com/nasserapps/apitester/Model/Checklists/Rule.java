@@ -8,11 +8,12 @@ import java.util.Arrays;
 
 public abstract class Rule {
 
+
     //Criteria Chooser
-    private static final ArrayList<String> mVariable_options =new ArrayList(Arrays.asList(new String[]{"PE Ratio", "Volume", "PBV Ratio"}));
+    public static final ArrayList<String> mVariable_options =new ArrayList(Arrays.asList(new String[]{"Change" , "PE Ratio","Percentage", "Price", "Volume", "PBV Ratio"}));
 
     //Condition Chooser
-    private static final ArrayList<String> mExpression_options =new ArrayList(Arrays.asList(new String[] {">","=","<"}));
+    public static final ArrayList<String> mExpression_options =new ArrayList(Arrays.asList(new String[] {">",">=","=","<=","<"}));
 
         public boolean evaluate(Stock stock){
             return false;
@@ -28,10 +29,16 @@ public abstract class Rule {
 
             switch (criteria_case) {
                 case 0:
-                    return new RulePERatio(Double.parseDouble(value), condition_case);
+                    return new RuleChange(Double.parseDouble(value), condition_case);
                 case 1:
-                    return new RuleVolume(Long.parseLong(value), condition_case);
+                    return new RulePERatio(Double.parseDouble(value), condition_case);
                 case 2:
+                    return new RulePercentageChange(Double.parseDouble(value.substring(0, value.length() - 1)), condition_case);
+                case 3:
+                    return new RulePrice(Double.parseDouble(value), condition_case);
+                case 4:
+                    return new RuleVolume(Long.parseLong(value), condition_case);
+                case 5:
                     return new RulePBVRatio(Double.parseDouble(value), condition_case);
             }
 
@@ -44,7 +51,6 @@ public abstract class Rule {
             };
     }
 }
-//TODO add price rule
 /*Resources
 Background Tasks
 http://technology.jana.com/2014/10/28/periodic-background-tasks-in-android/comment-page-1/

@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.nasserapps.apitester.Controllers.Activities.StockDetailsActivity;
 import com.nasserapps.apitester.Model.Stock;
+import com.nasserapps.apitester.Model.Tools;
 import com.nasserapps.apitester.R;
-import com.nasserapps.apitester.Tools;
 
 import java.util.List;
 

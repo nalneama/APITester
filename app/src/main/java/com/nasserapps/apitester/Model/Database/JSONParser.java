@@ -1,7 +1,7 @@
 package com.nasserapps.apitester.Model.Database;
 
 import com.nasserapps.apitester.Model.Stock;
-import com.nasserapps.apitester.Tools;
+import com.nasserapps.apitester.Model.Tools;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,7 +52,7 @@ public class JSONParser {
         JSONObject stock;
         for (int i=0;i < mQuotes.length(); i++){
             stock = mQuotes.getJSONObject(i);
-            if(!stock.isNull("StockExchange")) {
+            if(!stock.isNull("LastTradePriceOnly")) {
                 mStocks.add(extractStock(stock));
             }
             else{

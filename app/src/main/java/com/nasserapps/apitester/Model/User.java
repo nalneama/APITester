@@ -6,11 +6,11 @@ import com.nasserapps.apitester.Model.Checklists.Checklist;
 import com.nasserapps.apitester.Model.Checklists.Rule;
 import com.nasserapps.apitester.Model.Database.DataSource;
 import com.nasserapps.apitester.Model.Database.JSONParser;
-import com.nasserapps.apitester.Tools;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class User {
 
@@ -100,7 +100,26 @@ public class User {
         //return mChecklists;
     }
 
+    public HashMap<Stock,Checklist> getNotificationRules(){
+
+        HashMap<Stock,Checklist> noti = new HashMap<>();
+        Checklist mersChecklist = new Checklist("mers_checklist");
+        //mersChecklist.addRule(Rule.getRule("Volume", "<", "80000"));
+        Checklist bresCL = new Checklist("bres");
+        bresCL.addRule(Rule.getRule("PE Ratio","<","15.0"));
+        bresCL.addRule(Rule.getRule("Volume", ">", "0"));
+        Checklist markCL = new Checklist("mark");
+        markCL.addRule(Rule.getRule("Volume", ">", "10000000"));
+
+        noti.put(Tools.getStockFromList("MERS", getAllStocks()), mersChecklist);
+        noti.put(Tools.getStockFromList("BRES",getAllStocks()),bresCL);
+        noti.put(Tools.getStockFromList("MARK",getAllStocks()),markCL);
+
+        return noti;
+    }
+
     public void setChecklists(ArrayList<Checklist> checklists) {
         mUserData.setChecklist(checklists);
     }
+
 }
