@@ -92,7 +92,7 @@
                 android:value="com.nasserapps.apitester.Controllers.Activities.StockDetailsActivity"/>
         </activity>
         <activity
-            android:name=".Controllers.Activities.WelcomeScreen.WelcomeActivity"
+            android:name=".Controllers.Activities.WelcomeScreen.OnboardingPagerActivity"
             android:label="@string/title_activity_welcome"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
