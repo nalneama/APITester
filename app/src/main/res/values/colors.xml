@@ -30,5 +30,6 @@
     <color name="grey700">#616161</color>
     <color name="grey800">#424242</color>
     <color name="grey900">#212121</color>
+    <color name="transparent">#20000000</color>
 
 </resources>

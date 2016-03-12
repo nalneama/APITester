@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
+
+    <!-- Application -->
     <application
         android:name=".Controllers.Application.MyApplication"
         android:allowBackup="true"
@@ -13,26 +15,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <receiver
-            android:name=".Controllers.Services.InformAI"
-            android:process=":remote">
-        </receiver>
-        <receiver
-            android:name=".Controllers.Services.InformAIAfterBooting"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-        </receiver>
 
-        <service
-            android:name=".Controllers.Services.ExecutedTask"
-            android:exported="false"/>
-        <service
-            android:name=".Controllers.Services.MuteService"
-            android:exported="false"/>
 
+
+
+        <!-- Activities-->
         <activity
             android:name=".Controllers.Activities.EditStockListActivity"
             android:label="@string/title_activity_edit_stock_list"
@@ -96,6 +83,39 @@
             android:label="@string/title_activity_welcome"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+
+
+        <!-- Services and Receivers -->
+        <receiver
+            android:name=".Controllers.Services.InformAI"
+            android:process=":remote">
+        </receiver>
+        <receiver
+            android:name=".Controllers.Services.InformAIAfterBooting"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <service
+            android:name=".Controllers.Services.ExecutedTask"
+            android:exported="false"/>
+        <service
+            android:name=".Controllers.Services.MuteService"
+            android:exported="false"/>
+
+
+
+
+
+        <!-- Content Providers-->
+        <provider
+            android:authorities="com.nasserapps.apitester.app"
+            android:name=".Model.Database.FinancialDataProvider">
+
+        </provider>
     </application>
 
 </manifest>

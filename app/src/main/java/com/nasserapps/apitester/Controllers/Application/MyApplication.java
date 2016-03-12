@@ -18,7 +18,7 @@ public class MyApplication extends Application {
 //        TODO Launch ensure that the broadcast receiver is alive;
 //        }
 
-        if(true){//mUser.getUserData().isFirstTime()
+        if(false){//mUser.getUserData().isFirstTime()
             Intent i = new Intent(getBaseContext(), OnboardingPagerActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //GO to welcome screen and after agreeing on all the info, on clicking agree make the first time(false)

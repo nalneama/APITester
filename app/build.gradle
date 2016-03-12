@@ -21,6 +21,9 @@ android {
     aaptOptions {
         additionalParameters "--no-version-vectors"
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 repositories {
     maven { url "https://jitpack.io" }
@@ -30,6 +33,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12' // For JUnit Test
     testCompile 'org.json:json:20140107' // For JSON Test
+    testCompile "org.mockito:mockito-core:1.9.5"
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.android.support:design:23.2.0'
     compile 'com.squareup.okhttp:okhttp:2.5.0'

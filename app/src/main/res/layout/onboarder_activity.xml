@@ -1,18 +1,22 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:id="@+id/homeLayout"
-              android:weightSum="1.0"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/green600"
+    android:fitsSystemWindows="true">
 
-              android:orientation="vertical">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:id="@+id/homeLayout"
+                      android:orientation="vertical">
 
-    <android.support.v4.view.ViewPager
-
-        android:id="@+id/pager"
-        android:layout_weight="0.1"
-        android:layout_width="match_parent"
-
-        android:layout_height="match_parent" />
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_weight="0.1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
 
+        </LinearLayout>
 </LinearLayout>

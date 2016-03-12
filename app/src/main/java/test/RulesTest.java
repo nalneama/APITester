@@ -1,4 +1,4 @@
-package tests;
+package test;
 
 import com.nasserapps.apitester.Model.Checklists.Checklist;
 import com.nasserapps.apitester.Model.Checklists.Rule;
