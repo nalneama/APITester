@@ -19,7 +19,7 @@ public class SqlLiteDbHelper extends SQLiteOpenHelper {
     // Database Version
     private static final int DATABASE_VERSION = 1;
     // Database Name
-    private static final String DATABASE_NAME = "database.sqlite";
+    public static final String DATABASE_NAME = "database.sqlite";
     private static final String DB_PATH_SUFFIX = "/databases/";
     static Context ctx;
 

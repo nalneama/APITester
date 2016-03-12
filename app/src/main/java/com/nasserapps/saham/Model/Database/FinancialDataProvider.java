@@ -6,7 +6,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.support.annotation.Nullable;
+
 
 public class FinancialDataProvider extends ContentProvider {
 
@@ -79,7 +79,6 @@ public class FinancialDataProvider extends ContentProvider {
 
 
 
-    @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         return null;

@@ -34,14 +34,14 @@ dependencies {
     testCompile 'junit:junit:4.12' // For JUnit Test
     testCompile 'org.json:json:20140107' // For JSON Test
     testCompile "org.mockito:mockito-core:1.9.5"
-    compile 'com.android.support:appcompat-v7:23.2.0'
-    compile 'com.android.support:design:23.2.0'
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:design:23.2.1'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.2'
     compile 'junit:junit:4.12'
-    compile 'com.android.support:cardview-v7:23.2.0'
+    compile 'com.android.support:cardview-v7:23.2.1'
     compile 'com.google.code.gson:gson:1.7.2'
-    compile 'com.android.support:recyclerview-v7:23.2.0'
-    compile 'com.android.support:support-v4:23.2.0'
+    compile 'com.android.support:recyclerview-v7:23.2.1'
+    compile 'com.android.support:support-v4:23.2.1'
 }

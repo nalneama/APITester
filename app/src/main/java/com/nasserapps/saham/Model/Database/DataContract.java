@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
 public class DataContract {
 
     //TODO content provider authority path to be updated after changing the app package name
-    public static final String CONTENT_AUTHORITY = "com.nasserapps.apitester.app";
+    public static final String CONTENT_AUTHORITY = "com.nasserapps.saham.app";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
 
