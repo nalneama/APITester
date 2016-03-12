@@ -1,7 +1,7 @@
 import android.net.Uri;
 import android.test.AndroidTestCase;
 
-import com.nasserapps.apitester.Model.Database.DataContract;
+import com.nasserapps.saham.Model.Database.DataContract;
 
 public class DataContractTest extends AndroidTestCase {
 

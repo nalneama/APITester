@@ -3,8 +3,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.test.AndroidTestCase;
 
-import com.nasserapps.apitester.Model.Database.DataContract;
-import com.nasserapps.apitester.Model.Database.FinancialDataProvider;
+import com.nasserapps.saham.Model.Database.DataContract;
+import com.nasserapps.saham.Model.Database.FinancialDataProvider;
 
 public class TestProvider extends AndroidTestCase {
 

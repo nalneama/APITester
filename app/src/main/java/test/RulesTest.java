@@ -1,8 +1,8 @@
 package test;
 
-import com.nasserapps.apitester.Model.Checklists.Checklist;
-import com.nasserapps.apitester.Model.Checklists.Rule;
-import com.nasserapps.apitester.Model.Stock;
+import com.nasserapps.saham.Model.Checklists.Checklist;
+import com.nasserapps.saham.Model.Checklists.Rule;
+import com.nasserapps.saham.Model.Stock;
 
 import org.junit.Assert;
 import org.junit.Test;

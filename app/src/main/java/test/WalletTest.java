@@ -1,6 +1,6 @@
 package test;
 
-import com.nasserapps.apitester.Model.Wallet;
+import com.nasserapps.saham.Model.Wallet;
 
 import org.junit.Test;
 
