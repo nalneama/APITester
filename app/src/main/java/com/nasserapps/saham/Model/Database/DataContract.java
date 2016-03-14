@@ -96,12 +96,13 @@ public class DataContract {
         // Tables Names
         public static final String TABLE_NAME="commodities_db";
         //Columns Names
-        public static final String COLUMN_STOCK_SYMBOL="symbol";
-        public static final String COLUMN_STOCK_NAME="name_english";
-        public static final String COLUMN_STOCK_EPS="eps";
-        public static final String COLUMN_STOCK_PRICE_CHANGE="change";
-        public static final String COLUMN_STOCK_PERCENTAGE_CHANGE="percentage_change";
-        public static final String COLUMN_STOCK_CURRENT_PRICE="current_price";
+        public static final String COLUMN_COMMODITY_SYMBOL="symbol";
+        public static final String _ID="id";
+        public static final String COLUMN_COMMODITY_NAME="name_english";
+        public static final String COLUMN_COMMODITY_EPS="eps";
+        public static final String COLUMN_COMMODITY_PRICE_CHANGE="change";
+        public static final String COLUMN_COMMODITY_PERCENTAGE_CHANGE="percentage_change";
+        public static final String COLUMN_COMMODITY_CURRENT_PRICE="current_price";
 
 
         //Uri

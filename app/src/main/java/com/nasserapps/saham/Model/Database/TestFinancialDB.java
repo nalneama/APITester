@@ -1,16 +1,15 @@
+package com.nasserapps.saham.Model.Database;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 
-import com.nasserapps.saham.Model.Database.DataContract;
-import com.nasserapps.saham.Model.Database.SqlLiteDbHelper;
-
 import java.util.HashSet;
 
-public class TestDB extends AndroidTestCase {
+public class TestFinancialDB extends AndroidTestCase {
 
-    public static final String LOG_TAG = TestDB.class.getSimpleName();
+    public static final String LOG_TAG = TestFinancialDB.class.getSimpleName();
 
     // Since we want each test to start with a clean slate
     void deleteTheDatabase() {
@@ -39,13 +38,13 @@ public class TestDB extends AndroidTestCase {
         // Android metadata (db version information)
         final HashSet<String> tableNameHashSet = new HashSet<>();
         tableNameHashSet.add(DataContract.StocksEntry.TABLE_NAME);
-        //tableNameHashSet.add(DataContract.CommoditiesEntry.TABLE_NAME);
+        tableNameHashSet.add(DataContract.CommoditiesEntry.TABLE_NAME);
 
 //        mContext.deleteDatabase(SqlLiteDbHelper.DATABASE_NAME);
-        SQLiteDatabase db = new SqlLiteDbHelper(getContext()).openDataBase();
-        SqlLiteDbHelper.addTables(db);
+        FinancialDBHelper financialDBHelper = new FinancialDBHelper(getContext());
+        SQLiteDatabase db = financialDBHelper.getWritableDatabase();
         assertEquals(true, db.isOpen());
-
+        assertTrue(db.getPath().equalsIgnoreCase(financialDBHelper.getDatabasePath()));
         // have we created the tables we want?
         Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
 
@@ -59,11 +58,16 @@ public class TestDB extends AndroidTestCase {
 
         // if this fails, it means that your database doesn't contain both the stock entry
         // and commodity entry tables
-        assertTrue("Error: Your database was created without both the stocks entry and commodity entry tables",
-                tableNameHashSet.isEmpty());
+        String tables = "";
+        c.moveToFirst();
+        do {
+            tables= tables + c.getString(0)+ " ," ;
+        } while( c.moveToNext() );
+
+        assertTrue("Error: Your database was created with "+ tables.substring(0,tables.length()-2), tableNameHashSet.isEmpty());
 
         // now, do our tables contain the correct columns?
-        c = db.rawQuery("PRAGMA table_info(" + DataContract.StocksEntry.TABLE_NAME + ")",
+        c = db.rawQuery("PRAGMA table_info(" + DataContract.CommoditiesEntry.TABLE_NAME + ")",
                 null);
 
         assertTrue("Error: This means that we were unable to query the database for table information.",
@@ -120,7 +124,7 @@ public class TestDB extends AndroidTestCase {
                 null,
                 null
         );
-        assertTrue("Error: No records returned",cursor.moveToFirst());
+        assertTrue("Error: No records returned", cursor.moveToFirst());
         // Validate data in resulting Cursor with the original ContentValues
         // (you can use the validateCurrentRecord function in TestUtilities to validate the
         // query if you like)
