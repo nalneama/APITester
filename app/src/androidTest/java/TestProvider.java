@@ -1,9 +1,13 @@
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 
 import com.nasserapps.saham.Model.Database.DataContract;
+import com.nasserapps.saham.Model.Database.FinancialDBHelper;
 import com.nasserapps.saham.Model.Database.FinancialDataProvider;
 
 public class TestProvider extends AndroidTestCase {
@@ -53,10 +57,10 @@ public class TestProvider extends AndroidTestCase {
         String testStock = "/MERS";
         // content://com.example.android.sunshine.app/weather/94074
         type = mContext.getContentResolver().getType(
-                DataContract.StocksEntry.buildingStockUri(testStock));
+                DataContract.StocksEntry.buildStockUri(testStock));
         // vnd.android.cursor.dir/com.example.android.sunshine.app/weather
-        assertEquals("Error: the StockEntry CONTENT_URI with one stock should return StockEntry.CONTENT_TYPE",
-                DataContract.StocksEntry.CONTENT_TYPE, type);
+        assertEquals("Error: the StockEntry CONTENT_URI with one stock should return StockEntry.CONTENT_ITEM_TYPE",
+                DataContract.StocksEntry.CONTENT_ITEM_TYPE, type);
 
 //        long testDate = 1419120000L; // December 21st, 2014
 //        // content://com.example.android.sunshine.app/weather/94074/20140612
@@ -79,34 +83,34 @@ public class TestProvider extends AndroidTestCase {
         read out the data.  Uncomment this test to see if the basic weather query functionality
         given in the ContentProvider is working correctly.
      */
-//    public void testBasicWeatherQuery() {
-//        // insert our test records into the database
-//        WeatherDbHelper dbHelper = new WeatherDbHelper(mContext);
-//        SQLiteDatabase db = dbHelper.getWritableDatabase();
-//
-//        ContentValues testValues = TestUtilities.createNorthPoleLocationValues();
-//        long locationRowId = TestUtilities.insertNorthPoleLocationValues(mContext);
-//
-//        // Fantastic.  Now that we have a location, add some weather!
-//        ContentValues weatherValues = TestUtilities.createWeatherValues(locationRowId);
-//
-//        long weatherRowId = db.insert(WeatherEntry.TABLE_NAME, null, weatherValues);
-//        assertTrue("Unable to Insert WeatherEntry into the Database", weatherRowId != -1);
-//
-//        db.close();
-//
-//        // Test the basic content provider query
-//        Cursor weatherCursor = mContext.getContentResolver().query(
-//                WeatherEntry.CONTENT_URI,
-//                null,
-//                null,
-//                null,
-//                null
-//        );
-//
-//        // Make sure we get the correct cursor out of the database
-//        TestUtilities.validateCursor("testBasicWeatherQuery", weatherCursor, weatherValues);
-//    }
+    public void testBasicStockQuery() {
+        // insert our test records into the database
+        FinancialDBHelper dbHelper = new FinancialDBHelper(mContext);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues testValues = new ContentValues();
+        testValues.put(DataContract.CommoditiesEntry.COLUMN_COMMODITY_NAME,"Oil");
+        testValues.put(DataContract.CommoditiesEntry.COLUMN_COMMODITY_CURRENT_PRICE,30);
+        testValues.put(DataContract.CommoditiesEntry.COLUMN_COMMODITY_SYMBOL,"OIL");
+
+        long locationRowId = db.insert(DataContract.CommoditiesEntry.TABLE_NAME,null,testValues);
+
+        assertTrue("Unable to Insert WeatherEntry into the Database", locationRowId != -1);
+
+        db.close();
+
+        //Test the basic content provider query
+        Cursor weatherCursor = mContext.getContentResolver().query(
+                DataContract.StocksEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
+
+        // Make sure we get the correct cursor out of the database
+        //TestUtilities.validateCursor("testBasicWeatherQuery", weatherCursor, weatherValues);
+    }
 
     /*
         This test uses the database directly to insert and then uses the ContentProvider to

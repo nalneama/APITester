@@ -67,7 +67,7 @@ public class TestFinancialDB extends AndroidTestCase {
         assertTrue("Error: Your database was created with "+ tables.substring(0,tables.length()-2), tableNameHashSet.isEmpty());
 
         // now, do our tables contain the correct columns?
-        c = db.rawQuery("PRAGMA table_info(" + DataContract.CommoditiesEntry.TABLE_NAME + ")",
+        c = db.rawQuery("PRAGMA table_info(" + DataContract.StocksEntry.TABLE_NAME + ")",
                 null);
 
         assertTrue("Error: This means that we were unable to query the database for table information.",
@@ -99,7 +99,7 @@ public class TestFinancialDB extends AndroidTestCase {
         where you can uncomment out the "createNorthPoleLocationValues" function.  You can
         also make use of the ValidateCurrentRecord function from within TestUtilities.
     */
-    public void testLocationTable() {
+    public void testCommodityTable() {
         // First step: Get reference to writable database
         SQLiteDatabase db = new SqlLiteDbHelper(getContext()).getWritableDatabase();
         SqlLiteDbHelper.addTables(db);
@@ -126,9 +126,11 @@ public class TestFinancialDB extends AndroidTestCase {
         );
         assertTrue("Error: No records returned", cursor.moveToFirst());
         // Validate data in resulting Cursor with the original ContentValues
+        assertTrue("Error:not matching",cursor.getString(1).equals(contentValues.getAsString(DataContract.CommoditiesEntry.COLUMN_COMMODITY_NAME)));
         // (you can use the validateCurrentRecord function in TestUtilities to validate the
         // query if you like)
-
+        cursor.close();
+        db.close();
         // Finally, close the cursor and database
 
     }
@@ -139,7 +141,7 @@ public class TestFinancialDB extends AndroidTestCase {
         where you can use the "createWeatherValues" function.  You can
         also make use of the validateCurrentRecord function from within TestUtilities.
      */
-    public void testWeatherTable() {
+    public void testStockTable() {
         // First insert the location, and then use the locationRowId to insert
         // the weather. Make sure to cover as many failure cases as you can.
 
