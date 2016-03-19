@@ -16,4 +16,12 @@ public class Market {
     public Commodity getCommodity() {
         return mCommodity;
     }
+
+    public void setIndex(Index index) {
+        mIndex = index;
+    }
+
+    public void setCommodity(Commodity commodity) {
+        mCommodity = commodity;
+    }
 }

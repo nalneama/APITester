@@ -13,7 +13,7 @@ public class TestFinancialDB extends AndroidTestCase {
 
     // Since we want each test to start with a clean slate
     void deleteTheDatabase() {
-        mContext.deleteDatabase(SqlLiteDbHelper.DATABASE_NAME);
+        mContext.deleteDatabase(FinancialDBHelper.DATABASE_NAME);
     }
 
     /*
@@ -101,8 +101,7 @@ public class TestFinancialDB extends AndroidTestCase {
     */
     public void testCommodityTable() {
         // First step: Get reference to writable database
-        SQLiteDatabase db = new SqlLiteDbHelper(getContext()).getWritableDatabase();
-        SqlLiteDbHelper.addTables(db);
+        SQLiteDatabase db = new FinancialDBHelper(getContext()).getWritableDatabase();
         // Create ContentValues of what you want to insert
         // (you can use the createNorthPoleLocationValues if you wish)
         ContentValues contentValues = new ContentValues();

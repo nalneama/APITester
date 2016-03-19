@@ -81,8 +81,8 @@ public class FinancialDataProvider extends ContentProvider {
             case ALL_STOCKS:
                 retCursor = mOpenHelper.getReadableDatabase().query(
                         DataContract.StocksEntry.TABLE_NAME,
-                        null,
-                        null,null,null,null,null
+                        projection,
+                        selection,selectionArgs,null,null,sortOrder
                 );
                 break;
 
@@ -94,8 +94,8 @@ public class FinancialDataProvider extends ContentProvider {
             case ALL_COMMODITIES:
                 retCursor = mOpenHelper.getReadableDatabase().query(
                         DataContract.CommoditiesEntry.TABLE_NAME,
-                        null,
-                        null,null,null,null,null
+                        projection,
+                        selection,selectionArgs,null,null,sortOrder
                 );
                 break;
 
@@ -117,25 +117,81 @@ public class FinancialDataProvider extends ContentProvider {
         switch (match) {
             case ALL_STOCKS: {
                 long _id = db.insert(DataContract.StocksEntry.TABLE_NAME, null, values);
-//                if (_id>0){returnUri = DataContract.StocksEntry.buildStockUri();}
-//                else throw new android.database.SQLException("Failed to insert row into "+uri);
+                if (_id > 0) {
+                    returnUri = DataContract.StocksEntry.buildStockUri(_id);
+                } else throw new android.database.SQLException("Failed to insert row into " + uri);
+                break;
+            }
+            case ALL_COMMODITIES: {
+                long _id = db.insert(DataContract.CommoditiesEntry.TABLE_NAME, null, values);
+                if (_id>0){returnUri = DataContract.CommoditiesEntry.buildCommodityUri(_id);}
+                else throw new android.database.SQLException("Failed to insert row into "+uri);
                 break;
             }
             default:
                 throw new UnsupportedOperationException("Unknown uri: "+uri);
         }
+
+
+
         getContext().getContentResolver().notifyChange(uri,null);
         db.close();
-        return null;
+        return returnUri;
     }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        int rowsDeleted;
+
+        if( null == selection) selection ="1";
+        switch (match) {
+            case ALL_STOCKS: {
+                rowsDeleted = db.delete(DataContract.StocksEntry.TABLE_NAME,selection,selectionArgs);
+                break;
+            }
+            case ALL_COMMODITIES: {
+                rowsDeleted = db.delete(DataContract.CommoditiesEntry.TABLE_NAME,selection,selectionArgs);
+                break;
+            }
+            default:
+                throw new UnsupportedOperationException("Unknown uri: "+uri);
+        }
+
+        if(rowsDeleted !=0){
+            getContext().getContentResolver().notifyChange(uri,null);
+        }
+
+        return rowsDeleted;
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return 0;
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final int match = sUriMatcher.match(uri);
+        int rowsUpdated;
+
+        switch (match) {
+            case ALL_STOCKS: {
+                rowsUpdated = db.update(DataContract.StocksEntry.TABLE_NAME, values,selection,selectionArgs);
+                break;
+            }
+            case ALL_COMMODITIES: {
+                rowsUpdated = db.update(DataContract.CommoditiesEntry.TABLE_NAME, values,selection,selectionArgs);
+                break;
+            }
+            default:
+                throw new UnsupportedOperationException("Unknown uri: "+uri);
+        }
+
+        if(rowsUpdated !=0){
+            getContext().getContentResolver().notifyChange(uri,null);
+        }
+
+        return rowsUpdated;
     }
+
+    //bulkInsert
+    //If required we can get from https://www.udacity.com/course/viewer#!/c-ud853/l-3599339441/m-3614409717
 }

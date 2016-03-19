@@ -57,7 +57,7 @@ public class TestProvider extends AndroidTestCase {
         String testStock = "/MERS";
         // content://com.example.android.sunshine.app/weather/94074
         type = mContext.getContentResolver().getType(
-                DataContract.StocksEntry.buildStockUri(testStock));
+                DataContract.StocksEntry.buildOneStock(testStock));
         // vnd.android.cursor.dir/com.example.android.sunshine.app/weather
         assertEquals("Error: the StockEntry CONTENT_URI with one stock should return StockEntry.CONTENT_ITEM_TYPE",
                 DataContract.StocksEntry.CONTENT_ITEM_TYPE, type);
@@ -101,7 +101,7 @@ public class TestProvider extends AndroidTestCase {
 
         //Test the basic content provider query
         Cursor weatherCursor = mContext.getContentResolver().query(
-                DataContract.StocksEntry.CONTENT_URI,
+                DataContract.CommoditiesEntry.CONTENT_URI,
                 null,
                 null,
                 null,
@@ -117,9 +117,9 @@ public class TestProvider extends AndroidTestCase {
         read out the data.  Uncomment this test to see if your location queries are
         performing correctly.
      */
-//    public void testBasicLocationQueries() {
+//    public void testBasicCommodityQueries() {
 //        // insert our test records into the database
-//        WeatherDbHelper dbHelper = new WeatherDbHelper(mContext);
+//        FinancialDBHelper dbHelper = new FinancialDBHelper(mContext);
 //        SQLiteDatabase db = dbHelper.getWritableDatabase();
 //
 //        ContentValues testValues = TestUtilities.createNorthPoleLocationValues();

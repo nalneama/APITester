@@ -1,5 +1,7 @@
 package com.nasserapps.saham.Model.Database;
 
+import com.nasserapps.saham.Model.Commodity;
+import com.nasserapps.saham.Model.Index;
 import com.nasserapps.saham.Model.Stock;
 import com.nasserapps.saham.Model.Tools;
 
@@ -122,7 +124,7 @@ public class JSONParser {
     }
 
 
-    public static Stock getBrent(String json) throws JSONException{
+    public static Commodity getBrent(String json) throws JSONException{
         JSONObject APIResults = new JSONObject(json);
         JSONObject query = APIResults.getJSONObject("query");
         JSONObject results;
@@ -131,12 +133,30 @@ public class JSONParser {
         JSONObject mJSONObject = results.getJSONObject("quote");
         mQuotes = new JSONArray("["+mJSONObject+"]");
         JSONObject mQuote= mQuotes.getJSONObject(0);
-        Stock brent = new Stock();
+        Commodity brent = new Commodity("OIL");
         if(!mQuote.isNull("LastTradePriceOnly")){
             brent.setPrice(mQuote.getDouble("LastTradePriceOnly"));}
         brent.setPercentage(mQuote.getString("PercentChange"));
         if(!mQuote.isNull("Change")){
             brent.setChange(mQuote.getDouble("Change"));}
         return brent;
+    }
+
+    public static Index getQEIndex(String json) throws JSONException{
+        JSONObject APIResults = new JSONObject(json);
+        JSONObject query = APIResults.getJSONObject("query");
+        JSONObject results;
+        JSONArray mQuotes;
+        results = query.getJSONObject("results");
+        JSONObject mJSONObject = results.getJSONObject("quote");
+        mQuotes = new JSONArray("["+mJSONObject+"]");
+        JSONObject mQuote= mQuotes.getJSONObject(0);
+        Index index = new Index("Qatar Exchange");
+        if(!mQuote.isNull("LastTradePriceOnly")){
+            index.setValue((int) mQuote.getDouble("LastTradePriceOnly"));}
+        index.setPercentage(mQuote.getString("PercentChange"));
+        if(!mQuote.isNull("Change")){
+            index.setChange(mQuote.getDouble("Change"));}
+        return index;
     }
 }

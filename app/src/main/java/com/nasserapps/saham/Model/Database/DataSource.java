@@ -16,15 +16,15 @@ import java.util.HashMap;
 public class DataSource {
 
     private Context mContext;
-    private SqlLiteDbHelper mSqlLiteDbHelper;
+    private FinancialDBHelper mFinancialDBHelper;
 
 
     //Constructor
     public DataSource(Context context){
         mContext = context;
 
-        mSqlLiteDbHelper = new SqlLiteDbHelper(mContext);
-        SQLiteDatabase database = mSqlLiteDbHelper.openDataBase();
+        mFinancialDBHelper = new FinancialDBHelper(mContext);
+        SQLiteDatabase database = mFinancialDBHelper.getReadableDatabase();
         database.close();
 
     }
@@ -32,7 +32,7 @@ public class DataSource {
 
     //Stocks
     public HashMap<String,Stock> getStocks(){
-        SQLiteDatabase database = mSqlLiteDbHelper.openDataBase();
+        SQLiteDatabase database = mFinancialDBHelper.getWritableDatabase();
         database.beginTransaction();
 
         HashMap<String,Stock> AllStocks= new HashMap<>();
@@ -57,7 +57,7 @@ public class DataSource {
     }
 
     public void updateStock(Stock stock){
-        SQLiteDatabase database = mSqlLiteDbHelper.openDataBase();
+        SQLiteDatabase database = mFinancialDBHelper.getWritableDatabase();
         database.beginTransaction();
 
         ContentValues updateStockValues = new ContentValues();

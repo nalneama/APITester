@@ -4,7 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 
 import com.nasserapps.saham.Model.Database.DataContract;
-import com.nasserapps.saham.Model.Database.SqlLiteDbHelper;
+import com.nasserapps.saham.Model.Database.FinancialDBHelper;
 
 import java.util.HashSet;
 
@@ -14,7 +14,7 @@ public class TestDB extends AndroidTestCase {
 
     // Since we want each test to start with a clean slate
     void deleteTheDatabase() {
-        mContext.deleteDatabase(SqlLiteDbHelper.DATABASE_NAME);
+        mContext.deleteDatabase(FinancialDBHelper.DATABASE_NAME);
     }
 
     /*
@@ -42,8 +42,7 @@ public class TestDB extends AndroidTestCase {
         //tableNameHashSet.add(DataContract.CommoditiesEntry.TABLE_NAME);
 
 //        mContext.deleteDatabase(SqlLiteDbHelper.DATABASE_NAME);
-        SQLiteDatabase db = new SqlLiteDbHelper(getContext()).openDataBase();
-        SqlLiteDbHelper.addTables(db);
+        SQLiteDatabase db = new FinancialDBHelper(getContext()).getWritableDatabase();
         assertEquals(true, db.isOpen());
 
         // have we created the tables we want?
@@ -97,8 +96,7 @@ public class TestDB extends AndroidTestCase {
     */
     public void testLocationTable() {
         // First step: Get reference to writable database
-        SQLiteDatabase db = new SqlLiteDbHelper(getContext()).getWritableDatabase();
-        SqlLiteDbHelper.addTables(db);
+        SQLiteDatabase db = new FinancialDBHelper(getContext()).getWritableDatabase();
         // Create ContentValues of what you want to insert
         // (you can use the createNorthPoleLocationValues if you wish)
         ContentValues contentValues = new ContentValues();
@@ -120,7 +118,7 @@ public class TestDB extends AndroidTestCase {
                 null,
                 null
         );
-        assertTrue("Error: No records returned",cursor.moveToFirst());
+        assertTrue("Error: No records returned", cursor.moveToFirst());
         // Validate data in resulting Cursor with the original ContentValues
         // (you can use the validateCurrentRecord function in TestUtilities to validate the
         // query if you like)

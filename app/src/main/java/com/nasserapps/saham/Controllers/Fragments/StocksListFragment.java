@@ -28,17 +28,18 @@ import com.nasserapps.saham.Model.Stock;
 import com.nasserapps.saham.Model.Tools;
 import com.nasserapps.saham.Model.User;
 import com.nasserapps.saham.R;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class StocksListFragment extends Fragment {
 
@@ -117,7 +118,7 @@ public class StocksListFragment extends Fragment {
             Call call = client.newCall(request);
             call.enqueue(new Callback() {
                 @Override
-                public void onFailure(Request request, IOException e) {
+                public void onFailure(Call call, IOException e) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -127,7 +128,7 @@ public class StocksListFragment extends Fragment {
                 }
 
                 @Override
-                public void onResponse(Response response) throws IOException {
+                public void onResponse(Call call, Response response) throws IOException {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -155,6 +156,7 @@ public class StocksListFragment extends Fragment {
                         Log.e("error", "JSON Exception caught", e);
                     }
                 }
+
             });
         }
 
