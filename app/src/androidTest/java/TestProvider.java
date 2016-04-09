@@ -57,7 +57,7 @@ public class TestProvider extends AndroidTestCase {
         String testStock = "/MERS";
         // content://com.example.android.sunshine.app/weather/94074
         type = mContext.getContentResolver().getType(
-                DataContract.StocksEntry.buildOneStock(testStock));
+                DataContract.StocksEntry.buildStockFromSymbol(testStock));
         // vnd.android.cursor.dir/com.example.android.sunshine.app/weather
         assertEquals("Error: the StockEntry CONTENT_URI with one stock should return StockEntry.CONTENT_ITEM_TYPE",
                 DataContract.StocksEntry.CONTENT_ITEM_TYPE, type);

@@ -7,21 +7,27 @@ import android.provider.BaseColumns;
 
 public class DataContract {
 
-    //TODO content provider authority path to be updated after changing the app package name
+    // 1.0 BASE_CONTENT_URI is the root path of the complete content provider
     public static final String CONTENT_AUTHORITY = "com.nasserapps.saham.app";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
-
+    // 1.1 All the paths under the base uri
     public static final String PATH_STOCK = "stock";
+    public static final String PATH_COMMODITY = "commodity";
     public static final String PATH_INDEX = "index";
     //GNRI.QA
-    public static final String PATH_COMMODITY = "commodity";
 
 
+
+
+
+
+
+    //2.0 The Stock Path
     public static final class StocksEntry implements BaseColumns{
-        // Tables Names
+        // 2.1 Table Name
         public static final String TABLE_NAME="stocks_db";
-        //Columns Names
+        // 2.2 Columns Names
         public static final String COLUMN_STOCK_SYMBOL="symbol";
         public static final String COLUMN_STOCK_NAME="name_english";
         public static final String COLUMN_STOCK_API_CODE="api_code";
@@ -51,8 +57,9 @@ public class DataContract {
         public static final String COLUMN_STOCK_PURCHASED_QUANTITY="purchased_quantity";
         public static final String COLUMN_STOCK_PURITY="is_islamic";
         public static final String COLUMN_STOCK_NOTIFICATION="notification_enabled";
+        public static final String COLUMN_STOCK_NOTE="personal_note";
 
-        //Uri
+        //2.3 The content uri for the stock table
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_STOCK).build();
 
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_STOCK; //Return multiple items
@@ -60,47 +67,34 @@ public class DataContract {
 
         //https://www.udacity.com/course/viewer#!/c-ud853/l-3599339441/m-3650138769 to get more types and queries
 
-        public static Uri buildOneStock(String symbol){
-            return CONTENT_URI.buildUpon().appendPath(symbol).build();
-        }
 
+        // Helper method: get the Uri from the row id
         public static Uri buildStockUri(long id){
             return ContentUris.withAppendedId(CONTENT_URI,id);
         }
 
-    }
+        // Get one stock
+        public static Uri buildStockFromSymbol(String symbol){
+            return CONTENT_URI.buildUpon().appendPath(symbol).build();
+        }
 
-
-
-    public static final class IndexesEntry implements BaseColumns{
-        // Tables Names
-        public static final String TABLE_NAME="indexes_db";
-        //Columns Names
-        public static final String COLUMN_STOCK_SYMBOL="symbol";
-        public static final String COLUMN_STOCK_NAME="name_english";
-        public static final String COLUMN_STOCK_EPS="eps";
-        public static final String COLUMN_STOCK_PRICE_CHANGE="change";
-        public static final String COLUMN_STOCK_PERCENTAGE_CHANGE="percentage_change";
-        public static final String COLUMN_STOCK_CURRENT_PRICE="current_price";
-
-        //Uri
-        public static final Uri CONTENT_URI =
-                BASE_CONTENT_URI.buildUpon().appendPath(PATH_INDEX).build();
-
-        public static final String CONTENT_TYPE =
-                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_INDEX;
-        public static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_INDEX;
 
     }
 
 
 
 
+
+
+
+
+
+
+    // 3.0 The Commodity Path
     public static final class CommoditiesEntry implements BaseColumns{
-        // Tables Names
+        // 3.1 Table Name
         public static final String TABLE_NAME="commodities_db";
-        //Columns Names
+        // 3.2 Columns Names
         public static final String COLUMN_COMMODITY_SYMBOL="symbol";
         public static final String _ID="id";
         public static final String COLUMN_COMMODITY_NAME="name_english";
@@ -110,16 +104,63 @@ public class DataContract {
         public static final String COLUMN_COMMODITY_CURRENT_PRICE="current_price";
 
 
-        //Uri
+        // 3.3 The content uri for the Commodity table
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_COMMODITY).build();
 
         public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_COMMODITY;
         public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_COMMODITY;
 
 
+        // Helper method: get the Uri from the row id
         public static Uri buildCommodityUri(long id){
             return ContentUris.withAppendedId(CONTENT_URI,id);
         }
+
+        // Get one Commodity
+        public static Uri buildCommodityFromSymbol(String symbol){
+            return CONTENT_URI.buildUpon().appendPath(symbol).build();
+        }
     }
+
+
+
+
+
+
+
+
+
+
+    // 4.0 The Index Path
+    public static final class IndexesEntry implements BaseColumns{
+        // 4.1 Table Name
+        public static final String TABLE_NAME="indexes_db";
+        // 4.2 Columns Names
+        public static final String COLUMN_STOCK_SYMBOL="symbol";
+        public static final String COLUMN_STOCK_NAME="name_english";
+        public static final String COLUMN_STOCK_EPS="eps";
+        public static final String COLUMN_STOCK_PRICE_CHANGE="change";
+        public static final String COLUMN_STOCK_PERCENTAGE_CHANGE="percentage_change";
+        public static final String COLUMN_STOCK_CURRENT_PRICE="current_price";
+
+        //4.3 The content uri for the Index table
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_INDEX).build();
+
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_INDEX;
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_INDEX;
+
+        // Helper method: get the Uri from the row id
+        public static Uri buildIndexUri(long id){
+            return ContentUris.withAppendedId(CONTENT_URI,id);
+        }
+
+        // Get one Index
+        public static Uri buildIndexFromSymbol(String symbol){
+            return CONTENT_URI.buildUpon().appendPath(symbol).build();
+        }
+    }
+
+
 
 }

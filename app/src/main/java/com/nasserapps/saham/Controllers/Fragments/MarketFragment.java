@@ -112,7 +112,9 @@ public class MarketFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+//        Uri uri = DataContract.CommoditiesEntry.CONTENT_URI;
+//        Cursor cursor = getContext().getContentResolver().query(uri,null,null,null,null);
+//        cursor.get
 
         mDataset[0]= mMarket;
         ArrayList<Stock> topGainers = mUser.getAllStocks();

@@ -11,6 +11,7 @@ import android.net.Uri;
 
 public class FinancialDataProvider extends ContentProvider {
 
+    // UriMatcher used by the content provider to know with method to return
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private FinancialDBHelper mOpenHelper;
 
@@ -19,7 +20,10 @@ public class FinancialDataProvider extends ContentProvider {
     static final int ONE_STOCK = 101;
 
     static final int ALL_COMMODITIES =200;
+    static final int ONE_COMMODITY =201;
 
+    static final int ALL_INDEXES =300;
+    static final int ONE_INDEX =301;
 
     private static final SQLiteQueryBuilder sFinancialDataQueryHelper;
     static {
@@ -35,8 +39,11 @@ public class FinancialDataProvider extends ContentProvider {
         matcher.addURI(authority,DataContract.PATH_STOCK, ALL_STOCKS); //Dir to get all stocks
         matcher.addURI(authority,DataContract.PATH_STOCK + "/*", ONE_STOCK); //item to get one stock
 
-        //Add matcher for commodity and index below here
         matcher.addURI(authority,DataContract.PATH_COMMODITY, ALL_COMMODITIES);
+        matcher.addURI(authority,DataContract.PATH_COMMODITY + "/*", ONE_COMMODITY);
+
+        matcher.addURI(authority,DataContract.PATH_COMMODITY, ALL_INDEXES);
+        matcher.addURI(authority,DataContract.PATH_INDEX + "/*", ONE_INDEX);
 
         return matcher;
     }
@@ -65,6 +72,13 @@ public class FinancialDataProvider extends ContentProvider {
 
             case ALL_COMMODITIES:
                 return DataContract.CommoditiesEntry.CONTENT_TYPE;
+            case ONE_COMMODITY:
+                return DataContract.CommoditiesEntry.CONTENT_ITEM_TYPE;
+
+            case ALL_INDEXES:
+                return DataContract.IndexesEntry.CONTENT_TYPE;
+            case ONE_INDEX:
+                return DataContract.IndexesEntry.CONTENT_ITEM_TYPE;
 
             default:
                 throw new UnsupportedOperationException("Unkown uri:" + uri);
@@ -79,25 +93,33 @@ public class FinancialDataProvider extends ContentProvider {
 
             //stock
             case ALL_STOCKS:
-                retCursor = mOpenHelper.getReadableDatabase().query(
-                        DataContract.StocksEntry.TABLE_NAME,
-                        projection,
-                        selection,selectionArgs,null,null,sortOrder
-                );
+                retCursor = mOpenHelper.getReadableDatabase().query(DataContract.StocksEntry.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
                 break;
-
             //stock/*
             case ONE_STOCK:
-                retCursor = null;//todo to be fixed
+                retCursor = mOpenHelper.getReadableDatabase().query(DataContract.StocksEntry.TABLE_NAME,projection,"symbol = ?",selectionArgs,null,null,sortOrder);
                 break;
 
+
+            //commodity
             case ALL_COMMODITIES:
-                retCursor = mOpenHelper.getReadableDatabase().query(
-                        DataContract.CommoditiesEntry.TABLE_NAME,
-                        projection,
-                        selection,selectionArgs,null,null,sortOrder
-                );
+                retCursor = mOpenHelper.getReadableDatabase().query(DataContract.CommoditiesEntry.TABLE_NAME,projection,selection,selectionArgs,null,null,sortOrder);
                 break;
+            //commodity/*
+            case ONE_COMMODITY:
+                retCursor = mOpenHelper.getReadableDatabase().query(DataContract.CommoditiesEntry.TABLE_NAME,projection,"symbol = ?",selectionArgs,null,null,sortOrder);
+                break;
+
+
+            //index
+            case ALL_INDEXES:
+                retCursor = mOpenHelper.getReadableDatabase().query(DataContract.IndexesEntry.TABLE_NAME, projection, selection,selectionArgs,null,null,sortOrder);
+                break;
+            //index/*
+            case ONE_INDEX:
+                retCursor = mOpenHelper.getReadableDatabase().query(DataContract.IndexesEntry.TABLE_NAME,projection,"symbol = ?",selectionArgs,null,null,sortOrder);
+                break;
+
 
             default:
                 throw new UnsupportedOperationException("Unknown uri: "+ uri);
@@ -117,8 +139,7 @@ public class FinancialDataProvider extends ContentProvider {
         switch (match) {
             case ALL_STOCKS: {
                 long _id = db.insert(DataContract.StocksEntry.TABLE_NAME, null, values);
-                if (_id > 0) {
-                    returnUri = DataContract.StocksEntry.buildStockUri(_id);
+                if (_id > 0) {returnUri = DataContract.StocksEntry.buildStockUri(_id);
                 } else throw new android.database.SQLException("Failed to insert row into " + uri);
                 break;
             }
@@ -128,11 +149,15 @@ public class FinancialDataProvider extends ContentProvider {
                 else throw new android.database.SQLException("Failed to insert row into "+uri);
                 break;
             }
+            case ALL_INDEXES: {
+                long _id = db.insert(DataContract.IndexesEntry.TABLE_NAME, null, values);
+                if (_id>0){returnUri = DataContract.IndexesEntry.buildIndexUri(_id);}
+                else throw new android.database.SQLException("Failed to insert row into "+uri);
+                break;
+            }
             default:
                 throw new UnsupportedOperationException("Unknown uri: "+uri);
         }
-
-
 
         getContext().getContentResolver().notifyChange(uri,null);
         db.close();
@@ -153,6 +178,10 @@ public class FinancialDataProvider extends ContentProvider {
             }
             case ALL_COMMODITIES: {
                 rowsDeleted = db.delete(DataContract.CommoditiesEntry.TABLE_NAME,selection,selectionArgs);
+                break;
+            }
+            case ALL_INDEXES: {
+                rowsDeleted = db.delete(DataContract.IndexesEntry.TABLE_NAME,selection,selectionArgs);
                 break;
             }
             default:
@@ -179,6 +208,10 @@ public class FinancialDataProvider extends ContentProvider {
             }
             case ALL_COMMODITIES: {
                 rowsUpdated = db.update(DataContract.CommoditiesEntry.TABLE_NAME, values,selection,selectionArgs);
+                break;
+            }
+            case ALL_INDEXES: {
+                rowsUpdated = db.update(DataContract.IndexesEntry.TABLE_NAME, values,selection,selectionArgs);
                 break;
             }
             default:

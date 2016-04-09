@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.nasserapps.saham.Controllers.Fragments.MarketFragment;
+import com.nasserapps.saham.Controllers.Fragments.StocksListCursorFragment;
 import com.nasserapps.saham.Controllers.Fragments.StocksListFragment;
 import com.nasserapps.saham.Controllers.Fragments.WalletFragment;
 import com.nasserapps.saham.R;
@@ -28,7 +28,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return new WalletFragment();
             case 2:
-                return new MarketFragment();
+                return new StocksListCursorFragment();
         }
         return null;
     }

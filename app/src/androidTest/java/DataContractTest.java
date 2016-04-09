@@ -14,7 +14,7 @@ public class DataContractTest extends AndroidTestCase {
         Students: Uncomment this out to test your weather location function.
      */
     public void testBuildStockContract() {
-        Uri uri = DataContract.StocksEntry.buildOneStock(TEST_STOCK);
+        Uri uri = DataContract.StocksEntry.buildStockFromSymbol(TEST_STOCK);
         assertNotNull("Error: Null Uri returned.  You must fill-in buildWeatherLocation in " +
                         "WeatherContract.",
                 uri);
