@@ -52,6 +52,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.nasserapps.saham.Controllers.Activities.EconomicDecisionActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
             android:name="com.nasserapps.saham.Controllers.Activities.ChecklistActivity"
             android:label="@string/title_activity_checklist"
             android:parentActivityName="com.nasserapps.saham.Controllers.Activities.HomeActivity"

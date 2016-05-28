@@ -70,20 +70,24 @@ public class JSONParser {
         String symbol = mQuote.getString("Symbol").substring(0, 4);
         Stock stock = Tools.getStockFromList(symbol, mAllStocksInDB);
         if(!mQuote.isNull("PERatio")){
-        stock.setPERatio(mQuote.getDouble("PERatio"));}
+            stock.setPERatio(mQuote.getDouble("PERatio"));}
         stock.setVolume(mQuote.getLong("Volume"));
         stock.setPBV(mQuote.getDouble("PriceBook"));
         stock.setPrice(mQuote.getDouble("LastTradePriceOnly"));
         if(!mQuote.isNull("Bid")){
-        stock.setBid(mQuote.getDouble("Bid"));}
+            stock.setBid(mQuote.getDouble("Bid"));}
         if(!mQuote.isNull("Ask")){
-        stock.setAsk(mQuote.getDouble("Ask"));}
+            stock.setAsk(mQuote.getDouble("Ask"));}
         stock.setPercentage(mQuote.getString("PercentChange"));
         stock.setChange(mQuote.getDouble("Change"));
-        stock.setDayHigh(mQuote.getDouble("DaysHigh"));
-        stock.setDayLow(mQuote.getDouble("DaysLow"));
-        stock.setM52WHigh(mQuote.getDouble("YearHigh"));
-        stock.setM52WLow(mQuote.getDouble("YearLow"));
+        if(!mQuote.isNull("DaysHigh")) {
+            stock.setDayHigh(mQuote.getDouble("DaysHigh"));}
+        if(!mQuote.isNull("DaysLow")) {
+           stock.setDayLow(mQuote.getDouble("DaysLow"));}
+        if(!mQuote.isNull("YearHigh")) {
+            stock.setM52WHigh(mQuote.getDouble("YearHigh"));}
+        if(!mQuote.isNull("YearLow")) {
+            stock.setM52WLow(mQuote.getDouble("YearLow"));}
         if(!mQuote.isNull("Open")){
         stock.setOpenPrice(mQuote.getDouble("Open"));}
 

@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.nasserapps.saham.Model.FinancialStatement;
 import com.nasserapps.saham.Model.MarketTime;
 import com.nasserapps.saham.Model.Stock;
 import com.nasserapps.saham.Model.Tools;
@@ -28,6 +29,9 @@ public class StockDetailsActivity extends AppCompatActivity {
     private TextView mStock52WView;
     private Stock mStock;
     private TextView mStockTodayTitlesView;
+    private TextView mIncomeStatmentValues;
+    private TextView mIncomeStatmentPercentage;
+    private TextView mIncomeStatmentRaios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +116,46 @@ public class StockDetailsActivity extends AppCompatActivity {
                 mStock.getWorstPE(),
                 mStock.getBestPBV(),
                 mStock.getWorstPBV()));
+
+
+
+
+
+
+        //Income Statement
+        FinancialStatement financialStatement = new FinancialStatement(4508326-222000-104936-4033,0,-1206383-951511+75425,-75425,21208,0,-10331,-76016,236293);
+        mIncomeStatmentValues = (TextView) findViewById(R.id.statementValues); //12 Values
+        mIncomeStatmentValues.setText(String.format("%.2f%n%.2f%n%.2f%n%.2f%n%.2f%n%.2f%n%.2f%n%.2f%n%.2f%n%.2f%n%.2f%n%.2f",
+                financialStatement.getRevenues(),
+                financialStatement.getCOGS(),
+                financialStatement.getGrossProfit(),
+                financialStatement.getSGA(),
+                financialStatement.getDA(),
+                financialStatement.getOperatingProfit(),
+                financialStatement.getSpecialItems(),
+                financialStatement.getEBIT(),
+                financialStatement.getInterest(),
+                financialStatement.getEBT(),
+                financialStatement.getTax(),
+                financialStatement.getEAT()));
+
+        mIncomeStatmentPercentage = (TextView) findViewById(R.id.statementPercentage); //6 Values
+        mIncomeStatmentPercentage.setText(String.format("%.2f%n%n%.2f%n%n%n%.2f%n%n%.2f%n%n%.2f%n%n%.2f",
+                financialStatement.getRevenues()/financialStatement.getRevenues()*100,
+                financialStatement.getGrossProfit()/financialStatement.getRevenues()*100,
+                financialStatement.getOperatingProfit()/financialStatement.getRevenues()*100,
+                financialStatement.getEBIT()/financialStatement.getRevenues()*100,
+                financialStatement.getEBT()/financialStatement.getRevenues()*100,
+                financialStatement.getEAT()/financialStatement.getRevenues()*100));
+
+        mIncomeStatmentRaios = (TextView) findViewById(R.id.statementRatios); //6 Values
+        mIncomeStatmentRaios.setText(String.format("%.2f%n%n%.2f%n%n%n%.2f%n%n%.2f%n%n%.2f%n%n%.2f",
+                mStock.getPrice()/financialStatement.getRevenues(),
+                mStock.getPrice()/financialStatement.getGrossProfit(),
+                mStock.getPrice()/financialStatement.getOperatingProfit(),
+                mStock.getPrice()/financialStatement.getEBIT(),
+                mStock.getPrice()/financialStatement.getEBT(),
+                mStock.getPrice()/financialStatement.getEAT()));
 
     }
 

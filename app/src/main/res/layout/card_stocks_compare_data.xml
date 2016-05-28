@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:padding="16dp">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/bank"
+            android:baselineAlignBottom="true"
+            android:scaleType="fitCenter"
+            />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#424242"
+            android:id="@+id/stockNameR"
+            style="@style/MySpinnerLook"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:id="@+id/stockPriceR"
+            android:textStyle="bold"
+            android:textColor="#9E9E9E"
+            android:textSize="24sp"
+            android:text="79.11"
+            android:layout_alignParentEnd="false"
+            android:layout_centerHorizontal="true"/>
+
+
+        <TextView
+            android:text="1.0 (-5.34%)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="2dp"
+            android:id="@+id/percentageR"
+            android:layout_below="@+id/stockPriceR"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/cardview_shadow_start_color"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:divider="@drawable/line_divider"
+        android:paddingTop="8dp"
+        android:showDividers="middle">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp">
+            <TextView
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text=""
+                android:id="@+id/today"/>
+
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/today"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textAlignment="textEnd"
+                android:textSize="@dimen/stock_details_values"
+                android:text="34.0\n80.10\n56.30\n500k\n12.34\n1.54"
+                android:lineSpacingExtra="@dimen/stock_details_values_spacing"
+                android:id="@+id/todayValuesR"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text=""
+                android:id="@+id/fiftytwoWeeks"/>
+
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/fiftytwoWeeks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textAlignment="textEnd"
+                android:textSize="@dimen/stock_details_values"
+                android:text="90.0\n20.10\n12.4\n20.1\n0.84\n1.54"
+                android:lineSpacingExtra="@dimen/stock_details_values_spacing"
+                android:id="@+id/fiftytwoWeeksValuesR"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -19,42 +19,23 @@ public class Tools {
         HashMap<String, Comparator<Stock>> comparatorHashMap =  new HashMap<>();
 
 
-
         // A-Z Comparator
-        comparatorHashMap.put(sortingOptions[0], new Comparator<Stock>() {
-            @Override
-            public int compare(Stock stock1, Stock stock2) {
-                return stock1.getName().compareTo(stock2.getName());}});
+        comparatorHashMap.put(sortingOptions[0], (stock1, stock2) -> stock1.getName().compareTo(stock2.getName()));
 
         //Book Value
-        comparatorHashMap.put(sortingOptions[1],new Comparator<Stock>() {
-            @Override
-            public int compare(Stock stock1, Stock stock2) {
-                return Double.compare(stock1.getPBV(), stock2.getPBV());}});
+        comparatorHashMap.put(sortingOptions[1], (stock1, stock2) -> Double.compare(stock1.getPBV(), stock2.getPBV()));
 
         // Gain
-        comparatorHashMap.put(sortingOptions[2], new Comparator<Stock>() {
-            @Override
-            public int compare(Stock stock1, Stock stock2) {
-                return Double.compare(Double.parseDouble(stock2.getPercentage().substring(0, stock2.getPercentage().length() - 1)), Double.parseDouble(stock1.getPercentage().substring(0, stock1.getPercentage().length() - 1)));}});
+        comparatorHashMap.put(sortingOptions[2], (stock1, stock2) -> Double.compare(Double.parseDouble(stock2.getPercentage().substring(0, stock2.getPercentage().length() - 1)), Double.parseDouble(stock1.getPercentage().substring(0, stock1.getPercentage().length() - 1))));
 
         // PE Ratio
-        comparatorHashMap.put(sortingOptions[3], new Comparator<Stock>() {
-            @Override
-            public int compare(Stock stock1, Stock stock2) {
-                return Double.compare(stock1.getPERatio(), stock2.getPERatio());}});
+        comparatorHashMap.put(sortingOptions[3], (stock1, stock2) -> Double.compare(stock1.getPERatio(), stock2.getPERatio()));
 
         // Price
-        comparatorHashMap.put(sortingOptions[4], new Comparator<Stock>() {
-            @Override
-            public int compare(Stock stock1, Stock stock2) {
-                return Double.compare(stock2.getPrice(), stock1.getPrice());}});
+        comparatorHashMap.put(sortingOptions[4], (stock1, stock2) -> Double.compare(stock2.getPrice(), stock1.getPrice()));
 
         // Price
-        comparatorHashMap.put(sortingOptions[5], new Comparator<Stock>() {
-            @Override
-            public int compare(Stock stock1, Stock stock2) {
-                return Double.compare(stock2.getVolume(), stock1.getVolume());}});
+        comparatorHashMap.put(sortingOptions[5], (stock1, stock2) -> Double.compare(stock2.getVolume(), stock1.getVolume()));
 
         //Sort by the Option and return the sorted list
         Collections.sort(list, comparatorHashMap.get(string));
